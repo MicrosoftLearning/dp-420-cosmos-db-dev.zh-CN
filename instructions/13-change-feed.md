@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 处理更改源事件
   module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 6dbff97f3a587513714610617007080ccd371778
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 6baf04cd68c510697e9567d240b2c641b812c125
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057405"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024911"
 ---
 # <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 处理更改源事件
 
@@ -173,7 +173,7 @@ Microsoft.Azure.Cosmos.Container 类附带一系列方法，用于流畅地生�
 
 1. 在 foreach 循环和匿名函数之外，创建名为 builder 的新变量，该变量使用以下参数将调用 [GetChangeFeedProcessorBuilder<>][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.getchangefeedprocessorbuilder] 的结果存储在 sourceContainer 变量上： 
 
-    | **参数** | **值** |
+    | **Parameter** | **值** |
     | ---: | :--- |
     | processorName | productsProcessor |
     | onChangesDelegate | handleChanges |
@@ -223,13 +223,7 @@ Microsoft.Azure.Cosmos.Container 类附带一系列方法，用于流畅地生�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    using CosmosClient client = new(endpoint, key);
     
     Container sourceContainer = client.GetContainer("cosmicworks", "products");
     Container leaseContainer = client.GetContainer("cosmicworks", "productslease");

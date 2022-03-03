@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 12d88545282991a14b758d05d27625b633edc7a3
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: 9ad507d58db5b7522e2a6e24231e18caaa86e36a
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039330"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024929"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
 
@@ -149,13 +149,7 @@ ms.locfileid: "139039330"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
@@ -258,13 +252,7 @@ ms.locfileid: "139039330"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);

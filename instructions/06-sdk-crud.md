@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 创建和更新文档
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: b4b167618243026dd3b2d9510da1b73555b1c136
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: 5aa8e7ec314243dce08e3d14a561e45d2ac83049
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039323"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024923"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 创建和更新文档
 
@@ -121,13 +121,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -172,11 +166,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 使用以下属性创建一个 Product 类型的名为 saddle 的新对象：
 
-    | 属性 | 值 |
+    | 属性 | Value |
     | ---: | :--- |
     | **id** | ``706cd7c6-db8b-41f9-aea2-0e0c7e8eb009`` |
     | categoryId | ``9603ca6c-9e28-4a02-9194-51cdb7fea816`` |
-    | **name** | ``Road Saddle`` |
+    | name | ``Road Saddle`` |
     | **price** | ``45.99d`` |
     | **标记** | ``{ tan, new, crisp }`` |
 
@@ -211,13 +205,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -313,13 +301,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -409,13 +391,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);  
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     

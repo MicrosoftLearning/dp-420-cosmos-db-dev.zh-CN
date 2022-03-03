@@ -2,12 +2,12 @@
 lab:
   title: 借助 SDK 实现并使用 UDF
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB SQL API
-ms.openlocfilehash: 638c9b822f2ed8f1eae1e6ac1be36585804abf1c
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 05606b2900341449061b133a844cce6d40dec4d0
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057396"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024952"
 ---
 # <a name="implement-and-then-use-a-udf-using-the-sdk"></a>借助 SDK 实现并使用 UDF
 
@@ -165,13 +165,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 

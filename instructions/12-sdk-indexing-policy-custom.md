@@ -2,12 +2,12 @@
 lab:
   title: 通过门户配置 Azure Cosmos DB SQL API 容器的索引策略
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 1d14cf0d3c98832cb46c06178845b56b9748b0d3
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 0a4f1118d4a2f726df12dbeec1d3d96918450e12
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057387"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024893"
 ---
 # <a name="configure-an-azure-cosmos-db-sql-api-containers-index-policy-using-the-sdk"></a>使用 SDK 配置 Azure Cosmos DB SQL API 容器的索引策略
 
@@ -43,16 +43,16 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
-    | **位置** | 选择任意可用区域 |
+    | **帐户名** | 输入一个全局唯一名称 |
+    | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
-1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“键”窗格。
+1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“键”窗格 。
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
@@ -148,13 +148,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -200,9 +194,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在 Web 浏览器中，转到 Azure 门户 (``portal.azure.com``)。
 
-1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
+1. 选择“资源组”，然后选择在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源 。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
 1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
 

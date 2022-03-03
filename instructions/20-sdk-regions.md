@@ -2,12 +2,12 @@
 lab:
   title: 通过 Azure Cosmos DB SQL API SDK 连接到不同区域
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 758a51237ee4c8b4e4eb173addb1e66fbcafbe9e
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 8d6439943bc1baac6e5c1cdb8e40f98cf6665119
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057398"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024942"
 ---
 # <a name="connect-to-different-regions-with-the-azure-cosmos-db-sql-api-sdk"></a>通过 Azure Cosmos DB SQL API SDK 连接到不同区域
 
@@ -174,8 +174,6 @@ CosmosClientOptions 类包含一个属性，用于配置要使用 SDK 连接到�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -226,8 +224,6 @@ CosmosClientOptions 类包含一个属性，用于配置要使用 SDK 连接到�
     CosmosClientOptions options = new () 
     { 
         ApplicationPreferredRegions = regions
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     using CosmosClient client = new(endpoint, key, options);

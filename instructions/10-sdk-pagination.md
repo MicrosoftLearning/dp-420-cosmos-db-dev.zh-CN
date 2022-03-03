@@ -2,12 +2,12 @@
 lab:
   title: 在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 18f176a3f54fe4143f3d1966327a83d862bd617c
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: ac9e8181d606a62011f4980d1dd90055578ce22a
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057389"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024928"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
 
@@ -204,13 +204,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new (endpoint, key);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 

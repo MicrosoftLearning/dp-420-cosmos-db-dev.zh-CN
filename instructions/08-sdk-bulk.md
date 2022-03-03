@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: a602f5e827c5183cfb2af8220490b7b672ee2638
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: db439a89114c0256884ad676c67d6e4ad6c27844
+ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039321"
+ms.lasthandoff: 01/12/2022
+ms.locfileid: "138024910"
 ---
 # <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
 
@@ -120,8 +120,6 @@ ms.locfileid: "139039321"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     ```
 
@@ -200,8 +198,6 @@ ms.locfileid: "139039321"
     CosmosClientOptions options = new () 
     { 
         AllowBulkExecution = true 
-        , RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
     };
     
     CosmosClient client = new (endpoint, key, options);  
