@@ -2,12 +2,12 @@
 lab:
   title: 通过 Azure 门户为 Azure Cosmos DB SQL API 配置吞吐量
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 5d9829917435948bebede48324897fb38dd6374b
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 021e34b83692f0e8930362cb54749f81b8ffe945
+ms.sourcegitcommit: 3dcd91627a28a2718744929be8f23b427f701793
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024930"
+ms.lasthandoff: 03/08/2022
+ms.locfileid: "139616129"
 ---
 # <a name="configure-throughput-for-azure-cosmos-db-sql-api-with-the-azure-portal"></a>通过 Azure 门户为 Azure Cosmos DB SQL API 配置吞吐量
 
@@ -63,7 +63,7 @@ ms.locfileid: "138024930"
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
@@ -89,7 +89,7 @@ ms.locfileid: "138024930"
 
 1. 在“基本信息”选项卡上，为每个设置输入以下值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | --: | :-- |
     | **订阅** | 所有资源都必须属于某个资源组。每个资源组都必须属于某个订阅。在这里，使用现有的 Azure 订阅。 |
     | **资源组** | 所有资源都必须属于某个资源组。此处请选择现有资源组或创建新的资源组。 |
@@ -115,13 +115,13 @@ ms.locfileid: "138024930"
     | **设置** | **值** |
     | --: | :-- |
     | **数据库 ID** | nothroughputdb |
-    | **在容器之间共享吞吐量** | 请不要选择 |
+    | 预配吞吐量 | 请不要选择 |
 
 1. 返回“数据资源管理器”窗格中，观察层次结构中的“nothroughputdb”数据库节点。 
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
@@ -140,7 +140,7 @@ ms.locfileid: "138024930"
     | **设置** | **值** |
     | --: | :-- |
     | **数据库 ID** | manualthroughputdb |
-    | **在容器之间共享吞吐量** | 选择此选项 |
+    | 预配吞吐量 | 选择此选项 |
     | **数据库吞吐量** | *手动* |
     | **RU/秒** | *400* |
 
@@ -148,15 +148,15 @@ ms.locfileid: "138024930"
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 新建 &vert; manualthroughputdb |
-    | **在容器之间共享吞吐量** | 选择此选项 |
-    | **数据库吞吐量** | *手动* |
-    | **RU/秒** | *1000* |
+    | **数据库 ID** | 使用现有 &vert; manualthroughputdb  |
     | **容器 ID** | childcontainer |
     | **分区键** | /primarykey |
+    | 为此容器预配专用吞吐量 | 选择此选项 |
+    | **容器吞吐量** | *手动* |
+    | **RU/秒** | *1000* |
 
 1. 返回到“数据资源管理器”窗格，展开“manualthroughputdb”数据库节点，然后观察层次结构中的“childcontainer”容器节点。
