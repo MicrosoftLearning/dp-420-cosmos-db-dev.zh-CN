@@ -2,12 +2,12 @@
 lab:
   title: 在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: ac9e8181d606a62011f4980d1dd90055578ce22a
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: f03064bd16ad52920c6a25dfaee2b985bffdb570
+ms.sourcegitcommit: 83a535ff82225114232d911bf4654d3b66d40dc4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024928"
+ms.lasthandoff: 04/26/2022
+ms.locfileid: "144012121"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
 
@@ -125,7 +125,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 创建一个名为 sql 的新变量，其 string 类型的值为 SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags：
 
     ```
-    string sql = "SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags";
+    string sql = "SELECT p.id, p.name, p.price FROM products p ";
     ```
 
 1. 创建一个 [QueryDefinition][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.querydefinition] 类型的新变量，并传入 sql 变量作为构造函数的参数：
@@ -179,7 +179,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 在 foreach 循环中，使用内置的 Console.WriteLine 静态方法格式化并输出 product 变量的 id、name 和 price 属性：
 
     ```
-    Console.WriteLine($"[{product.name,40}]\t{product.tag}");
+    Console.WriteLine($"[{product.id}]\t[{product.name,40}]\t[{product.price,10}]");
     ```
 
 1. 返回到 while 循环中，使用内置的 Console.WriteLine 静态方法输出消息“按任意键获取更多结果”：
@@ -204,13 +204,19 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
 
-    string sql = "SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags";
+    string sql = "SELECT p.id, p.name, p.price FROM products p ";
     QueryDefinition query = new (sql);
 
     QueryRequestOptions options = new ();
@@ -223,7 +229,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         FeedResponse<Product> products = await iterator.ReadNextAsync();
         foreach (Product product in products)
         {
-            Console.WriteLine($"[{product.name,40}]\t{product.tag}");
+            Console.WriteLine($"[{product.id}]\t[{product.name,40}]\t[{product.price,10}]");
         }
 
         Console.WriteLine("Press any key for next page of results");
