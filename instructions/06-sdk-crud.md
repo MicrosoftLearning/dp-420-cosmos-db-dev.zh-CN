@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 创建和更新文档
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: b4b167618243026dd3b2d9510da1b73555b1c136
-ms.sourcegitcommit: 9e320ed456eaaab98e80324267c710628b557b1c
+ms.openlocfilehash: d952992daabc7dcdfc379620c41659907fa5633f
+ms.sourcegitcommit: 83a535ff82225114232d911bf4654d3b66d40dc4
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139039323"
+ms.lasthandoff: 04/26/2022
+ms.locfileid: "144012124"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 创建和更新文档
 
@@ -100,7 +100,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
 
-1. 异步调用 client 变量的 CreateDatabaseIfNotExistsAsync 方法，该方法传入你要在仿真器中创建的新数据库的名称 (cosmicworks)，并将结果存储在 Database 类型的变量中：
+1. 异步调用 client 变量的 CreateDatabaseIfNotExistsAsync 方法，传入要创建的新数据库的名称 (cosmicworks)，并将结果存储在 Database 类型的变量中  ：
 
     ```
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
@@ -367,8 +367,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **属性** | **值** |
     | ---: | :--- |
-    | **Name** | Road Saddle |
-    | **Price** | 45.99 美元 |
+    | **名称** | Road Saddle |
+    | **价格** | 45.99 美元 |
 
     > &#128221; 此时，自从你创建了这个项后，这些值不应发生更改。 在本练习中，你将更改这些值。
 
@@ -460,8 +460,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **属性** | **值** |
     | ---: | :--- |
-    | **Name** | Road LL Saddle |
-    | **Price** | 32.55 美元 |
+    | **名称** | Road LL Saddle |
+    | **价格** | 32.55 美元 |
 
     > &#128221; 此时，自从你观察到这个项后，这些值应发生更改。
 
