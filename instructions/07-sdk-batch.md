@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 9ad507d58db5b7522e2a6e24231e18caaa86e36a
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 83babc282624763d5df6b51f83c2ad1bfc58c1dd
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024929"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773631"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
 
@@ -149,7 +149,7 @@ ms.locfileid: "138024929"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
@@ -252,7 +252,7 @@ ms.locfileid: "138024929"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);

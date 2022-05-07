@@ -2,12 +2,12 @@
 lab:
   title: 在门户和 Azure Cosmos DB SQL API SDK 中配置一致性模型
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 280f43ff34be1d12ff9767531d6909743678d53e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: fd7f7832336a672036462dad6e3850def3b9bc3f
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024902"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773604"
 ---
 # <a name="configure-consistency-models-in-the-portal-and-the-azure-cosmos-db-sql-api-sdk"></a>在门户和 Azure Cosmos DB SQL API SDK 中配置一致性模型
 
@@ -31,7 +31,7 @@ ms.locfileid: "138024902"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
@@ -43,19 +43,19 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一名称 |
+    | **帐户名** | 输入一个全局唯一的名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **全球分发** &vert; **异地冗余** | *启用* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
-1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“全局复制数据”窗格 。
+1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“全局复制数据”窗格。
 
-1. 在“全局复制数据”窗格中，向帐户添加两个额外的读取区域，然后保存所做的更改 。
+1. 在“全局复制数据”窗格中，向帐户添加两个额外的读取区域，然后保存所做的更改。
 
 1. 等待复制任务完成，然后继续执行此任务。
 
@@ -75,17 +75,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 创建新的 &vert; cosmicworks  |
-    | 在容器之间共享吞吐量 | 请不要选择 |
+    | **数据库 ID** | 新建 &vert; cosmicworks |
+    | **在容器之间共享吞吐量** | 请不要选择 |
     | **容器 ID** | products |
     | **分区键** | /categoryId |
-    | 容器吞吐量 | 手动 &vert; 400  |
+    | **容器吞吐量** | 手动 &vert; 400 |
 
-1. 返回到“数据资源管理器”窗格中，展开 cosmicworks 数据库节点，然后观察层次结构中的 products 容器节点  。
+1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。  
 
-1. 在“数据资源管理器”窗格中，依次展开 cosmicworks 数据库节点和 products 容器节点，然后选择“项”   。
+1. 在“数据资源管理器”窗格中，依次展开“cosmicworks”数据库节点和“products”容器节点，然后选择“项”。
 
-1. 同样在“数据资源管理器”窗格中，从命令栏中选择“新建项” 。 在编辑器中，将占位符 JSON 项替换为以下内容：
+1. 同样在“数据资源管理器”窗格中，从命令栏中选择“新建项”。 在编辑器中，将占位符 JSON 项替换为以下内容：
 
     ```
     {
@@ -100,7 +100,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 从命令栏中选择“保存”，添加 JSON 项：
 
-1. 在“项”选项卡中，观察“项”窗格中的新项 。
+1. 在“项”选项卡中，观察“项”窗格中的新项。
 
 1. 在资源边栏选项卡中，导航到“键”窗格。
 
@@ -128,33 +128,33 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet build
     ```
 
-    > &#128221; 你可能会看到编译器警告，指出当前未使用 endpoint 和 key 变量 。 可以安全地忽略此警告，因为将在此任务中使用这些变量。
+    > &#128221; 你可能会看到编译器警告，指出当前未使用 endpoint 和 key 变量。 可以安全地忽略此警告，因为将在此任务中使用这些变量。
 
 1. 关闭集成终端。
 
 1. 打开 product.cs 代码文件。
 
-1. 观察 Product 记录及其对应的属性。 具体而言，此实验室将使用 id、name 和 categoryId 属性  。
+1. 观察 Product 记录及其对应的属性。 具体而言，此实验室将使用 id、name 和 categoryId属性。
 
-1. 返回到 Visual Studio Code 的“资源管理器”窗格，打开 script.cs 代码文件  。
+1. 返回到 Visual Studio Code 的“资源管理器”窗格，打开 script.cs 代码文件。  
 
     > &#128221; [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 库已从 NuGet 中预先导入。
 
-1. 找到名为 endpoint 的 string 变量 。 将它的值设置为之前创建的 Azure Cosmos DB 帐户的终结点。
+1. 找到名为 endpoint 的 string 变量。 将它的值设置为之前创建的 Azure Cosmos DB 帐户的终结点。
   
     ```
     string endpoint = "<cosmos-endpoint>";
     ```
 
-    > &#128221; 例如，如果终结点为：https:&shy;//dp420.documents.azure.com:443/，则 C# 语句将为：string endpoint = "https:&shy;//dp420.documents.azure.com:443/"; 。
+    > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，则 C# 语句将为：string endpoint = "https&shy;://dp420.documents.azure.com:443/";。
 
-1. 找到名为 key 的 string 变量 。 将它的值设置为之前创建的 Azure Cosmos DB 帐户的键。
+1. 找到名为 key 的 string 变量。 将它的值设置为之前创建的 Azure Cosmos DB 帐户的键。
 
     ```
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
 
 1. 保存 script.cs 代码文件 。
 
@@ -200,7 +200,13 @@ ItemRequestOptions 类包含每个请求的配置属性。 使用此类，可以
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    using CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClientOptions clientoptions = new CosmosClientOptions()
+    {
+        RequestTimeout = new TimeSpan(0,0,90)
+        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
+    };
+
+    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
     
     Container container = client.GetContainer("cosmicworks", "products");
     
@@ -269,7 +275,7 @@ ItemRequestOptions 类包含每个请求的配置属性。 使用此类，可以
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    using CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container container = client.GetContainer("cosmicworks", "products");
     

@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 处理更改源事件
   module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 6dbff97f3a587513714610617007080ccd371778
-ms.sourcegitcommit: 694767b3c7933a8ee84beca79da880d5874486bc
+ms.openlocfilehash: 5cb8fe36f952140f0579df10bba19a4fcad33b54
+ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 02/17/2022
-ms.locfileid: "139057405"
+ms.lasthandoff: 05/05/2022
+ms.locfileid: "144773619"
 ---
 # <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 处理更改源事件
 
@@ -73,7 +73,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
@@ -223,13 +223,7 @@ Microsoft.Azure.Cosmos.Container 类附带一系列方法，用于流畅地生�
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container sourceContainer = client.GetContainer("cosmicworks", "products");
     Container leaseContainer = client.GetContainer("cosmicworks", "productslease");
