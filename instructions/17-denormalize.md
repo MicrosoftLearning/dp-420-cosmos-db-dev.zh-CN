@@ -2,12 +2,12 @@
 lab:
   title: 反规范化数据和聚合以及使用更改源实现引用完整性的成本
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 3abaf4dc55eb06b32eb3b3c94b2db9441d2d1868
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: dab2ec1b5ba4eb1fd317a039aa6db346cfae0d3d
+ms.sourcegitcommit: e2c44650d91ce5b92b82d1357b43c254c0691471
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024993"
+ms.lasthandoff: 04/13/2022
+ms.locfileid: "141674638"
 ---
 # <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>反规范化数据和聚合以及使用更改源实现引用完整性的成本
 
@@ -15,33 +15,53 @@ ms.locfileid: "138024993"
 
 在此实验室中，你将了解反规范化数据和聚合如何帮助我们降低成本的好处，以及如何使用更改源来维护反规范化数据的引用完整性。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## <a name="prepare-your-azure-cosmos-db-database-environment"></a>准备 Azure Cosmos DB 数据库环境
 
-如果尚未将 DP-420 的实验室代码存储库克隆到你在此实验室中处理的环境中，请按照以下步骤进行操作。 否则，请在 Visual Studio Code 中打开之前克隆的文件夹。
+如果尚未准备好用于此实验室的 Azure Cosmos DB 数据库，请按照以下步骤进行准备。 否则，请转到“在反规范化数据时衡量性能成本”部分。
 
-1. 启动 Visual Studio Code。
+1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-    > &#128221; 如果尚不熟悉 Visual Studio Code 界面，请查看 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
+1. 使用提供的 Azure 凭据登录。
 
-1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 在此实验室中，我们将使用 Azure Cloud Shell 终端加载示例数据，但在此之前，Azure Cloud Shell 将需要添加一个 Azure 存储帐户才能工作。 如果还没有可用的存储帐户，则需要创建一个。  如果已有权访问 Azure Cloud Shell，则可以跳过此步骤。
 
-    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
+    1. 选择“创建资源”  选项。
 
-1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
+    1. 搜索“存储帐户”。
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 17-denormalize 文件夹  。
+    1. 在列表中选择“存储帐户”，并选择“创建” 。
 
-1. 打开 17-denormalize 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例 。
+    1. 如果尚未选择，请选择正确的订阅和资源组 。
 
-1. 如果终端作为 Windows Powershell 终端打开，请打开一个新的 Git Bash 终端 。
+    1. 使用小写字母和数字，为存储帐户名称选择一个唯一名称。  如果资源组名称足够唯一，也可以将其用作存储帐户名称。  将所有其他选项保留为默认值。
 
-    > &#128161; 要打开 Git Bash 终端，请在终端菜单的右侧，单击 + 符号旁边的下拉菜单，然后选择 Git Bash 。
+        > &#128221; 请注意创建此存储帐户的“区域”，如果在下面首次设置 Azure Cloud Shell，则需要选择同一区域。
 
-1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 脚本要求提供 Azure 帐户的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+   1. 选择“查看 + 创建”，通过验证后，选择“创建” 。
+
+1. 如果已设置 Azure Cloud Shell，请在“Bash”模式下将其打开，否则请使用以下说明首次设置它。
+
+    ![显示 Azure Cloud Shell 选项的屏幕截图。](media/17-open-azure-cloud-shell.png)
+
+    1. 选择“Azure Cloud Shell”按钮将其打开。
+
+    1. 选择“Bash”模式。
+
+        ![显示 Azure Cloud Shell Bash/PS 选项的屏幕截图。](media/17-open-azure-cloud-shell-bash.png)
+ 
+    1. 假设这是首次在此 Azure 帐户下运行 Azure Cloud Shell，则需要将 Azure 存储帐户连接到此 Cloud Shell。  选择“显示高级设置”链接存储帐户。 
+
+        ![显示 Cloud Shell 高级设置的屏幕截图。](media/17-azure-cloud-shell-choose-storage-account.png)
+ 
+    1. 选择正确的订阅和区域 。 在“资源组”和“存储帐户”下，选择“使用现有项”并选择正确的资源组和存储帐户  。  在“文件共享”下，为共享提供该存储帐户下的唯一名称。 选择“创建存储”来完成 Cloud Shell 的设置。
+
+        ![显示 Cloud Shell 高级设置的屏幕截图。](media/17-azure-cloud-shell-choose-storage-account-details.png)
+ 
+ 1. 在“Azure Cloud Shell Bash 终端”中运行以下命令。 这些命令运行创建新 Azure Cosmos DB 帐户的脚本，然后构建并启动用于填充数据库的应用并完成练习。 可能需要 15-20 分钟才能完成构建，不妨在此时喝点咖啡或茶。
 
     ```
-    az login
-    cd 17-denormalize
+    git clone https://github.com/microsoftlearning/dp-420-cosmos-db-dev
+    cd dp-420-cosmos-db-dev/17-denormalize
     bash init.sh
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     dotnet build
@@ -49,7 +69,31 @@ ms.locfileid: "138024993"
 
     ```
 
-1. 关闭集成终端。
+1. 关闭 Cloud Shell 终端。 请勿关闭 Azure 门户。
+
+1. 在 Azure 门户中，导航至通过上述步骤创建的新 Azure Cosmos DB 帐户。
+
+1. 记录“键”部分下的“URI”和“主键” *_。  我们将使用以下值更新 appSettings.json 文件_*。
+
+## <a name="prepare-your-development-environment"></a>准备开发环境
+
+如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
+
+1. 启动 Visual Studio Code。
+
+    > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
+
+1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+
+    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+
+1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
+
+1. 在 Visual Studio Code 中，打开 17-denormalize 文件夹中的 appSettings.json 文件 。
+
+1. 将 CosmosDBAccountURI 和 CosmosDBAccountKey 替换为之前记录的相应值 。
+
+1. 选择 Ctrl+S 保存所做更改。
 
 ## <a name="exercise-1-measure-performance-cost-when-denormalizing-data"></a>练习 1：在反规范化数据时衡量性能成本
 
@@ -57,16 +101,22 @@ ms.locfileid: "138024993"
 
 在 database-v2 容器（其中数据存储在各个容器中）中，运行查询以获取产品类别名称，然后查看该查询的请求费用。
 
-1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
+1. 如果尚未打开，在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
 1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
 1. 在左窗格上，选择“Azure Cosmos DB”。
+
 1. 选择名称以 cosmicworks 开头的 Azure Cosmos DB 帐户。
+
 1. 在左窗格上，选择“数据资源管理器”。
+
 1. 展开“database-v2”。
+
 1. 选择 productCategory 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 1”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -86,7 +136,9 @@ ms.locfileid: "138024993"
 接下来，查询 product 容器以获取“Components, Headsets”类别的所有产品。
 
 1. 选择 product 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 2”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -108,7 +160,9 @@ ms.locfileid: "138024993"
 首先，运行查询以返回 HL Headset 的标记。
 
 1. 选择 productTag 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 3”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -126,7 +180,9 @@ ms.locfileid: "138024993"
 接下来，运行查询以返回 LL Headset 的标记。
 
 1. 选择 productTag 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 4”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -144,7 +200,9 @@ ms.locfileid: "138024993"
 最后，运行查询以返回 ML Headset 的标记。
 
 1. 选择 productTag 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 5”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -176,8 +234,11 @@ ms.locfileid: "138024993"
 查询相同的信息，但这次是在非规范化数据库中。
 
 1. 在数据资源管理器中，选择“database-v3”。
+
 1. 选择 product 容器。
+
 1. 在页面顶部，选择“新建 SQL 查询”。
+
 1. 在“查询 6”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -217,7 +278,7 @@ ms.locfileid: "138024993"
 - 使用新的类别名称查询新的 product 容器，并计算产品数量以确保所有产品都已更新。
 - 改回原来的名称并监视更改源是否已将更改传播回来。
 
-### <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>启动 Azure Cloud Shell 并打开 Visual Studio Code
+### <a name="open-visual-studio-code"></a>打开“Visual Studio Code”
 
 若要转到要针对更改源更新的代码，请执行以下操作：
 
@@ -301,6 +362,7 @@ ms.locfileid: "138024993"
 1. 若要编译和执行项目，请运行以下命令：
 
     ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     dotnet build
     dotnet run
     ```
@@ -333,7 +395,7 @@ ms.locfileid: "138024993"
 
 1. 如果离单击间隔过久并已返回到主菜单，请再次选择“b”来观察更改。
 
-1. 完成后，键入 x 以退出并返回到 Cloud Shell。
+1. 完成后，键入 x 以退出并返回到 Shell。
 
 ---
 
@@ -351,7 +413,7 @@ ms.locfileid: "138024993"
 - 运行针对排名前 10 的客户的查询，查看当前的结果如何。
 - 演示在客户取消订单时如何使用事务性批处理。
 
-## <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>启动 Azure Cloud Shell 并打开 Visual Studio Code
+## <a name="open-visual-studio-code"></a>打开“Visual Studio Code”
 
 若要获取将在本单元中使用的代码，请执行以下操作：
 
@@ -453,8 +515,11 @@ ms.locfileid: "138024993"
 为同一客户创建新的销售订单，并更新其客户记录中保存的总销售订单。
 
 1. 按窗口中的任何键返回到主菜单。
+
 1. 选择“d”以运行“创建新订单并更新订单总数”的菜单项。
+
 1. 按任意键返回到主菜单。
+
 1. 选择“c”以再次运行同一查询。
 
    请注意，新的销售订单显示“HL Mountain Frame - Black, 38”和“Racing Socks, M”。
@@ -476,6 +541,7 @@ ms.locfileid: "138024993"
 1. 选择“f”以运行“删除订单并更新订单总计”的菜单项。
 
 1. 按任意键返回到主菜单。
+
 1. 选择“c”，再次运行同一查询以确认客户记录是否已更新。
 
    请注意，不再会返回新订单。 如果向上滚动，可以看到 `salesOrderCount` 值已返回到 `2`。
@@ -487,6 +553,7 @@ ms.locfileid: "138024993"
 删除销售订单的方式与创建销售订单的方式完全相同。 这两个操作都包装在事务中，并在同一逻辑分区中执行。 接下来看一下执行该操作的代码。
 
 1. 键入“x”退出应用程序。
+
 1. 如果尚未打开，请打开 Visual Studio Code，然后打开 17-denormalize 文件夹中的 Program.cs 文件 。
 
 1. 选择 Ctrl+G，然后输入 529。
