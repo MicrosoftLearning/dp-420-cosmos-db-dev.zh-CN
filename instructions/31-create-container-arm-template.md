@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 55e5430aac14807552378acfc01791818da5f267
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: caae313721f68a3a41013c5bdcb586b2003f8151
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024892"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971462"
 ---
 # <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
 
@@ -86,6 +86,37 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
     > &#128221; 此命令将打开起始目录已设置为 31-create-container-arm-template 文件夹的终端。
 
+1. 使用以下命令开始 Azure CLI 的交互式登录过程：
+
+    ```
+    az login
+    ```
+
+1. Azure CLI 将自动打开 Web 浏览器窗口或选项卡。在浏览器实例中，使用与订阅关联的 Microsoft 凭据登录 Azure CLI。
+
+1. 关闭 Web 浏览器窗口或选项卡。
+
+1. 检查实验室提供商是否为你创建了资源组，如果已创建，请记录其名称，因为你将在下一部分中用到它。
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    此命令可能会返回多个资源组名称。
+
+1. （可选）*_如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。*
+
+    i. 从此列表中获取离你最近的位置名称
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. 创建资源组。  请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
+
 1. 使用以下命令，使用此实验中之前创建或查看的资源组的名称创建一个新的变量名 resourceGroup：
 
     ```
@@ -99,14 +130,6 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
     ```
     echo $resourceGroup
     ```
-
-1. 使用以下命令开始 Azure CLI 的交互式登录过程：
-
-    ```
-    az login
-    ```
-
-1. Azure CLI 将自动打开 Web 浏览器窗口或选项卡。在浏览器实例中，使用与订阅关联的 Microsoft 凭据登录 Azure CLI。
 
 1. 使用 [az deployment group create][docs.microsoft.com/cli/azure/deployment/group] 命令部署 Azure 资源管理器模板：
 
@@ -260,7 +283,7 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **别名** | *帐户* |
+    | **Alias** | *帐户* |
     | **名称** | 从帐户名称生成的 csmsarm 和 unique 字符串  |
     | **资源类型** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
     | **API 版本** | 2021-05-15 |
@@ -306,8 +329,8 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **父级** | 之前在模板中创建的帐户 |
-    | **别名** | *Database* |
+    | **Parent** | 之前在模板中创建的帐户 |
+    | **Alias** | *Database* |
     | **名称** | cosmicworks  |
     | **资源类型** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
     | **API 版本** | 2021-05-15 |
@@ -351,8 +374,8 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **父级** | 之前在模板中创建的数据库 |
-    | **别名** | *容器* |
+    | **Parent** | 之前在模板中创建的数据库 |
+    | **Alias** | *容器* |
     | **名称** | products  |
     | **资源 ID** | products |
     | **吞吐量** | *400* |

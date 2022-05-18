@@ -2,12 +2,12 @@
 lab:
   title: 在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
   module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: 77429a01ed632556a95096f830ef3c4f640e3588
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 0a353068db4047cb710b6937a89c5f3ccb652aed
+ms.sourcegitcommit: 63494c7409f08210c57aab19f2a61dd35851fd3b
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773622"
+ms.lasthandoff: 05/11/2022
+ms.locfileid: "144940127"
 ---
 # <a name="paginate-cross-product-query-results-with-the-azure-cosmos-db-sql-api-sdk"></a>在 Azure Cosmos DB SQL API SDK 中对叉积查询结果进行分页
 
@@ -122,7 +122,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
 
-1. 创建一个名为 sql 的新变量，其 string 类型的值为 SELECT p.name, t.name AS tag FROM products p JOIN t IN p.tags：
+1. 使用 SELECT p.id, p.name, p.price FROM products p 的值创建一个名为 sql 的 string 类型的新变量：
 
     ```
     string sql = "SELECT p.id, p.name, p.price FROM products p ";
