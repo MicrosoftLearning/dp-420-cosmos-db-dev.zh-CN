@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: caae313721f68a3a41013c5bdcb586b2003f8151
-ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
+ms.openlocfilehash: d82920cf333d5d59f74d1990b623e9be33582647
+ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/12/2022
-ms.locfileid: "144971462"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145890689"
 ---
 # <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
 
@@ -142,6 +142,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB SQL API 数据库：
 
     ```
+    ,
     {
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
         "apiVersion": "2021-05-15",
@@ -182,6 +183,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB SQL API 容器：
 
     ```
+    ,
     {
         "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
         "apiVersion": "2021-05-15",

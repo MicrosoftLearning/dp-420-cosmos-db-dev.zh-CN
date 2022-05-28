@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 83babc282624763d5df6b51f83c2ad1bfc58c1dd
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: a532bcefbd68b6ba99373035977522ad2c04d0a9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773631"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919951"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
 
@@ -87,6 +87,12 @@ ms.locfileid: "144773631"
 1. 打开“07-sdk-batch”文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例。
 
     > &#128221; 此命令将打开起始目录已设置为“07-sdk-batch”文件夹的终端。
+
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. 使用 [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 命令生成项目：
 
