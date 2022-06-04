@@ -2,12 +2,12 @@
 lab:
   title: 在门户和 Azure Cosmos DB SQL API SDK 中配置一致性模型
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: fd7f7832336a672036462dad6e3850def3b9bc3f
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
+ms.openlocfilehash: 5b6fc9dd51677f854b341bb32838e65cdb8d79de
+ms.sourcegitcommit: 403c2ecd84a8d6cb1672752734a0844749d6cba5
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773604"
+ms.lasthandoff: 06/01/2022
+ms.locfileid: "145987797"
 ---
 # <a name="configure-consistency-models-in-the-portal-and-the-azure-cosmos-db-sql-api-sdk"></a>在门户和 Azure Cosmos DB SQL API SDK 中配置一致性模型
 
@@ -200,13 +200,7 @@ ItemRequestOptions 类包含每个请求的配置属性。 使用此类，可以
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClientOptions clientoptions = new CosmosClientOptions()
-    {
-        RequestTimeout = new TimeSpan(0,0,90)
-        , OpenTcpConnectionTimeout = new TimeSpan (0,0,90)
-    };
-
-    CosmosClient client = new CosmosClient(endpoint, key, clientoptions);
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Container container = client.GetContainer("cosmicworks", "products");
     
