@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure 门户创建存储过程
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB SQL API
-ms.openlocfilehash: 0af86a04b0a5cc9a9786e88063e7f5590baa7089
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 0f390ab5e3bd796c3bfb17a060e2db4424e222e2
+ms.sourcegitcommit: 58caf52fefd9f9cbeeef3629e98245544a299b44
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024927"
+ms.lasthandoff: 06/02/2022
+ms.locfileid: "146027670"
 ---
 # <a name="create-a-stored-procedure-with-the-azure-portal"></a>使用 Azure 门户创建存储过程
 
@@ -208,7 +208,7 @@ ms.locfileid: "138024927"
     }
     ```
 
-1. 选择“保存”以保留对存储过程所做的更改。
+1. 选择“更新”以保留对存储过程所做的更改。
 
 1. 选择“执行”，然后使用以下输入参数执行存储过程：
 

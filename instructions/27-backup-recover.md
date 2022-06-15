@@ -2,12 +2,12 @@
 Lab:
   title: 从恢复点恢复数据库或容器
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 1e934b994735c51ad3d699474186e2255ba1f057
-ms.sourcegitcommit: c3778722311b55568f083480ecc69c9b3e837a18
+ms.openlocfilehash: 5b3dca08e8c95281c3a06b688ec36b82c119ed2e
+ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/19/2022
-ms.locfileid: "138025013"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145893413"
 ---
 # <a name="recover-a-database-or-container-from-a-recovery-point"></a>从恢复点恢复数据库或容器 
 
@@ -29,14 +29,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一名称 |
+    | **帐户名** | 输入一个全局唯一的名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
+    | “全局分发”选项卡 | 禁用多区域写入 |
 
     > &#128221; 请注意，你可以在创建 Azure Cosmos DB 帐户期间，通过在“备份策略”选项卡下选择连续模式来启用该模式。在此实验室中，你可以选择在创建帐户期间或在创建帐户后，在下面的可选部分中启用此功能 。 在创建帐户后启用该功能可能需要 5 分钟以上的时间 。
 
-    > &#128221; 你的实验环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
+    > &#128221; 请注意，[连续备份目前不支持多区域写入帐户][/azure/cosmos-db/continuous-backup-restore-introduction]。
+
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 ## <a name="add-a-database-and-two-containers-to-the-account"></a>向帐户添加一个数据库和两个容器
 
@@ -215,13 +218,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“连续备份”选项以启用该功能。 选择此选项将打开窗口，选择“启用”按钮。  启用此功能可能需要 5 分钟以上的时间。
 
+    > &#128221; 请注意，[连续备份目前不支持多区域写入帐户][/azure/cosmos-db/continuous-backup-restore-introduction]。 如果在创建 Azure Cosmos DB 帐户时未禁用多区域写入，则需要立即执行此操作，否则启用连续备份功能将失败。  可以在“全局复制数据”设置部分下禁用多区域写入。
+
 ## <a name="delete-one-of-the-salesorder-documents"></a>删除其中一个 salesOrder 文档
 
 1. 在“数据资源管理器”下，运行以下查询获取当前日期和时间。 将时间戳复制到记事本。 此时间戳应采用 UTC 格式。
 
-```
-SELECT GetCurrentDateTime ()
-```
+    ```
+    SELECT GetCurrentDateTime ()
+    ```
 
 1. 在“数据资源管理器”下，找到 ID 为 `0019092E-BD25-48F5-8050-7051B2655BC5` 的 salesOrder 文档  。 删除文档，验证文档不再存在。
 
@@ -241,7 +246,7 @@ SELECT GetCurrentDateTime ()
 
     > &#128221; 对于 Azure Cosmos DB 还原，切勿在现有帐户的基础上还原，而是始终必须创建一个新的 Azure Cosmos DB 帐户。
 
-    > &#128221;尽管可以选择还原整个数据库甚至整个帐户，但在实际的生产环境中，数据库可能会很大。 在许多情况下，只还原容器或需要的数据库可能会更快。
+    > &#128221; 尽管可以选择还原整个数据库甚至整个帐户，但在实际的生产环境中，数据库可能会很大。 在许多情况下，只还原容器或需要的数据库可能会更快。
 
 1. 此还原可能需要 15 分钟或更长时间，请转到下一部分，让此还原在后台运行。
 
@@ -249,9 +254,9 @@ SELECT GetCurrentDateTime ()
 
 1. 在“数据资源管理器”下，运行以下查询获取当前日期和时间。 将时间戳复制到记事本。
 
-```
-SELECT GetCurrentDateTime ()
-```
+    ```
+    SELECT GetCurrentDateTime ()
+    ```
 
 1. 删除 customer 容器。
 
@@ -289,4 +294,5 @@ SELECT GetCurrentDateTime ()
 
 1. 删除 Sales 数据库，如果需要，请删除原始 Azure Cosmos DB 帐户。
 
+[/azure/cosmos-db/continuous-backup-restore-introduction]:https://docs.microsoft.com/azure/cosmos-db/continuous-backup-restore-introduction
 

@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure 数据工厂迁移现有数据
   module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 0ea95a45f5e20ef089d712939fde0c3d8767601e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 15a34904589e5ce2e266ec3078f9b794ae744d73
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024913"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919954"
 ---
 # <a name="migrate-existing-data-using-azure-data-factory"></a>使用 Azure 数据工厂迁移现有数据
 
@@ -35,6 +35,7 @@ ms.locfileid: "138024913"
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
+    | 限制可在此帐户上预配的总吞吐量 | *未选中* |
 
     > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
 
@@ -100,15 +101,15 @@ ms.locfileid: "138024913"
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
     | **数据库 ID** | 使用现有 &vert; cosmicworks  |
-    | **容器 ID** | flatproducts |
-    | **分区键** | */category* |
+    | **容器 ID** | *`flatproducts`* |
+    | **分区键** | *`/category`* |
     | **容器吞吐量(自动缩放)** | *手动* |
-    | **RU/秒** | *400* |
+    | **RU/秒** | *`400`* |
 
 1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“flatproducts”容器节点。
 
@@ -151,7 +152,7 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **名称** | CosmosSqlConn |
+    | **名称** | *`CosmosSqlConn`* |
     | **通过集成运行时进行连接** | AutoResolveIntegrationRuntime |
     | **身份验证方法** | 帐户密钥 &vert; 连接字符串 |
     | **帐户选择方法** | *从 Azure 订阅中* |
@@ -182,7 +183,7 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
 
 1. 在“目标”列表中，选择“flatproducts”，然后选择“下一步”，转到向导的“设置”步骤。
 
-1. 在向导的“设置”步骤中，在“任务名称”字段中输入“FlattenAndMoveData”。
+1. 在向导的“设置”步骤中，在“任务名称”字段中输入 `FlattenAndMoveData`  。
 
 1. 将所有剩余字段保留为默认的空值，然后选择“下一步”，转到向导的最后一步。
 
@@ -204,7 +205,7 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
 
 1. 删除编辑器区域的内容。
 
-1. 创建一个新的 SQL 查询，该查询将返回 name 为 HL Headset 的所有文档：
+1. 创建一个新的 SQL 查询，该查询将返回 name 等同于 HL Headset 的所有文档：
 
     ```
     SELECT 

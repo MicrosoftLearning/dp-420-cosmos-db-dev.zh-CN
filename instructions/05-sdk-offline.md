@@ -2,12 +2,12 @@
 lab:
   title: 配置 Azure Cosmos DB SQL API SDK 进行脱机开发
   module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: d6d5bad51d4adc029e901352f0becc9268acab3e
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: f977dc20266bbd843ab9c94bae8cf08672b99dd9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024939"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919966"
 ---
 # <a name="configure-the-azure-cosmos-db-sql-api-sdk-for-offline-development"></a>配置 Azure Cosmos DB SQL API SDK 进行脱机开发
 
@@ -37,7 +37,7 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
     > &#128221; 系统可能会提示你授予管理员访问权限以启动仿真器。 在实验室环境中，Admin 帐户密码与 Student 帐户密码相同。
 
-    > &#128161; Azure Cosmos DB 仿真器已固定到 Windows 任务栏和“开始”菜单。
+    > &#128161; Azure Cosmos DB 仿真器已固定到 Windows 任务栏和“开始”菜单。如果仿真器未从固定图标启动，请尝试通过双击 C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe 文件来打开它 ** 。 请注意，仿真器需要 20-30 秒才能启动。
 
 1. 等待仿真器自动打开默认浏览器并导航到 localhost:8081/_explorer/index.html 登陆页面。
 
@@ -61,17 +61,15 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 1. 在 05-sdk-offline 文件夹内打开 script.cs 代码文件。
 
-    > &#128221; 已从 NuGet 中预先导入 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 库。
-
 1. 更新名为 connectionString 的现有变量，将值设置为 Azure Cosmos DB 仿真器的连接字符串。
   
     ```
     string connectionString = "AccountEndpoint=https://localhost:8081/;AccountKey=C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==";
     ```
 
-    > &#128221; 仿真器的 URI 通常是使用 SSL 的 ``localhost:[port]``，默认端口设置为 8081。
+    > &#128221; 仿真器的 URI 通常是使用 SSL 的 localhost:[port]，默认端口设置为 8081。
 
-    > &#128221; ``C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw==`` 是仿真器所有安装的默认键。 可以使用命令行选项更改此键。
+    > &#128221; C2y6yDjf5/R+ob0N8A7Cgv30VRDJIWEHLM+4QDU5DE2nQ9nDuVTqobD4b8mGGyPMbIZnqyMsEcaGQy67XIw/Jw== 是仿真器所有安装的默认键。 可以使用命令行选项更改此键。
 
 1. 异步调用 client 变量的 [CreateDatabaseIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.createdatabaseifnotexistsasync] 方法，传入要在仿真器中创建的新数据库的名称 (cosmicworks)，并将结果存储在 [Database][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database] 类型的变量中：
 
@@ -104,6 +102,12 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 1. 在 Visual Studio Code 中，打开 05-sdk-offline 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例。
 
     > &#128221; 此命令将打开起始目录已设置为“05-sdk-offline”文件夹的终端。
+
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
 

@@ -2,78 +2,18 @@
 lab:
   title: 反规范化数据和聚合以及使用更改源实现引用完整性的成本
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: dab2ec1b5ba4eb1fd317a039aa6db346cfae0d3d
-ms.sourcegitcommit: e2c44650d91ce5b92b82d1357b43c254c0691471
+ms.openlocfilehash: 15cd43fa0d9b901c235384a3f2e89f36216f812a
+ms.sourcegitcommit: afe4494c941a80ce5f692349bb002c9e984a6b24
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 04/13/2022
-ms.locfileid: "141674638"
+ms.lasthandoff: 06/02/2022
+ms.locfileid: "146018302"
 ---
 # <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>反规范化数据和聚合以及使用更改源实现引用完整性的成本
 
 使用关系模型可以让我们将不同的实体放置在它们自己的容器中。  但是，在 NoSQL 数据库中，容器之间没有联接，因此我们需要开始反规范化数据，以便消除联接的使用 。 此外，NoSQL 通过为数据建模来减少请求数，以便应用程序可以在尽可能少的请求中提取数据。 反规范化数据时出现的一个问题可能是实体之间的引用完整性，为此，可以使用更改源使数据保持同步。反规范化聚合（如按计数分组）还可以帮助我们减少请求。  
 
 在此实验室中，你将了解反规范化数据和聚合如何帮助我们降低成本的好处，以及如何使用更改源来维护反规范化数据的引用完整性。
-
-## <a name="prepare-your-azure-cosmos-db-database-environment"></a>准备 Azure Cosmos DB 数据库环境
-
-如果尚未准备好用于此实验室的 Azure Cosmos DB 数据库，请按照以下步骤进行准备。 否则，请转到“在反规范化数据时衡量性能成本”部分。
-
-1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
-
-1. 使用提供的 Azure 凭据登录。
-
-1. 在此实验室中，我们将使用 Azure Cloud Shell 终端加载示例数据，但在此之前，Azure Cloud Shell 将需要添加一个 Azure 存储帐户才能工作。 如果还没有可用的存储帐户，则需要创建一个。  如果已有权访问 Azure Cloud Shell，则可以跳过此步骤。
-
-    1. 选择“创建资源”  选项。
-
-    1. 搜索“存储帐户”。
-
-    1. 在列表中选择“存储帐户”，并选择“创建” 。
-
-    1. 如果尚未选择，请选择正确的订阅和资源组 。
-
-    1. 使用小写字母和数字，为存储帐户名称选择一个唯一名称。  如果资源组名称足够唯一，也可以将其用作存储帐户名称。  将所有其他选项保留为默认值。
-
-        > &#128221; 请注意创建此存储帐户的“区域”，如果在下面首次设置 Azure Cloud Shell，则需要选择同一区域。
-
-   1. 选择“查看 + 创建”，通过验证后，选择“创建” 。
-
-1. 如果已设置 Azure Cloud Shell，请在“Bash”模式下将其打开，否则请使用以下说明首次设置它。
-
-    ![显示 Azure Cloud Shell 选项的屏幕截图。](media/17-open-azure-cloud-shell.png)
-
-    1. 选择“Azure Cloud Shell”按钮将其打开。
-
-    1. 选择“Bash”模式。
-
-        ![显示 Azure Cloud Shell Bash/PS 选项的屏幕截图。](media/17-open-azure-cloud-shell-bash.png)
- 
-    1. 假设这是首次在此 Azure 帐户下运行 Azure Cloud Shell，则需要将 Azure 存储帐户连接到此 Cloud Shell。  选择“显示高级设置”链接存储帐户。 
-
-        ![显示 Cloud Shell 高级设置的屏幕截图。](media/17-azure-cloud-shell-choose-storage-account.png)
- 
-    1. 选择正确的订阅和区域 。 在“资源组”和“存储帐户”下，选择“使用现有项”并选择正确的资源组和存储帐户  。  在“文件共享”下，为共享提供该存储帐户下的唯一名称。 选择“创建存储”来完成 Cloud Shell 的设置。
-
-        ![显示 Cloud Shell 高级设置的屏幕截图。](media/17-azure-cloud-shell-choose-storage-account-details.png)
- 
- 1. 在“Azure Cloud Shell Bash 终端”中运行以下命令。 这些命令运行创建新 Azure Cosmos DB 帐户的脚本，然后构建并启动用于填充数据库的应用并完成练习。 可能需要 15-20 分钟才能完成构建，不妨在此时喝点咖啡或茶。
-
-    ```
-    git clone https://github.com/microsoftlearning/dp-420-cosmos-db-dev
-    cd dp-420-cosmos-db-dev/17-denormalize
-    bash init.sh
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
-    dotnet build
-    dotnet run --load-data
-
-    ```
-
-1. 关闭 Cloud Shell 终端。 请勿关闭 Azure 门户。
-
-1. 在 Azure 门户中，导航至通过上述步骤创建的新 Azure Cosmos DB 帐户。
-
-1. 记录“键”部分下的“URI”和“主键” *_。  我们将使用以下值更新 appSettings.json 文件_*。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -89,11 +29,27 @@ ms.locfileid: "141674638"
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-1. 在 Visual Studio Code 中，打开 17-denormalize 文件夹中的 appSettings.json 文件 。
+1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 17-denormalize 文件夹  。
 
-1. 将 CosmosDBAccountURI 和 CosmosDBAccountKey 替换为之前记录的相应值 。
+1. 打开 17-denormalize 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例 。
 
-1. 选择 Ctrl+S 保存所做更改。
+1. 如果终端作为 Windows Powershell 终端打开，请打开一个新的 Git Bash 终端 。
+
+    > &#128161; 要打开 Git Bash 终端，请在终端菜单的右侧，单击 + 符号旁边的下拉菜单，然后选择 Git Bash 。
+
+1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 脚本要求提供 Azure 帐户的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+
+    ```
+    az login
+    cd 17-denormalize
+    bash init.sh
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet build
+    dotnet run --load-data
+
+    ```
+
+1. 关闭集成终端。
 
 ## <a name="exercise-1-measure-performance-cost-when-denormalizing-data"></a>练习 1：在反规范化数据时衡量性能成本
 
@@ -101,22 +57,16 @@ ms.locfileid: "141674638"
 
 在 database-v2 容器（其中数据存储在各个容器中）中，运行查询以获取产品类别名称，然后查看该查询的请求费用。
 
-1. 如果尚未打开，在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
+1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
 1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
 1. 在左窗格上，选择“Azure Cosmos DB”。
-
 1. 选择名称以 cosmicworks 开头的 Azure Cosmos DB 帐户。
-
 1. 在左窗格上，选择“数据资源管理器”。
-
 1. 展开“database-v2”。
-
 1. 选择 productCategory 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 1”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -136,9 +86,7 @@ ms.locfileid: "141674638"
 接下来，查询 product 容器以获取“Components, Headsets”类别的所有产品。
 
 1. 选择 product 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 2”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -160,9 +108,7 @@ ms.locfileid: "141674638"
 首先，运行查询以返回 HL Headset 的标记。
 
 1. 选择 productTag 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 3”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -180,9 +126,7 @@ ms.locfileid: "141674638"
 接下来，运行查询以返回 LL Headset 的标记。
 
 1. 选择 productTag 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 4”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -200,9 +144,7 @@ ms.locfileid: "141674638"
 最后，运行查询以返回 ML Headset 的标记。
 
 1. 选择 productTag 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 5”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -219,26 +161,22 @@ ms.locfileid: "141674638"
 
 现在，合计你运行的每个查询中的所有的 RU 成本。
 
-| 查询 | RU 成本 |
-| - | - |
-| 类别名称 | 2.93 |
-| 产品 | 2.9 |
-| HL 产品标记 | 3.06 |
-| LL 产品标记 | 3.47 |
-| ML 产品标记 | 3.2 |
-| 总 RU 成本 | **15.56** |
-| | |
+|**查询**|**RU/秒 成本**|
+|---------|---------|
+|类别名称|2.93|
+|产品|2.9|
+|HL 产品标记|3.06|
+|LL 产品标记|3.47|
+|ML 产品标记|3.2|
+|总 RU 成本|**15.56**|
 
 ### <a name="run-the-same-queries-for-your-nosql-design"></a>对 NoSQL 设计运行相同的查询
 
 查询相同的信息，但这次是在非规范化数据库中。
 
 1. 在数据资源管理器中，选择“database-v3”。
-
 1. 选择 product 容器。
-
 1. 在页面顶部，选择“新建 SQL 查询”。
-
 1. 在“查询 6”窗格上，粘贴以下 SQL 代码，然后选择“执行查询”。
 
     ```
@@ -278,7 +216,7 @@ ms.locfileid: "141674638"
 - 使用新的类别名称查询新的 product 容器，并计算产品数量以确保所有产品都已更新。
 - 改回原来的名称并监视更改源是否已将更改传播回来。
 
-### <a name="open-visual-studio-code"></a>打开“Visual Studio Code”
+### <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>启动 Azure Cloud Shell 并打开 Visual Studio Code
 
 若要转到要针对更改源更新的代码，请执行以下操作：
 
@@ -298,15 +236,15 @@ ms.locfileid: "141674638"
 
    第 588 行和第 589 行是两个容器引用。 你需要使用正确的容器名称更新它们。 更改源的工作原理是对容器引用创建更改源处理器的实例。 在这种情况下，你将监视对 productCategory 容器的更改。
 
-1. 在第 588 行，将 {container to watch} 替换为 productCategory 。
+1. 在第 588 行，将 {container to watch} 替换为 `productCategory`。
 
-1. 在第 589 行，将 {container to update} 替换为 product 。 更新产品类别名称时，需要使用新的产品类别名称更新该类别的每个产品。
+1. 在第 589 行，将 {container to update} 替换为 `product`。 更新产品类别名称时，需要使用新的产品类别名称更新该类别的每个产品。
 
 1. 在“要监视的容器”和“要更新的容器”行下方，查看 leaseContainer 行。 leaseContainer 的工作原理类似于容器上的检查点。 它知道自从更改源处理器最后一次检查后已更新哪些内容。
   
    当更改源发现新的更改时，它会调用委托并将更改传入只读集合中。
 
-1. 在第 603 行，需要添加一些代码，当更改源具有需要处理的新更改时将调用这些代码。 为此，请复制以下代码片段，并将其粘贴到以 `//To-Do:` 开头的行下面
+1. 在第 603 行，需要添加一些代码，当更改源具有需要处理的新更改时将调用这些代码。 为此，请复制以下代码片段，并将其粘贴到以 //To-Do: 开头的行下面
 
     ```
     //Fetch each change to productCategory container
@@ -323,13 +261,13 @@ ms.locfileid: "141674638"
 
     ![Cloud Shell 窗口的屏幕截图，其中显示了更改源的完整代码。](media/16-change-feed-function-delegate-code.png)
 
-    默认情况下，更改源每秒运行一次。 如果在受监视的容器中进行大量插入或更新，委托可能会有多个更改。 因此，将委托 `input` 类型化为 `IReadOnlyCollection`。
+    默认情况下，更改源每秒运行一次。 如果在受监视的容器中进行大量插入或更新，委托可能会有多个更改。 因此，将委托 input 类型化为 IReadOnlyCollection 。
 
-    此代码片段循环访问委托 `input` 中的所有更改，并将它们另存为 `categoryId` 和 `categoryName` 的字符串。 然后，它将一个任务添加到任务列表中，并调用另一个函数来使用新的类别名称更新 product 容器。
+    此代码片段循环访问委托 input 中的所有更改，并将它们另存为 categoryId 和 categoryName 的字符串  。 然后，它将一个任务添加到任务列表中，并调用另一个函数来使用新的类别名称更新 product 容器。
 
-1. 选择 Ctrl+G，然后输入 647 以查找 `UpdateProductCategoryName()` 函数。 在这里，你需要编写一些代码，以使用更改源捕获的新的类别名称更新 product 容器中的每个产品。
+1. 选择 Ctrl+G，然后输入 647 以查找 UpdateProductCategoryName() 函数 。 在这里，你需要编写一些代码，以使用更改源捕获的新的类别名称更新 product 容器中的每个产品。
 
-1. 复制以下代码片段，并将其粘贴到以“//To-Do:”开头的行下面。 函数执行两项任务。 它首先查询 product 容器以查找传入的 `categoryId` 的所有产品。 然后使用新的产品类别名称更新每个产品。
+1. 复制以下代码片段，并将其粘贴到以“//To-Do:”开头的行下面。 函数执行两项任务。 它首先查询 product 容器以查找传入的 categoryId 的所有产品。 然后使用新的产品类别名称更新每个产品。
 
     ```
     //Loop through all products
@@ -353,7 +291,7 @@ ms.locfileid: "141674638"
 
     此代码读取查询的响应对象中的行，然后针对查询返回的所有产品更新 product 容器。
 
-    你将使用 `foreach()` 循环来遍历查询返回的每个产品。 对于每一行，你会更新计数器，这样就能知道有多少产品已更新。 接下来，你将该产品的类别名称更新为新的 `categoryName`。 最后调用 `ReplaceItemAsync()`，将 product 容器中的产品更新回来。
+    你将使用 foreach() 循环来遍历查询返回的每个产品。 对于每一行，你会更新计数器，这样就能知道有多少产品已更新。 接下来，你将该产品的类别名称更新为新的 categoryName。 最后调用 ReplaceItemAsync()，将 product 容器中的产品更新回来。
 
 1. 选择 Ctrl+S 保存所做更改。
 
@@ -362,7 +300,6 @@ ms.locfileid: "141674638"
 1. 若要编译和执行项目，请运行以下命令：
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     dotnet build
     dotnet run
     ```
@@ -395,13 +332,13 @@ ms.locfileid: "141674638"
 
 1. 如果离单击间隔过久并已返回到主菜单，请再次选择“b”来观察更改。
 
-1. 完成后，键入 x 以退出并返回到 Shell。
+1. 完成后，键入 x 以退出并返回到 Cloud Shell。
 
 ---
 
 ## <a name="exercise-3-denormalizing-aggregates"></a>练习 3：反规范化聚合
 
-在本单元中，你将了解如何使聚合非规范化，以便为电子商务站点编写针对排名前 10 的客户的查询。 你将使用 Azure Cosmos DB .NET SDK 中的事务性批处理功能，该功能同时插入新的销售订单并更新客户的 `salesOrderCount` 属性，这两者都在同一逻辑分区中。
+在本单元中，你将了解如何使聚合非规范化，以便为电子商务站点编写针对排名前 10 的客户的查询。 你将使用 Azure Cosmos DB .NET SDK 中的事务性批处理功能，该功能同时插入新的销售订单并更新客户的 salesOrderCount 属性，这两者都在同一逻辑分区中。
 
 对于本练习，你将完成以下步骤：
 
@@ -409,7 +346,7 @@ ms.locfileid: "141674638"
 - 完成 C# 代码以递增客户的 salesOrderCount。
 - 完成 C# 代码以实现事务，从而使用事务性批处理插入新的销售订单并更新客户记录。
 - 对特定客户运行查询，查看客户的记录及其所有的订单。
-- 为该客户创建新的销售订单并更新其 `salesOrderCount` 属性。
+- 为该客户创建新的销售订单并更新其 salesOrderCount 属性。
 - 运行针对排名前 10 的客户的查询，查看当前的结果如何。
 - 演示在客户取消订单时如何使用事务性批处理。
 
@@ -431,9 +368,9 @@ ms.locfileid: "141674638"
 
     此函数使用事务性批处理创建新的销售订单并更新客户记录。
 
-    首先，调用 `ReadItemAsync()` 并传入 `customerId` 作为分区键和 ID 来检索客户记录。
+    首先，调用 ReadItemAsync() 并传入 customerId 作为分区键和 ID 来检索客户记录 。
 
-1. 在第 483 行的 `//To-Do:` 注释下，粘贴以下代码片段，以增加 `salesOrderCount` 的值：
+1. 在 //To-Do: 注释下的第 483 行，通过粘贴以下代码片段来增加 salesOrderCount 的值 ：
 
     ```
     //Increment the salesOrderTotal property
@@ -450,15 +387,15 @@ ms.locfileid: "141674638"
 
     新的销售订单对象具有电子商务应用程序中销售订单的典型标头和详细信息结构。
 
-    销售订单标头包含 `orderId`、`customerId`、`orderDate` 和 `shipDate`，你会将此项留空。
+    销售订单标头包含 orderId、customerId、orderDate 和 shipDate，你会将此项留空   。
 
-    由于 customer 容器同时包含客户和销售订单实体，因此销售订单对象还包含值为 `salesOrder` 的鉴别器属性 `type`。 这有助于区分销售订单与 customer 容器中的客户对象。
+    由于 customer 容器同时包含客户和销售订单实体，因此销售订单对象还包含值为 salesOrder 的鉴别器属性 type 。 这有助于区分销售订单与 customer 容器中的客户对象。
 
     再往下，你还可以看到订单的两个产品，它们构成了销售订单中的详细信息部分。
 
-1. 再稍加滚动，滚动到另一个 `//To-Do:` 注释。 在这里，你需要添加使用事务性批处理插入新的销售订单并更新客户记录的代码。
+1. 再稍加滚动，滚动到另一个 //To-Do: 注释。 在这里，你需要添加使用事务性批处理插入新的销售订单并更新客户记录的代码。
 
-1. 复制以下代码片段，然后将其粘贴到 `//To-Do:` 注释下的行上。
+1. 复制以下代码片段，然后将其粘贴到 //To-Do: 注释下的行上。
 
     ```
     TransactionalBatchResponse txBatchResponse = await container.CreateTransactionalBatch(
@@ -471,7 +408,7 @@ ms.locfileid: "141674638"
         Console.WriteLine("Order created successfully");
     ```
 
-    此代码对容器对象调用 `CreateTransactionalBatch()`。 它采用分区键值作为必需参数，因为所有事务都限定在单个逻辑分区范围内。 你还将调用 `CreateItem()` 传入新的销售订单，调用 `ReplaceItem()` 传入更新后的客户对象。 然后，调用 `ExecuteAsync()` 来执行事务。
+    此代码对容器对象调用 CreateTransactionalBatch()。 它采用分区键值作为必需参数，因为所有事务都限定在单个逻辑分区范围内。 你还将调用 CreateItem() 传入新的销售订单，调用 ReplaceItem() 传入更新后的客户对象 。 然后，调用 ExecuteAsync() 来执行事务。
 
     最后，通过查看响应对象来检查事务是否成功。
 
@@ -496,7 +433,7 @@ ms.locfileid: "141674638"
 
 ## <a name="query-for-the-customer-and-their-sales-orders"></a>查询客户及其销售订单
 
-由于你已将数据库设计为使用 `customerId` 作为分区键来将客户及其所有销售订单存储在同一容器中，因此你可以在单个操作中查询客户容器，并返回客户的记录及其所有的销售订单。
+由于你已将数据库设计为使用 customerId 作为分区键来将客户及其所有销售订单存储在同一容器中，因此你可以在单个操作中查询客户容器，并返回客户的记录及其所有的销售订单。
 
 1. 在主菜单上，选择“c”以运行“查询客户及其所有订单”的菜单项。 此查询会返回客户记录，后面跟该客户的所有销售订单。 屏幕上应会显示客户的所有销售订单输出。
 
@@ -504,7 +441,7 @@ ms.locfileid: "141674638"
 
 1. 向上滚动到“打印客户记录及其所有订单”。
 
-   请注意，`salesOrderCount` 属性显示两个销售订单。
+   请注意，salesOrderCount 属性显示两个销售订单。
 
    屏幕应与下图中所示类似：
 
@@ -515,18 +452,15 @@ ms.locfileid: "141674638"
 为同一客户创建新的销售订单，并更新其客户记录中保存的总销售订单。
 
 1. 按窗口中的任何键返回到主菜单。
-
 1. 选择“d”以运行“创建新订单并更新订单总数”的菜单项。
-
 1. 按任意键返回到主菜单。
-
 1. 选择“c”以再次运行同一查询。
 
    请注意，新的销售订单显示“HL Mountain Frame - Black, 38”和“Racing Socks, M”。
 
 1. 滚动回“打印客户记录及其所有订单”。
 
-   请注意，`salesOrderCount` 属性显示有三个销售订单。
+   请注意，salesOrderCount 属性显示三个销售订单。
 
 1. 屏幕应与下图中所示类似：
 
@@ -541,10 +475,9 @@ ms.locfileid: "141674638"
 1. 选择“f”以运行“删除订单并更新订单总计”的菜单项。
 
 1. 按任意键返回到主菜单。
-
 1. 选择“c”，再次运行同一查询以确认客户记录是否已更新。
 
-   请注意，不再会返回新订单。 如果向上滚动，可以看到 `salesOrderCount` 值已返回到 `2`。
+   请注意，不再会返回新订单。 如果向上滚动，可以看到 salesOrderCount 值已返回到 2 。
 
 1. 按任意键返回到主菜单。
 
@@ -553,16 +486,15 @@ ms.locfileid: "141674638"
 删除销售订单的方式与创建销售订单的方式完全相同。 这两个操作都包装在事务中，并在同一逻辑分区中执行。 接下来看一下执行该操作的代码。
 
 1. 键入“x”退出应用程序。
-
 1. 如果尚未打开，请打开 Visual Studio Code，然后打开 17-denormalize 文件夹中的 Program.cs 文件 。
 
 1. 选择 Ctrl+G，然后输入 529。
 
     此函数会删除新的销售订单并更新客户记录。
 
-    在这里，可以看到代码首先检索客户记录，然后将 `salesOrderCount` 递减 1。
+    在这里，可以看到代码首先检索客户记录，然后将 salesOrderCount 递减 1。
 
-    接下来是调用 `CreateTransactionalBatch()`。 再次传入逻辑分区键值，但这次使用订单 ID 调用 `DeleteItem()`，并使用更新后的客户记录调用 `ReplaceItem()`。
+    接下来是调用 CreateTransactionalBatch()。 再次传入逻辑分区键值，但这次使用订单 ID 调用 DeleteItem()，并使用更新后的客户记录调用 ReplaceItem() 。
 
 ## <a name="view-the-code-for-your-top-10-customers-query"></a>查看针对排名前 10 的客户的查询的代码
 
@@ -578,9 +510,9 @@ ms.locfileid: "141674638"
         ORDER BY c.salesOrderCount DESC
     ```
 
-    此查询非常简单，使用 `TOP` 语句来限制返回的记录数，并按降序对 `salesOrderCount` 属性使用 `ORDER BY`。
+    此查询非常简单，使用 TOP 语句来限制返回的记录数，并按降序对 salesOrderCount 属性使用 ORDER BY  。
 
-    另请注意，鉴别器属性 `type` 的值为 `customer`，因此你只返回客户，原因是你的 customer 容器同时包含客户和销售订单。
+    另请注意，鉴别器属性 type 的值为 customer，因此你只返回客户，原因是你的 customer 容器同时包含客户和销售订单 。
 
 1. 若要在应用程序尚未运行时再次启动，请运行以下命令：
 
