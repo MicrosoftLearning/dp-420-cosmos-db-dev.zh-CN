@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 对应用程序进行故障排除
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 49708e1ad77cf0e9b828b3a8571516d26f779071
-ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
+ms.openlocfilehash: 9e1d3220eac65806d0512c6a22b3ff1b4fe6d778
+ms.sourcegitcommit: e85dbb2b871e28631beea55bfbb47191bd979628
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145893425"
+ms.lasthandoff: 06/13/2022
+ms.locfileid: "146316629"
 ---
 # <a name="troubleshoot-an-application-using-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 对应用程序进行故障排除
 
@@ -23,9 +23,9 @@ Azure Cosmos DB 提供了一组广泛的响应代码，可帮助我们轻松解�
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
@@ -35,7 +35,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
 
@@ -43,12 +43,12 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *`Do Not Apply`* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -207,7 +207,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     Can not insert a duplicate partition key, customer with the same ID already exists.
     ```
 
-1. 此代码添加了对 403 和 409 异常的错误处理，现在，让我们为一些常见通信类型的异常添加代码 。 常见的通信类型异常有以下三种：429、503 和 408，分别对应“请求过多”、“服务不可用”和“请求超时”  。 在第 66 行附近现在应该有一个 default 语句，因此请在前面的 break; 语句之后和 default 语句之前添加下面的代码  。  此代码将验证我们是否发现任何这些通信异常，如果是，请等待 10 分钟，然后再尝试插入文档一次。  现在在代码中添加更多内容：
+1. 此代码添加了对 403 和 409 异常的错误处理，现在，让我们为一些常见通信类型的异常添加代码 。 常见的通信类型异常有以下三种：429、503 和 408，分别对应“请求过多”、“服务不可用”和“请求超时”  。 在第 66 行附近现在应该有一个 default 语句，因此请在前面的 break; 语句之后和 default 语句之前添加下面的代码  。  此代码将验证我们是否发现任何这些通信异常，如果是，请等待 10 秒，然后再尝试插入文档一次。  现在在代码中添加更多内容：
 
     ```C#
                         case ("TooManyRequests"):
