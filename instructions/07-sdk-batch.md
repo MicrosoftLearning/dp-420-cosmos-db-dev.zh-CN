@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 9ad507d58db5b7522e2a6e24231e18caaa86e36a
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: a532bcefbd68b6ba99373035977522ad2c04d0a9
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024929"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919951"
 ---
 # <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
 
@@ -88,6 +88,12 @@ ms.locfileid: "138024929"
 
     > &#128221; 此命令将打开起始目录已设置为“07-sdk-batch”文件夹的终端。
 
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
+
 1. 使用 [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 命令生成项目：
 
     ```
@@ -149,7 +155,7 @@ ms.locfileid: "138024929"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
@@ -252,7 +258,7 @@ ms.locfileid: "138024929"
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
     
-    CosmosClient client = new (endpoint, key);
+    CosmosClient client = new CosmosClient(endpoint, key);
         
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);

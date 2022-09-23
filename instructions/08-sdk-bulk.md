@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
   module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: db439a89114c0256884ad676c67d6e4ad6c27844
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 07d515ecfeb2ae59284d212323009770380ddcf0
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024910"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919960"
 ---
 # <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
 
@@ -64,11 +64,11 @@ ms.locfileid: "138024910"
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **数据库 ID** | 新建 &vert; cosmicworks |
+    | **数据库 ID** | 新建 &vert; `cosmicworks`  |
     | **在容器之间共享吞吐量** | 请不要选择 |
-    | **容器 ID** | products |
-    | **分区键** | /categoryId |
-    | **容器吞吐量** | 自动缩放 &vert; 4000 |
+    | **容器 ID** | *`products`* |
+    | **分区键** | *`/categoryId`* |
+    | **容器吞吐量** | 自动缩放 &vert; `4000`  |
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
@@ -99,6 +99,12 @@ ms.locfileid: "138024910"
 1. 打开“08-sdk-bulk”文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例。
 
     > &#128221; 此命令将打开起始目录已设置为“08-sdk-bulk”文件夹的终端。
+
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. 使用 [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 命令生成项目：
 

@@ -2,12 +2,12 @@
 lab:
   title: 衡量不同嵌入容器中的实体的性能
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: b3f7be3d3f7674fc19b2823de50d013e3bd4b04d
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 15b535ae9667402817f8a26d8f1ab51192f16b33
+ms.sourcegitcommit: 8911688483dd0aa3bcfad6bf87b9550eccf6e9ca
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024903"
+ms.lasthandoff: 06/02/2022
+ms.locfileid: "146017365"
 ---
 # <a name="measure-performance-of-entities-in-separate-and-embeded-containers"></a>衡量不同嵌入容器中的实体的性能
 
@@ -71,7 +71,7 @@ ms.locfileid: "138024903"
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. 选择“查询统计信息”选项卡，并记下请求费用为 2.83。
 
@@ -87,7 +87,7 @@ ms.locfileid: "138024903"
 
     ```
     SELECT * FROM c WHERE c.customerId = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. 选择“查询统计信息”选项卡，并记下请求费用为 2.83。
 
@@ -103,7 +103,7 @@ ms.locfileid: "138024903"
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. 选择“查询统计信息”选项卡，并记下请求费用为 2.83。
 
@@ -113,12 +113,12 @@ ms.locfileid: "138024903"
 
 现在我们已运行所有查询，接下来合计其所有请求单位成本。
 
-|**查询**|**RU/秒成本**|
+|**查询**|**RU/秒 成本**|
 |---------|---------|
 |客户|2.83|
 |客户地址|2.83|
 |客户密码|2.83|
-|**总 RU/s**|**8.49**|
+|**总 RU/秒**|**8.49**|
 
 ## <a name="measure-performance-of-embedded-entities"></a>衡量嵌入实体的性能
 
@@ -126,11 +126,11 @@ ms.locfileid: "138024903"
 
 1. 选择 Database-v2 数据库。
 1. 选择 Customer 容器。
-1. 运行以下查询。
+1. 运行以下查询。 
 
     ```
     SELECT * FROM c WHERE c.id = "FFD0DD37-1F0E-4E2E-8FAC-EAF45B0E9447"
-   ```
+    ```
 
 1. 请注意，返回的数据目前包括客户、地址和密码数据。
 

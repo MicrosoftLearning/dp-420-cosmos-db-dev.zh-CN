@@ -2,12 +2,12 @@
 lab:
   title: 将 Azure Cosmos DB SQL API 帐户密钥存储到 Azure 密钥保管库
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 929b8c5078ff27ae474f86393ad61f44dd3b66b3
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 56ecce7cf2b6460419f54813af06c0e0e01738b5
+ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024938"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145893422"
 ---
 # <a name="store-azure-cosmos-db-sql-api-account-keys-in-azure-key-vault"></a>将 Azure Cosmos DB SQL API 帐户密钥存储到 Azure 密钥保管库
 
@@ -17,7 +17,7 @@ ms.locfileid: "138024938"
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
-如果尚未将 DP-420 的实验室代码存储库克隆到你在此实验室中处理的环境中，请按照以下步骤进行操作。 否则，请在 Visual Studio Code 中打开之前克隆的文件夹。
+如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
 1. 启动 Visual Studio Code。
 
@@ -31,28 +31,28 @@ ms.locfileid: "138024938"
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，支持多个 API。 首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在用于 .NET 的 Azure SDK 或其他任何 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **订阅** | 现有 Azure 订阅 |
+    | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入全局唯一名称 |
+    | **帐户名** | 输入一个全局唯一的名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
-1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“密钥”窗格 。
+1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“键”窗格。
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
@@ -68,7 +68,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，支持多个 API�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **订阅** | 现有 Azure 订阅 |
+    | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **密钥保管库名称** | 输入全局唯一名称 |
     | **区域** | 选择任何可用区域 |
@@ -113,9 +113,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，支持多个 API�
     ```
 
 
-1. 该命令创建了 Web 应用的外壳，因此它添加了几个文件和目录。 我们已经有几个文件，其中包含我们需要的所有代码。 将 `.\Controllers\HomeController.cs` 和 `.\Views\Home\Index.cshtml` 文件替换为 `.\KeyvaultFiles` 目录中各自的文件。
+1. 该命令创建了 Web 应用的外壳，因此它添加了几个文件和目录。 我们已经有几个文件，其中包含我们需要的所有代码。 将文件 .\Controllers\HomeController.cs 和 .\Views\Home\Index.cshtml 替换为 .\KeyvaultFiles 目录中各自的文件  。
 
-1. 替换文件后，删除 `.\KeyvaultFiles` 目录。
+1. 替换文件后，请删除 .\KeyvaultFiles 目录。
 
 ## <a name="import-the-multiple-missing-libraries-into-the-net-script"></a>将多个缺少的库导入 .NET 脚本
 
@@ -187,7 +187,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，支持多个 API�
     - 在第 104-105 行中，我们准备了将连接到 Azure 密钥保管库的密钥保管库客户端 。 请注意，我们将 Web 应用令牌作为参数发送。 
     - 在第 107-108 行中，我们向密钥保管库客户端提供了我们的机密标识符的 URL 地址，该地址将返回存储在该密钥保管库中的机密。 
 
-1.  在部署 Web 应用之前，我们仍然需要发送机密标识符 URL。  在第 107 行，将字符串 `<Key Vault Secret Identifier>` 替换为我们在“机密”部分记录的“机密标识符”URL 并保存文件 。
+1.  在部署 Web 应用之前，我们仍然需要发送机密标识符 URL。  在第 107 行，将字符串 <Key Vault Secret Identifier> 替换为我们在“机密”部分记录的“机密标识符”URL 并保存文件 。
 
 ```
         var KeyVaultSecret = await KVClient.GetSecretAsync("<Key Vault Secret Identifier>")
@@ -214,6 +214,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，支持多个 API�
 1. 在 Visual Studio Code 中，打开命令面板，搜索“Azure 应用服务: 创建新的 Web 应用…(高级)”
 
 1. 选择“登录 Azure…”。此选项将打开一个 Web 浏览器窗口，按照登录流程进行操作，完成后关闭浏览器。
+
+1. （可选）如果要求提供订阅，请选择你的订阅。
 
 1. 为 Web 应用输入全局唯一名称。
 

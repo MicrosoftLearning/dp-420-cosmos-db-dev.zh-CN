@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Cosmos DB SQL API SDK 创建和更新文档
   module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 5aa8e7ec314243dce08e3d14a561e45d2ac83049
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 4e50de8a4368336f952a8f966ff26340f86fa170
+ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024923"
+ms.lasthandoff: 05/28/2022
+ms.locfileid: "145919963"
 ---
 # <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 创建和更新文档
 
@@ -72,6 +72,12 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 此命令将打开起始目录已设置为“06-sdk-crud”文件夹的终端。
 
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
+
 1. 使用 [dotnet build][docs.microsoft.com/dotnet/core/tools/dotnet-build] 命令生成项目：
 
     ```
@@ -100,7 +106,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
 
-1. 异步调用 client 变量的 CreateDatabaseIfNotExistsAsync 方法，该方法传入你要在仿真器中创建的新数据库的名称 (cosmicworks)，并将结果存储在 Database 类型的变量中：
+1. 异步调用 client 变量的 CreateDatabaseIfNotExistsAsync 方法，传入要创建的新数据库的名称 (cosmicworks)，并将结果存储在 Database 类型的变量中  ：
 
     ```
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
@@ -121,7 +127,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -166,13 +172,13 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 使用以下属性创建一个 Product 类型的名为 saddle 的新对象：
 
-    | 属性 | Value |
+    | 属性 | 值 |
     | ---: | :--- |
-    | **id** | ``706cd7c6-db8b-41f9-aea2-0e0c7e8eb009`` |
-    | categoryId | ``9603ca6c-9e28-4a02-9194-51cdb7fea816`` |
-    | name | ``Road Saddle`` |
-    | **price** | ``45.99d`` |
-    | **标记** | ``{ tan, new, crisp }`` |
+    | **id** | 706cd7c6-db8b-41f9-aea2-0e0c7e8eb009 |
+    | categoryId | 9603ca6c-9e28-4a02-9194-51cdb7fea816 |
+    | **name** | *Road Saddle* |
+    | **price** | 45.99d |
+    | **tags** | { tan, new, crisp } |
 
     ```
     Product saddle = new()
@@ -205,7 +211,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -301,7 +307,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -327,7 +333,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet run
     ```
 
-1. 查看终端输出。 具体而言，请查看带有项的 id、名称和价格的格式化输出文本。
+1. 查看终端输出。 具体而言，请查看带有项的 id、Name和Price的格式化输出文本。
 
 1. 关闭集成终端。
 
@@ -349,8 +355,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **属性** | **值** |
     | ---: | :--- |
-    | **名称** | Road Saddle |
-    | **价格** | 45.99 美元 |
+    | **名称** | *Road Saddle* |
+    | **价格** | *45.99 美元* |
 
     > &#128221; 此时，自从你创建了这个项后，这些值不应发生更改。 在本练习中，你将更改这些值。
 
@@ -391,7 +397,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string endpoint = "<cosmos-endpoint>";
     string key = "<cosmos-key>";
 
-    CosmosClient client = new (endpoint, key);  
+    CosmosClient client = new CosmosClient(endpoint, key);
     
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     
@@ -436,8 +442,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **属性** | **值** |
     | ---: | :--- |
-    | **名称** | Road LL Saddle |
-    | **价格** | 32.55 美元 |
+    | **名称** | *Road LL Saddle* |
+    | **价格** | *32.55 美元* |
 
     > &#128221; 此时，自从你观察到这个项后，这些值应发生更改。
 

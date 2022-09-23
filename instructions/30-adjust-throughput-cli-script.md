@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure CLI 脚本调整预配的吞吐量
   module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: f6eaf4f0e07037010cec92f3db348a4806304d94
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
+ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024953"
+ms.lasthandoff: 05/12/2022
+ms.locfileid: "144971459"
 ---
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>使用 Azure CLI 脚本调整预配的吞吐量
 
@@ -44,6 +44,27 @@ Azure CLI 是一组命令，可用于管理 Azure 中的各种资源。 Azure Co
 1. Azure CLI 将自动打开 Web 浏览器窗口或选项卡。在浏览器实例中，使用与订阅关联的 Microsoft 凭据登录 Azure CLI。
 
 1. 关闭 Web 浏览器窗口或选项卡。
+
+1. 检查实验室提供商是否为你创建了资源组，如果已创建，请记录其名称，因为你将在下一部分中用到它。
+
+    ```
+    az group list --query "[].{ResourceGroupName:name}" -o table
+    ```
+    
+    此命令可能会返回多个资源组名称。
+
+1. （可选）*_如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。*
+
+    i. 从此列表中获取离你最近的位置名称
+
+    ```
+    az account list-locations --query "sort_by([].{YOURLOCATION:name, DisplayName:regionalDisplayName}, &YOURLOCATION)" --output table
+    ```
+
+    ii. 创建资源组。  请注意，某些实验室环境可能被锁定，需要管理员为你创建资源组。
+    ```
+    az group create --name YOURRESOURCEGROUPNAME --location YOURLOCATION
+    ```
 
 ## <a name="create-azure-cosmos-db-account-using-the-azure-cli"></a>使用 Azure CLI 创建 Azure Cosmos DB 帐户
 

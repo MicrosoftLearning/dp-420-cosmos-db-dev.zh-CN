@@ -135,7 +135,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **数据源名称** | products-cosmossql-source |
     | **连接字符串** | 之前创建的 Azure Cosmos DB SQL API 帐户的 _连接字符串_ |
-    | **Database** | cosmicworks |
+    | **数据库** | cosmicworks |
     | **集合** | products |
 
 1. 在“查询”字段中，输入以下 SQL 查询，以创建容器中数据子集的一个具体化视图：

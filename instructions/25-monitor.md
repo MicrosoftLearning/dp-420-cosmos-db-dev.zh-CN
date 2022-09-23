@@ -2,12 +2,12 @@
 lab:
   title: 使用 Azure Monitor 分析 Azure Cosmos DB SQL API 帐户
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: c1b3db394c1082fd9165c0b5689e80144a87bc87
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
+ms.openlocfilehash: 55c1fe4335145a346bb1a197594a5c2d36c7fe7c
+ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
 ms.translationtype: HT
 ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024922"
+ms.lasthandoff: 05/26/2022
+ms.locfileid: "145890692"
 ---
 # <a name="use-azure-monitor-to-analyze-an-azure-cosmos-db-sql-api-account"></a>使用 Azure Monitor 分析 Azure Cosmos DB SQL API 帐户
 
@@ -31,7 +31,7 @@ Azure Monitor 是 Azure 中的全栈监视服务，它提供了一套完整的�
 
 ## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
@@ -47,6 +47,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *`Do Not Apply`* |
+    | 限制可在此帐户上预配的总吞吐量 | *取消选中* |
 
     > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
 
@@ -107,7 +108,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     private static readonly string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：private static readonly string key = "fDR2ci9QgkdkvERTQ==";。
+    > &#128221; 例如，如果你的键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：private static readonly string key = "fDR2ci9QgkdkvERTQ==";。
+
+1. 保存 Program.cs 文件。
+
+1. 返回到集成终端。
 
 1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
 
