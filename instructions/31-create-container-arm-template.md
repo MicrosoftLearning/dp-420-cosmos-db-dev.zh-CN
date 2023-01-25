@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
-  module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: d82920cf333d5d59f74d1990b623e9be33582647
-ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145890689"
+  title: 使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
+  module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
-# <a name="create-an-azure-cosmos-db-sql-api-container-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 容器
+
+# <a name="create-an-azure-cosmos-db-for-nosql-container-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
 
 Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 Azure 的基础结构。 Azure 资源管理器模板是一种常见的基础结构即代码解决方案，用于将服务部署到 Azure。 Bicep 通过定义一种更易于读取的域特定语言（该语言可用来创建 JSON 模板），进一步发展了此概念。
 
@@ -25,11 +20,11 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB SQL API 资源
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 资源
 
 借助 Azure 资源管理器中的 Microsoft.DocumentDB 资源提供程序，可以使用 JSON 文件部署帐户、数据库和容器。 虽然文件可能很复杂，但它们遵循可预测的格式，并且可以在 Visual Studio Code 扩展的帮助下编写。
 
@@ -104,7 +99,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
     
     此命令可能会返回多个资源组名称。
 
-1. （可选）*_如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。*
+1. （可选）如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。
 
     i. 从此列表中获取离你最近的位置名称
 
@@ -139,7 +134,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 将集成终端保持打开，然后返回到 deploy.json 文件的编辑器。
 
-1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB SQL API 数据库：
+1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB for NoSQL 数据库：
 
     ```
     ,
@@ -180,7 +175,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 将集成终端保持打开，然后返回到 deploy.json 文件的编辑器。
 
-1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB SQL API 容器：
+1. 在 resources 数组中，添加另一个新的 JSON 对象以创建新的 Azure Cosmos DB for NoSQL 容器：
 
     ```
     ,
@@ -234,7 +229,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 ## <a name="observe-deployed-azure-cosmos-db-resources"></a>观察已部署的 Azure Cosmos DB 资源
 
-部署 Azure Cosmos DB SQL API 资源后，可以在 Azure 门户中导航到该资源。 你将使用数据资源管理器，验证帐户、数据库和容器是否已全部部署并正确配置。
+部署 Azure Cosmos DB for NoSQL 资源后，可以在 Azure 门户中导航到该资源。 你将使用数据资源管理器，验证帐户、数据库和容器是否已全部部署并正确配置。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
@@ -244,9 +239,9 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
-1. 选择“SQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
+1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
 
 1. 观察“缩放”部分中的值。 特别请注意“吞吐量”部分中选择了“手动”选项，并且预配的吞吐量设置为 400 RU/s  。
 
@@ -254,7 +249,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-bicep-templates"></a>使用 Bicep 模板创建 Azure Cosmos DB SQL API 资源
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-bicep-templates"></a>使用 Bicep 模板创建 Azure Cosmos DB for NoSQL 资源
 
 Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板相比，使用该语言可以更简单、更轻松地部署 Azure 资源。 你将使用 Bicep 和不同的名称部署相同的资源，以说明\[差别\]。
 
@@ -331,7 +326,7 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **Parent** | 之前在模板中创建的帐户 |
+    | **父级** | 之前在模板中创建的帐户 |
     | **Alias** | *Database* |
     | **名称** | cosmicworks  |
     | **资源类型** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
@@ -376,7 +371,7 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **Parent** | 之前在模板中创建的数据库 |
+    | **父级** | 之前在模板中创建的数据库 |
     | **Alias** | *容器* |
     | **名称** | products  |
     | **资源 ID** | products |
@@ -417,9 +412,9 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
-1. 选择“SQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
+1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
 
 1. 观察“缩放”部分中的值。 特别请注意“吞吐量”部分中选择了“手动”选项，并且预配的吞吐量设置为 400 RU/s  。
 
