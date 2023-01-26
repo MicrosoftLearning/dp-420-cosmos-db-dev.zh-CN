@@ -2,13 +2,8 @@
 lab:
   title: 启用资源提供程序
   module: Setup
-ms.openlocfilehash: 4bb2ea5cdd9d123d1b235b28da67f295b9e26969
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024944"
 ---
+
 # <a name="enable-azure-resource-providers"></a>启用 Azure 资源提供程序
 
 有一些资源提供程序必须在 Azure 订阅中注册。 请按照以下步骤操作，确保已注册它们。

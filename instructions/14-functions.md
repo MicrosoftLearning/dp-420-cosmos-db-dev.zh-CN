@@ -1,39 +1,34 @@
 ---
 lab:
-  title: 使用 Azure Functions 处理 Azure Cosmos DB SQL API 数据
-  module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 78a13ba0cb150925083d449bb9abae1169af8e71
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024909"
+  title: 使用 Azure Functions 处理 Azure Cosmos DB for NoSQL 数据
+  module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
-# <a name="process-azure-cosmos-db-sql-api-data-using-azure-functions"></a>使用 Azure Functions 处理 Azure Cosmos DB SQL API 数据
 
-Azure Functions 的 Azure Cosmos DB 触发器是使用更改源处理器实现的。 利用这些知识，可以在 Azure Cosmos DB SQL API 容器中创建响应创建和更新操作的函数。 如果手动实现了一个更改源处理器，则 Azure Functions 的设置与此类似。
+# <a name="process-azure-cosmos-db-for-nosql-data-using-azure-functions"></a>使用 Azure Functions 处理 Azure Cosmos DB for NoSQL 数据
+
+Azure Functions 的 Azure Cosmos DB 触发器是使用更改源处理器实现的。 利用这些知识，可以在 Azure Cosmos DB for NoSQL 容器中创建响应创建和更新操作的函数。 如果手动实现了一个更改源处理器，则 Azure Functions 的设置与此类似。
 
 在本实验室中，将执行以下操作
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *无服务器* |
 
-    > &#128221; 你的实验环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -55,15 +50,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | --: | :-- |
     | **数据库 ID** | cosmicworks |
 
-1. 返回“数据资源管理器”窗格中，观察层次结构中的“cosmicworks”数据库节点。 
+1. 返回到“数据资源管理器”窗格，观察层次结构中的“cosmicworks”数据库节点。 
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”：
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 使用现有 &vert; cosmicworks |
+    | **数据库 ID** | 使用现有 &vert; cosmicworks  |
     | **容器 ID** | products |
     | **分区键** | /categoryId |
 
@@ -71,11 +66,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“数据资源管理器”窗格中，再次选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 使用现有 &vert; cosmicworks |
+    | **数据库 ID** | 使用现有 &vert; cosmicworks  |
     | **容器 ID** | productslease |
     | **分区键** | */id* |
 
@@ -89,7 +84,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“函数”，然后使用以下设置创建新的“函数应用”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -207,11 +202,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 最大化日志部分，以扩展输出窗口和最大程度填充可用空间。
 
-    > &#128221; 将使用另一个工具在 Azure Cosmos DB SQL API 容器中生成项。 生成项后，将返回此浏览器窗口查看输出。 不要提前关闭浏览器窗口。
+    > &#128221; 将使用另一个工具在 Azure Cosmos DB for NoSQL 容器中生成项。 生成项后，将返回此浏览器窗口查看输出。 不要提前关闭浏览器窗口。
 
-## <a name="seed-your-azure-cosmos-db-sql-api-account-with-sample-data"></a>使用示例数据设置 Azure Cosmos DB SQL API 种子帐户
+## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>使用示例数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
-你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器 。 然后，该工具将创建一组项，你将使用终端窗口中运行的更改源处理器来观察它们。
+你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器。  然后，该工具将创建一组项，你将使用终端窗口中运行的更改源处理器来观察它们。
 
 1. 启动 Visual Studio Code。
 
@@ -231,9 +226,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **选项** | **值** |
     | ---: | :--- |
-    | --endpoint | 之前在本实验室中复制的终结点值 |
-    | --key | 之前在本实验室中复制的键值 |
-    | --datasets | *product* |
+    | **--endpoint** | 之前在本实验室中复制的终结点值 |
+    | **--key** | 之前在本实验室中复制的键值 |
+    | **--datasets** | *product* |
 
     ```
     cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
@@ -241,7 +236,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
 
-1. 等待 cosmicworks 命令使用数据库、容器和项完成帐户填充。
+1. 等待 cosmicworks 命令完成对帐户的数据库、容器和项的填充。
 
 1. 关闭集成终端。
 

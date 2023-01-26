@@ -2,13 +2,8 @@
 lab:
   title: 创建实验室资源组
   module: Setup
-ms.openlocfilehash: c13cf83d1d7d5cb9d4902e320b44f234422367d1
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024897"
 ---
+
 # <a name="create-azure-resource-group-for-lab"></a>为实验室创建 Azure 资源组
 
 完成此实验室之前，应创建一个新[资源组][docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal]，将新部署的 Azure 资源放入其中。

@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
-  module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: a532bcefbd68b6ba99373035977522ad2c04d0a9
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919951"
+  title: 批处理多点操作与 Azure Cosmos DB for NoSQL SDK
+  module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
-# <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量处理多点操作
+
+# <a name="batch-multiple-point-operations-together-with-the-azure-cosmos-db-for-nosql-sdk"></a>批处理多点操作与 Azure Cosmos DB for NoSQL SDK
 
 [TransactionalBatch][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatch] 和 [TransactionalBatchResponse][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.transactionalbatchresponse] 类是将操作组合和分解为单个逻辑步骤的关键。 使用这两个类，可以编写代码来执行多个操作，然后确定这些操作是否在服务器端成功完成。
 
@@ -25,28 +20,28 @@ ms.locfileid: "145919951"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account-and-configure-the-sdk-project"></a>创建 Azure Cosmos DB SQL API 帐户并配置 SDK 项目
+## <a name="create-an-azure-cosmos-db-for-nosql-account-and-configure-the-sdk-project"></a>创建 Azure Cosmos DB for NoSQL 帐户并配置 SDK 项目
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -80,7 +75,7 @@ ms.locfileid: "145919951"
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
 
 1. 保存 script.cs 代码文件 。
 

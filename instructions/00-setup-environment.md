@@ -2,13 +2,8 @@
 lab:
   title: 设置实验室环境
   module: Setup
-ms.openlocfilehash: 6beb401fed4863929ed8772e2e8b3dff4b61434b
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024931"
 ---
+
 # <a name="setup-local-lab-environment"></a>设置本地实验室环境
 
 理想情况下，应在托管实验室环境中完成这些实验室。 如果要在你自己的计算机上完成它们，可以通过安装以下软件来完成。 使用自己的环境时，可能会遇到意外的对话和行为。 由于可能的本地配置范围广泛，课程团队无法支持你在自己的环境中可能遇到的问题。

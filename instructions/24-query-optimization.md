@@ -1,45 +1,40 @@
 ---
 lab:
-  title: 优化用于查询的 Azure Cosmos DB SQL API 容器索引策略
-  module: Module 10 - Optimize query performance in Azure Cosmos DB SQL API
-ms.openlocfilehash: 3556b5f9b8a3129d92dcccf65a54d6adf1ccbf32
-ms.sourcegitcommit: c3778722311b55568f083480ecc69c9b3e837a18
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/19/2022
-ms.locfileid: "138025012"
+  title: 优化用于查询的 Azure Cosmos DB for NoSQL 容器索引策略
+  module: Module 10 - Optimize query performance in Azure Cosmos DB for NoSQL
 ---
-# <a name="optimize-an-azure-cosmos-db-sql-api-containers-indexing-policy-for-a-query"></a>优化用于查询的 Azure Cosmos DB SQL API 容器索引策略
 
-在针对 Azure Cosmos DB SQL API 帐户进行规划时，了解最常见的查询有助于优化索引策略，尽可能提高查询性能。
+# <a name="optimize-an-azure-cosmos-db-for-nosql-containers-indexing-policy-for-a-query"></a>优化用于查询的 Azure Cosmos DB for NoSQL 容器索引策略
+
+在针对 Azure Cosmos DB for NoSQL 帐户进行规划时，了解最常见的查询有助于优化索引策略，尽可能提高查询性能。
 
 在此实验中，将通过数据资源管理器，使用默认索引策略和包含复合索引的索引策略来测试 SQL 查询。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *无服务器* |
 
-    > &#128221; 你的实验环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
 1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“数据资源管理器”窗格。
 
-1. 在“数据资源管理器”窗格中，选择“新建容器”。
+1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
 1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
@@ -49,7 +44,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **容器 ID** | products |
     | **分区键** | /categoryId |
 
-1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。
+1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。  
 
 1. 在资源边栏选项卡中，导航到“键”窗格。
 
@@ -61,7 +56,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="seed-your-azure-cosmos-db-sql-api-account-with-sample-data"></a>使用示例数据设置 Azure Cosmos DB SQL API 种子帐户
+## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>使用示例数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
 你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器。  然后，该工具将创建一组项，你将使用终端窗口中运行的更改源处理器来观察它们。
 
@@ -73,15 +68,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet tool install --global cosmicworks
     ```
 
-    > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具“cosmicworks”已安装）。
+    > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具 "cosmicworks" 已安装）。
 
 1. 使用以下命令行选项运行 cosmicworks 以设置 Azure Cosmos DB 种子帐户：
 
     | **选项** | **值** |
     | ---: | :--- |
-    | --endpoint | 之前在本实验室中复制的终结点值 |
-    | --key | 之前在本实验室中复制的键值 |
-    | --datasets | *product* |
+    | **--endpoint** | 之前在本实验室中复制的终结点值 |
+    | **--key** | 之前在本实验室中复制的键值 |
+    | **--datasets** | *product* |
 
     ```
     cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
@@ -89,7 +84,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
 
-1. 等待 cosmicworks 命令使用数据库、容器和项完成帐户填充。
+1. 等待 cosmicworks 命令完成对帐户的数据库、容器和项的填充。
 
 1. 关闭集成终端。
 
@@ -103,7 +98,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
 
-1. 选择“资源组”，然后选择在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
+1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
 

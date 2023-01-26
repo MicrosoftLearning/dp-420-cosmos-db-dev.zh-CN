@@ -4,7 +4,7 @@ lab:
   module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
 
-# <a name="create-an-azure-cosmos-db-for-nosql-container-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
+# <a name="create-an-azure-cosmos-db-for-nosqlcontainer-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
 
 Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 Azure 的基础结构。 Azure 资源管理器模板是一种常见的基础结构即代码解决方案，用于将服务部署到 Azure。 Bicep 通过定义一种更易于读取的域特定语言（该语言可用来创建 JSON 模板），进一步发展了此概念。
 
@@ -18,7 +18,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
     > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 

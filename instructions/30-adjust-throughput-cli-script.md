@@ -1,14 +1,9 @@
 ---
 lab:
   title: 使用 Azure CLI 脚本调整预配的吞吐量
-  module: Module 12 - Manage an Azure Cosmos DB SQL API solution using DevOps practices
-ms.openlocfilehash: 1e74a087f3357315725bfab778bd38ded9a6ca9d
-ms.sourcegitcommit: f6f2445d6c243e6381e5e6380c2147b0db4b922e
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/12/2022
-ms.locfileid: "144971459"
+  module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
+
 # <a name="adjust-provisioned-throughput-using-an-azure-cli-script"></a>使用 Azure CLI 脚本调整预配的吞吐量
 
 Azure CLI 是一组命令，可用于管理 Azure 中的各种资源。 Azure Cosmos DB 具有一组丰富的命令，可用于管理 Azure Cosmos DB 帐户的各个方面，而不用考虑所选的 API。
@@ -53,7 +48,7 @@ Azure CLI 是一组命令，可用于管理 Azure 中的各种资源。 Azure Co
     
     此命令可能会返回多个资源组名称。
 
-1. （可选）*_如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。*
+1. （可选）如果没有为你创建资源组，请选择资源组名称并进行创建。 请注意，某些实验室环境可能被锁定，你需要管理员为你创建资源组。
 
     i. 从此列表中获取离你最近的位置名称
 
@@ -123,19 +118,19 @@ Cosmosdb 命令组包含使用 CLI 创建和管理 Azure Cosmos DB 帐户的基�
 
     > &#128161; create 命令平均需要两到十二分钟的时间完成。
 
-## <a name="create-azure-cosmos-db-sql-api-resources-using-the-azure-cli"></a>使用 Azure CLI 创建 Azure Cosmos DB SQL API 资源
+## <a name="create-azure-cosmos-db-for-nosql-resources-using-the-azure-cli"></a>使用 Azure CLI 创建 Azure Cosmos DB for NoSQL 资源
 
-cosmosdb sql 命令组包含用于管理 Azure Cosmos DB 的 SQL API 特定资源的命令。 始终可以使用 --help 标志来查看这些命令组的选项。
+cosmosdb sql 命令组包含用于管理 Azure Cosmos DB 的 NoSQL API 特定资源的命令。 始终可以使用 --help 标志来查看这些命令组的选项。
 
 1. 返回到已在 Visual Studio Code 中打开的终端实例。
 
-1. 使用以下命令查看与 Azure Cosmos DB SQL API 相关的大多数 Azure CLI 命令组：
+1. 使用以下命令查看与 Azure Cosmos DB for NoSQL 相关的大多数 Azure CLI 命令组：
 
     ```
     az cosmosdb sql --help
     ```
 
-1. 使用以下命令查看用于管理 Azure Cosmos DB SQL API 数据库的 Azure CLI 命令：
+1. 使用以下命令查看用于管理 Azure Cosmos DB for NoSQL 数据库的 Azure CLI 命令：
 
     ```
     az cosmosdb sql database --help
@@ -149,7 +144,7 @@ cosmosdb sql 命令组包含用于管理 Azure Cosmos DB 的 SQL API 特定资�
 
 1. 等待 create 命令完成执行并返回，然后再继续此实验。
 
-1. 使用以下命令查看用于管理 Azure Cosmos DB SQL API 容器的 Azure CLI 命令：
+1. 使用以下命令查看用于管理 Azure Cosmos DB for NoSQL 容器的 Azure CLI 命令：
 
     ```
     az cosmosdb sql container --help
@@ -171,9 +166,9 @@ cosmosdb sql 命令组包含用于管理 Azure Cosmos DB 的 SQL API 特定资�
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
-1. 选择“SQL API”导航树中的“products”容器节点，然后选择“缩放和设置”。
+1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
 
 1. 观察“缩放”选项卡中的值。特别请注意“吞吐量”部分中选择了“手动”选项，并且预配的吞吐量设置为“400”RU/s   。
 
@@ -185,7 +180,7 @@ Azure CLI 可用于在手动和自动缩放的吞吐量预配之间迁移容器�
 
 1. 返回到已在 Visual Studio Code 中打开的终端实例。
 
-1. 使用以下命令查看用于管理 Azure Cosmos DB SQL API 容器吞吐量的 Azure CLI 命令：
+1. 使用以下命令查看用于管理 Azure Cosmos DB for NoSQL 容器吞吐量的 Azure CLI 命令：
 
     ```
     az cosmosdb sql container throughput --help
@@ -223,9 +218,9 @@ Azure CLI 可用于在手动和自动缩放的吞吐量预配之间迁移容器�
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
-1. 选择“SQL API”导航树中的“products”容器节点，然后选择“缩放和设置”。
+1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“缩放和设置”  。
 
 1. 观察“缩放”选项卡中的值。特别请注意“吞吐量”部分中选择了“自动缩放”选项，并且预配的吞吐量设置为“5,000”RU/s   。
 

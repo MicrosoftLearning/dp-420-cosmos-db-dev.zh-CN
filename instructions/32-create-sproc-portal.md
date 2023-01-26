@@ -1,14 +1,9 @@
 ---
 lab:
   title: 使用 Azure 门户创建存储过程
-  module: Module 13 - Create server-side programming constructs in Azure Cosmos DB SQL API
-ms.openlocfilehash: 0f390ab5e3bd796c3bfb17a060e2db4424e222e2
-ms.sourcegitcommit: 58caf52fefd9f9cbeeef3629e98245544a299b44
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 06/02/2022
-ms.locfileid: "146027670"
+  module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
+
 # <a name="create-a-stored-procedure-with-the-azure-portal"></a>使用 Azure 门户创建存储过程
 
 存储过程是你可以在 Azure Cosmos DB 中执行业务逻辑服务器端的方法之一。 使用存储过程，可以在单个事务范围内使用容器对多个文档执行基本的 CRUD（创建、读取、更新、删除）操作。
@@ -21,20 +16,20 @@ ms.locfileid: "146027670"
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -51,7 +46,7 @@ ms.locfileid: "146027670"
     | **索引** | *自动* |
     | **分区键** | /categoryId |
 
-1. 仍然是在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在 SQL API 导航树中选择新的“products”容器节点。   
+1. 仍然是在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在 NoSQL API 导航树中选择新的“products”容器节点。   
 
 1. 选择“新建存储过程”。
 
@@ -223,7 +218,7 @@ ms.locfileid: "146027670"
 
 最后，你将使用数据资源管理器发出 SQL 查询，该查询将返回在本实验室中创建的两个文档。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中选择“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中选择“products”容器节点。
 
 1. 选择“新建 SQL 查询”。
 

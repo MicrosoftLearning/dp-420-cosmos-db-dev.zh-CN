@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 将 Azure Cosmos DB SQL API 帐户密钥存储到 Azure 密钥保管库
-  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 56ecce7cf2b6460419f54813af06c0e0e01738b5
-ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145893422"
+  title: 将 Azure Cosmos DB for NoSQL 帐户密钥存储在 Azure Key Vault 中
+  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
-# <a name="store-azure-cosmos-db-sql-api-account-keys-in-azure-key-vault"></a>将 Azure Cosmos DB SQL API 帐户密钥存储到 Azure 密钥保管库
+
+# <a name="store-azure-cosmos-db-for-nosql-account-keys-in-azure-key-vault"></a>将 Azure Cosmos DB for NoSQL 帐户密钥存储在 Azure Key Vault 中
 
 将 Azure Cosmos DB 帐户连接代码添加到应用程序就像提供帐户的 URI 和密钥一样简单。 有时，此安全信息可能会硬编码到应用程序代码中。 但是，如果将应用程序部署到 Azure 应用服务，则可以将加密连接信息保存到 Azure 密钥保管库。
 
@@ -27,28 +22,28 @@ ms.locfileid: "145893422"
 
     > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
-1. 克隆存储库后，关闭 Visual Studio Code__*。 稍后，直接指向 28-key-vault，以打开该文件夹。
+1. 克隆存储库后，关闭 Visual Studio Code。 稍后，直接指向 28-key-vault，以打开该文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -64,9 +59,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在 Azure 门户，导航到“密钥保管库”页面。
 
-1. 选择“+ 创建”按钮添加保管库，并使用以下设置填写保管库，将所有其余设置保留为其默认值，然后选择创建保管库*__：
+1. 选择“+ 创建”按钮添加保管库，并使用以下设置填写保管库，将所有其余设置保留为其默认值，然后选择以创建保管库：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -275,7 +270,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“设置”部分下，选择“访问策略”。
 
-1. 选择“+ 添加访问策略”。
+1. 选择“+ 添加访问策略”****。
 
 1. 使用以下设置填写“访问策略”值，将所有其余设置保留为默认值，然后选择添加策略 ：
 
