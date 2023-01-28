@@ -1,17 +1,12 @@
 ---
 lab:
-  title: 通过门户配置 Azure Cosmos DB SQL API 容器的索引策略
-  module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 8e111a060e68c32dfb03a2b2b239131298dd0919
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773637"
+  title: 通过门户查看 Azure Cosmos DB for NoSQL 容器的默认索引策略
+  module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
 ---
-# <a name="configure-an-azure-cosmos-db-sql-api-containers-index-policy-using-the-sdk"></a>使用 SDK 配置 Azure Cosmos DB SQL API 容器的索引策略
 
-可以从任何 Azure Cosmos DB SDK 管理索引策略。 .NET SDK 专门包含了一组类，可用于构建新的索引策略，并将其推送到 Azure Cosmos DB SQL API 中的容器。
+# <a name="configure-an-azure-cosmos-db-for-nosql-containers-index-policy-using-the-sdk"></a>使用 SDK 配置 Azure Cosmos DB for NoSQL 容器的索引策略
+
+可以从任何 Azure Cosmos DB SDK 管理索引策略。 .NET SDK 专门包含了一组类，可用于构建新的索引策略，并将其推送到 Azure Cosmos DB for NoSQL 中的容器。
 
 在此实验室中，你将使用 .NET SDK 为容器创建自定义索引策略
 
@@ -25,30 +20,30 @@ ms.locfileid: "144773637"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -98,7 +93,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     policy.IndexingMode = IndexingMode.Consistent;
     ```
 
-1. 将 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] 类型的新对象添加到 _policy* 变量中的 [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] 集合属性，并将其 [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] 属性设置为 /_ 的值：
+1. 将 [ExcludedPath][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath] 类型的新对象添加到 _policy 变量中的 [ExcludedPaths][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy.excludedpaths] 集合属性，并将其 [Path][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.excludedpath.path] 属性设置为 /*_ 的值 ：
 
     ```
     policy.ExcludedPaths.Add(
@@ -196,11 +191,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点   。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
-1. 在 SQL API 导航树的 products 容器节点内，选择“缩放和设置”  。
+1. 在 NoSQL API 导航树的 products 容器节点内，选择“缩放和设置”  。
 
 1. 在“索引策略”部分中观察索引策略：
 

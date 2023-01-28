@@ -1,19 +1,14 @@
 ---
 lab:
-  title: 优化 Azure Cosmos DB SQL API 容器的写入操作索引策略
-  module: Module 10 - Optimize query performance in Azure Cosmos DB SQL API
-ms.openlocfilehash: d83af5c3783a7502a2f2e220b3b2ae566c0338fe
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024940"
+  title: 优化 Azure Cosmos DB for NoSQL 容器的索引策略以执行常见操作
+  module: Module 10 - Optimize query and operation performance in Azure Cosmos DB for NoSQL
 ---
-# <a name="optimize-an-azure-cosmos-db-sql-api-containers-indexing-policy-for-write-operations"></a>优化 Azure Cosmos DB SQL API 容器的写入操作索引策略
+
+# <a name="optimize-an-azure-cosmos-db-for-nosql-containers-indexing-policy-for-common-operations"></a>优化 Azure Cosmos DB for NoSQL 容器的索引策略以执行常见操作
 
 对于写入量很大的工作负载或具有大型 JSON 对象的工作负载，优化索引策略以只索引你知道要用于查询的属性可能更有利。
 
-在本实验室中，我们将使用测试 .NET 应用程序，使用默认索引策略将大型 JSON 项插入到 Azure Cosmos DB SQL API 容器中，然后使用经过微调的索引策略。
+在本实验室中，我们将使用测试 .NET 应用程序，使用默认索引策略将大型 JSON 项插入到 Azure Cosmos DB for NoSQL 容器中，然后使用经过微调的索引策略。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -25,29 +20,29 @@ ms.locfileid: "138024940"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *无服务器* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -55,7 +50,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
@@ -77,7 +72,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 ## <a name="run-the-test-net-application-using-the-default-indexing-policy"></a>使用默认索引策略运行测试 .NET 应用程序
 
-此实验室有一个预生成的测试 .NET 应用程序，该应用程序将采用大型 JSON 对象，并在 Azure Cosmos DB SQL API 容器中创建新项。 单次写入操作完成后，应用程序将项的唯一标识符和 RU 费用输出到控制台窗口。
+此实验室有一个预生成的测试 .NET 应用程序，该应用程序将采用大型 JSON 对象，并在 Azure Cosmos DB for NoSQL 容器中创建新项。 单次写入操作完成后，应用程序将项的唯一标识符和 RU 费用输出到控制台窗口。
 
 1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 23-index-optimization 文件夹。
 
@@ -111,7 +106,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
 
 1. 保存 script.cs 代码文件 。
 

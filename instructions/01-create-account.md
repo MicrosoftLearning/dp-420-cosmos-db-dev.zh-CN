@@ -1,23 +1,18 @@
 ---
 lab:
-  title: 创建 Azure Cosmos DB SQL API 帐户
-  module: Module 1 - Get started with Azure Cosmos DB SQL API
-ms.openlocfilehash: 4afd40294fba387fcc1ef5dda3196cc623609227
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024994"
+  title: 创建 Azure Cosmos DB for NoSQL 帐户
+  module: Module 1 - Get started with Azure Cosmos DB for NoSQL
 ---
-# <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+
+# <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
 在深入了解 Azure Cosmos DB 之前，请务必了解有关创建最常使用资源的基本知识。 在大多数情况下，你需要熟悉创建帐户、数据库、容器和项的流程。 在实际情况下，还应该有几个现成的基本查询，用来测试是否正确创建了所有资源。
 
-在此实验室中，你将使用 SQL API 创建新的 Azure Cosmos DB 帐户。 然后，你将使用数据资源管理器创建一个数据库、一个容器和两个项。 最后，将在数据库中查询已创建的项。
+在此实验室中，你将使用 Azure Cosmos DB for NoSQL 创建新的 Azure Cosmos DB 帐户。 然后，你将使用数据资源管理器创建一个数据库、一个容器和两个项。 最后，将在数据库中查询已创建的项。
 
 ## <a name="create-a-new-azure-cosmos-db-account"></a>创建新的 Azure Cosmos DB 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
@@ -27,7 +22,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128161; 或者，展开“&#8801;”菜单，选择“所有服务”，在“数据库”类别中选择“Azure Cosmos DB”，然后选择“创建”。
 
-1. 在“选择 API 选项”窗格中，选择“核心(SQL) - 建议”部分中的“创建”选项。
+1. 在“选择 API 选项”窗格中，选择“Azure Cosmos DB for NoSQL”部分中的“创建”选项。
 
 1. 在“创建 Azure Cosmos DB 帐户”窗格内，查看“基本信息”选项卡。
 
@@ -44,7 +39,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 依次选择“审阅并创建”以导航到“审阅并创建”选项卡，然后选择“创建”。
 
-    > &#128221; Azure Cosmos DB SQL API 帐户可能需要 10-15 分钟才能可供使用。
+    > &#128221; Azure Cosmos DB for NoSQL 帐户可能需要 10-15 分钟才能可供使用。
 
 1. 观察“部署”窗格。 部署完成后，窗格将更新，显示“部署成功”消息。
 
@@ -52,13 +47,13 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 ## <a name="use-the-data-explorer-to-create-a-new-database-and-container"></a>使用数据资源管理器来创建新的数据库和容器
 
-数据资源管理器将是用于在 Azure 门户中管理 Azure Cosmos DB SQL API 数据库和容器的主要工具。 你将创建一个要在此实验室中使用的基本数据库和容器。
+数据资源管理器将是用于在 Azure 门户中管理 Azure Cosmos DB for NoSQL 数据库和容器的主要工具。 你将创建一个要在此实验室中使用的基本数据库和容器。
 
 1. 从“Azure Cosmos DB 帐户”窗格内，选择资源菜单中的“数据资源管理器”。
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
@@ -73,7 +68,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 ## <a name="use-the-data-explorer-to-create-new-items"></a>使用数据资源管理器创建新项
 
-数据资源管理器还包含一套功能，可用于在 Azure Cosmos DB SQL API 容器中查询、创建和管理项。 你将在数据资源管理器中使用原始 JSON 创建两个基本项。
+数据资源管理器还包含一套功能，可用于在 Azure Cosmos DB for NoSQL 容器中查询、创建和管理项。 你将在数据资源管理器中使用原始 JSON 创建两个基本项。
 
 1. 在“数据资源管理器”窗格中，依次展开“cosmicworks”数据库节点和“products”容器节点，然后选择“项”。
 

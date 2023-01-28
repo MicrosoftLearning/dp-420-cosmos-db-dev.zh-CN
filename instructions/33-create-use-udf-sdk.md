@@ -1,10 +1,10 @@
 ---
 lab:
-  title: 借助 SDK 实现并使用 UDF
+  title: 通过 SDK 实现和使用用户定义的函数
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
 
-# <a name="implement-and-then-use-a-udf-using-the-sdk"></a>借助 SDK 实现并使用 UDF
+# <a name="implement-and-then-use-user-defined-functions-with-the-sdk"></a>通过 SDK 实现和使用用户定义的函数
 
 适用于 Azure Cosmos DB for NoSQL 的 .NET SDK 可用于直接从容器管理和调用服务器端编程结构。 准备新容器时，建议使用 .NET SDK 将 UDF 直接发布到容器，而不是使用数据资源管理器手动执行任务。
 
@@ -18,7 +18,7 @@ lab:
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
     > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
@@ -34,7 +34,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
