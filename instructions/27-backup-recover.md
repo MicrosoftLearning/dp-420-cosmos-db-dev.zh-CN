@@ -1,35 +1,30 @@
 ---
 Lab:
   title: 从恢复点恢复数据库或容器
-  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 5b3dca08e8c95281c3a06b688ec36b82c119ed2e
-ms.sourcegitcommit: b6d75bce14482279e6b4b3c8eb9d792a07516916
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145893413"
+  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
+
 # <a name="recover-a-database-or-container-from-a-recovery-point"></a>从恢复点恢复数据库或容器 
 
 Azure 自动执行数据的加密备份。 这些备份以两种模式进行：定期备份模式和连续备份模式 。
 
 在此实验室中，你将使用连续备份模式执行 `backup` 和 `restores`。 首先，创建一个 Azure Cosmos DB 帐户。 然后，创建两个容器，并在其中添加一些文档。 接下来，将更新这些容器中的一些文档。 最后，将帐户还原到每次删除前的某个点。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
@@ -242,7 +237,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **位置** | 已选择可用位置 |
     | **选择要还原的资源** | 已选择数据库/容器 |
     | **还原资源** | salesOrder |
-    | **还原目标帐户** | 选择一个新的 Azure Cosmos DB 帐户名称 * |
+    | **还原目标帐户** | 选择一个新的 Azure Cosmos DB 帐户名称 |
 
     > &#128221; 对于 Azure Cosmos DB 还原，切勿在现有帐户的基础上还原，而是始终必须创建一个新的 Azure Cosmos DB 帐户。
 
@@ -272,7 +267,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **还原点 (UTC)** | 适当转换日期和时间。 时间需要采用 AM/PM 格式|
     | **选择要还原的资源** | 已选择数据库/容器 |
     | **还原资源** | *`customer`* |
-    | **还原目标帐户** | 选择一个新的 Azure Cosmos DB 帐户名称 * |
+    | **还原目标帐户** | 选择一个新的 Azure Cosmos DB 帐户名称 |
 
     > &#128221; 对于 Azure Cosmos DB 还原，切勿在现有帐户的基础上还原，而是始终必须创建一个新的 Azure Cosmos DB 帐户。
 

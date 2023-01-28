@@ -1,17 +1,12 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 处理更改源事件
-  module: Module 7 - Integrate Azure Cosmos DB SQL API with Azure services
-ms.openlocfilehash: 5cb8fe36f952140f0579df10bba19a4fcad33b54
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773619"
+  title: 使用 Azure Cosmos DB for NoSQL SDK 处理更改源事件
+  module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
-# <a name="process-change-feed-events-using-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 处理更改源事件
 
-Azure Cosmos DB SQL API 更改源是创建由平台中的事件驱动的补充应用程序的关键。 适用于 Azure Cosmos DB SQL API 的 .NET SDK 附带了一套类，用于生成应用程序以与更改源集成并侦听有关容器内操作的通知。
+# <a name="process-change-feed-events-using-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 处理更改源事件
+
+Azure Cosmos DB for NoSQL 更改源是创建由平台中的事件驱动的补充应用程序的关键。 适用于 Azure Cosmos DB for NoSQL 的 .NET SDK 附带了一套类，用于生成应用程序以与更改源集成并侦听有关容器内操作的通知。
 
 在本实验中，你将使用 .NET SDK 中的更改源处理器功能创建一个应用程序，当对指定容器中的项执行创建或更新操作时，该应用程序会收到通知。
 
@@ -23,31 +18,31 @@ Azure Cosmos DB SQL API 更改源是创建由平台中的事件驱动的补充�
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *无服务器* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -270,9 +265,9 @@ Microsoft.Azure.Cosmos.Container 类附带一系列方法，用于流畅地生�
 
 1. 让 Visual Studio Code 和终端保持打开状态。
 
-    > &#128221; 你将使用另一个工具在 Azure Cosmos DB SQL API 容器中生成项。 生成项后，将返回到此终端以观察输出。 不要提前关闭该终端。
+    > &#128221; 将使用另一个工具在 Azure Cosmos DB for NoSQL 容器中生成项。 生成项后，将返回到此终端以观察输出。 不要提前关闭该终端。
 
-## <a name="seed-your-azure-cosmos-db-sql-api-account-with-sample-data"></a>使用示例数据设置 Azure Cosmos DB SQL API 种子帐户
+## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>使用示例数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
 你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器。  然后，该工具将创建一组项，你将使用终端窗口中运行的更改源处理器来观察它们。
 

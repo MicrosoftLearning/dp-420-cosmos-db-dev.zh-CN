@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 使用 Azure Monitor 分析 Azure Cosmos DB SQL API 帐户
-  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 55c1fe4335145a346bb1a197594a5c2d36c7fe7c
-ms.sourcegitcommit: fc48219b2f9ba5cbae4b0ba00b22142246bb2195
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/26/2022
-ms.locfileid: "145890692"
+  title: 使用 Azure Monitor 分析 Azure Cosmos DB for NoSQL 帐户
+  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
-# <a name="use-azure-monitor-to-analyze-an-azure-cosmos-db-sql-api-account"></a>使用 Azure Monitor 分析 Azure Cosmos DB SQL API 帐户
+
+# <a name="use-azure-monitor-to-analyze-an-azure-cosmos-db-for-nosql-account"></a>使用 Azure Monitor 分析 Azure Cosmos DB for NoSQL 帐户
 
 Azure Monitor 是 Azure 中的全栈监视服务，它提供了一套完整的功能来监视 Azure 资源。  Azure Cosmos DB 使用 Azure Monitor 来创建监视数据。  Azure Monitor 捕获 Cosmos DB 的指标和遥测数据。
 
@@ -23,33 +18,33 @@ Azure Monitor 是 Azure 中的全栈监视服务，它提供了一套完整的�
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *`Do Not Apply`* |
     | 限制可在此帐户上预配的总吞吐量 | *取消选中* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -133,7 +128,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在 Azure Cosmos DB 左侧菜单的“监视”下，选择“指标”。 你会注意到“范围”和“指标命名空间”字段预填充了正确的信息。 在下面的步骤中，我们将查看一些“指标”选项以及“添加筛选器”和“应用拆分”功能。
 
-1. 默认情况下，“指标”部分将显示过去 24 小时内的诊断信息。 我们需要更精细地查看在上一步中创建的工作负载中的指标。 在右上角，选择标记为“本地时间: 过去 24 小时(自动)”*_的按钮，随后将显示一个窗口，其中包含多个单选按钮时间范围选项。  选择标记为“过去 30 分钟”_***的单选按钮，然后选择“应用”按钮。 如果需要，可以选择“自定义”单选按钮，并选择一个开始和结束的日期和时间，以获得更精细的粒度。 
+1. 默认情况下，“指标”部分将显示过去 24 小时内的诊断信息。 我们需要更精细地查看在上一步中创建的工作负载中的指标。 在右上角，选择标记为“本地时间: 过去 24 小时(自动)”的按钮，随后将显示一个窗口，其中包含多个单选按钮时间范围选项。  选择标记为“过去 30 分钟”的单选按钮，然后选择“应用”按钮 。 如果需要，可以选择“自定义”单选按钮，并选择一个开始和结束的日期和时间，以获得更精细的粒度。 
 
 1. 现在我们有了诊断图表的时间范围，接下来让我们看看一些指标。 我们将从通用指标开始。 从“指标”下拉菜单中选择“请求单位总数”。 默认情况下，此指标显示为 RU 总和。 或者，可以将“聚合”下拉菜单更改为 avg 或 max。检查这两个聚合后，将其设置回 Sum 以执行接下来的步骤。
 
@@ -147,7 +142,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 这里有两个关键筛选器可以帮助我们排查不同类型的问题。 我们添加一个具有 StatusCode 属性的筛选器（请注意，具有不同类型详细信息的类似筛选器是 Status），对于“值”，选择“200”和“429”。 更改 Split 以使用 StatusCode。 请注意，与状态 200 成功请求相比，存在大量的 429 或速率限制请求。 出现 429 异常是因为脚本每秒发送了数千个请求，而我们将预配吞吐量设置为 400 RU/秒。 与成功的请求相比，这种大量的 429 异常在生产环境中是不正常的。在生产环境中，429 异常应很少出现在正常运行的 Azure Cosmos DB 帐户中。  你还可以使用 StautusCode 或 Status 属性对“请求单位总数”进行类似的故障排除
 
-1. 接下来，我们来看看“请求总数”，但将拆分更改为 OperationType。  此属性可帮助我们确定哪些读取或写入操作正在执行大部分工作。 同样，此属性也可以通过类似方式用于“请求单元总数”
+1. 接下来，我们来看看“请求总数”，但将拆分更改为 OperationType 。  此属性可帮助我们确定哪些读取或写入操作正在执行大部分工作。 同样，此属性也可以通过类似方式用于“请求单元总数”
 
 1. 就像我们对“请求单位总数”执行的操作一样，试验选择不同的筛选器和拆分选项。 
 
@@ -167,7 +162,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 请注意，在图表顶部，我们可以锁定在“时间范围”，因此，请选择“15”或“30”分钟来评估此练习中的工作负载。
 
-1. 在每个图表的右上角，你会注意到“打开指标资源管理器”*_选项。 接下来，为“请求总数”图表选择“打开指标资源管理器”_*选项。 你会注意到，当你选择此选项时，将转到我们之前查看的“指标”报告。 打开“指标资源管理器”的优点在于，它已为我们生成图表的大部分内容。
+1. 在每个图表的右上角，你会注意到“打开指标资源管理器”选项。 接下来，为“请求总数”图表选择“打开指标资源管理器”选项 。 你会注意到，当你选择此选项时，将转到我们之前查看的“指标”报告。 打开“指标资源管理器”的优点在于，它已为我们生成图表的大部分内容。
 
 1. 通过选择“指标”图表右上角的“X”，返回“见解”页面。
 

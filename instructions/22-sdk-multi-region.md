@@ -1,19 +1,14 @@
 ---
 lab:
-  title: 通过 Azure Cosmos DB SQL API SDK 连接到多区域写入帐户
-  module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: bc9f23e136b5987fb55c386485916c701d016fd1
-ms.sourcegitcommit: b90234424e5cfa18d9873dac71fcd636c8ff1bef
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 01/12/2022
-ms.locfileid: "138024941"
+  title: 通过 Azure Cosmos DB for NoSQL SDK 连接到多区域写入帐户
+  module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB for NoSQL
 ---
-# <a name="connect-to-a-multi-region-write-account-with-the-azure-cosmos-db-sql-api-sdk"></a>通过 Azure Cosmos DB SQL API SDK 连接到多区域写入帐户
 
-CosmosClientBuilder 类是一种流畅的类，设计为构建 SDK 客户端以连接到容器并执行操作。 如果你的 Azure Cosmos DB SQL API 帐户已配置为进行多区域写入，则可以使用生成器为写入操作配置首选应用程序区域。
+# <a name="connect-to-a-multi-region-write-account-with-the-azure-cosmos-db-for-nosql-sdk"></a>通过 Azure Cosmos DB for NoSQL SDK 连接到多区域写入帐户
 
-在本实验室中，你将为多个区域配置 Azure Cosmos DB SQL API 帐户，并启用多区域写入。 然后，你将使用 SDK 针对特定区域执行操作。
+CosmosClientBuilder 类是一种流畅的类，设计为构建 SDK 客户端以连接到容器并执行操作。 如果你的 Azure Cosmos DB for NoSQL 帐户已配置为进行多区域写入，则可以使用生成器为写入操作配置首选应用程序区域。
+
+在本实验室中，你将为多个区域配置 Azure Cosmos DB for NoSQL 帐户，并启用多区域写入。 然后，你将使用 SDK 针对特定区域执行操作。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -25,30 +20,30 @@ CosmosClientBuilder 类是一种流畅的类，设计为构建 SDK 客户端以�
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -68,12 +63,12 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
-1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定”： 
+1. 在“新建容器”弹出窗口中，为每个设置输入以下值，然后选择“确定” ：
 
     | **设置** | **值** |
     | --: | :-- |
     | **数据库 ID** | 新建 &vert; cosmicworks |
-    | **在容器之间共享吞吐量** | 请不要选择 |
+    | 在容器之间共享吞吐量 | 请不要选择 |
     | **容器 ID** | products |
     | **分区键** | /categoryId |
     | **容器吞吐量** | 手动 &vert; 400 |
@@ -90,7 +85,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="connect-to-the-azure-cosmos-db-sql-api-account-from-the-sdk"></a>从 SDK 连接到 Azure Cosmos DB SQL API 帐户
+## <a name="connect-to-the-azure-cosmos-db-for-nosql-account-from-the-sdk"></a>从 SDK 连接到 Azure Cosmos DB for NoSQL 帐户
 
 使用新创建帐户中的凭据，你将连接到 SDK 类，并创建新的数据库和容器实例。 然后，你将使用数据资源管理器验证这些实例是否存在于 Azure 门户中。
 
@@ -132,7 +127,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
 
 1. 保存 script.cs 代码文件 。
 
@@ -146,7 +141,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     CosmosClientBuilder builder = new (endpoint, key);
     ```
 
-1. 使用之前在实验室中创建的额外区域的名称，创建一个名为 region 的 string 类型的新变量。 例如，如果你在“美国东部”区域创建了 Azure Cosmos DB SQL API 帐户，然后添加了“巴西南部”，字符串变量将包含：
+1. 使用之前在实验室中创建的额外区域的名称，创建一个名为 region 的 string 类型的新变量。 例如，如果你在“美国东部”区域创建了 Azure Cosmos DB for NoSQL 帐户，然后添加了“巴西南部”，字符串变量将包含：
 
     ```
     string region = "Brazil South"; 

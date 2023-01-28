@@ -1,17 +1,12 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
-  module: Module 4 - Access and manage data with the Azure Cosmos DB SQL API SDKs
-ms.openlocfilehash: 07d515ecfeb2ae59284d212323009770380ddcf0
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919960"
+  title: 使用 Azure Cosmos DB for NoSQL SDK 批量移动多个文档
+  module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
-# <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 批量移动多个文档
 
-要了解如何执行批量操作，最简单的方法是尝试将多个文档推送到云中的 Azure Cosmos DB SQL API 帐户。 使用 SDK 的批量功能，可通过 [System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 命名空间提供的一些小帮助完成此操作。
+# <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 批量移动多个文档
+
+要了解如何执行批量操作，最简单的方法是尝试将多个文档推送到云中的 Azure Cosmos DB for NoSQL 帐户。 使用 SDK 的批量功能，可通过 [System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 命名空间提供的一些小帮助完成此操作。
 
 在本实验室中，你将使用 NuGet 的 [Bogus][nuget.org/packages/bogus/33.1.1] 库生成虚构的数据，并将其放入 Azure Cosmos DB 帐户。
 
@@ -25,28 +20,28 @@ ms.locfileid: "145919960"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account-and-configure-the-sdk-project"></a>创建 Azure Cosmos DB SQL API 帐户并配置 SDK 项目
+## <a name="create-an-azure-cosmos-db-for-nosql-account-and-configure-the-sdk-project"></a>创建 Azure Cosmos DB for NoSQL 帐户并配置 SDK 项目
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -92,7 +87,7 @@ ms.locfileid: "145919960"
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
 
 1. 保存 script.cs 代码文件 。
 
@@ -116,7 +111,7 @@ ms.locfileid: "145919960"
 
 ## <a name="bulk-inserting-a-twenty-five-thousand-documents"></a>批量插入 25,000 个文档
 
-接下来，我们不妨尝试大胆地插入大量文档，看看它是如何工作的。 在内部测试中，如果实验室虚拟机和 Azure Cosmos DB SQL API 帐户在地理上相对接近，则可能需要大约 1-2 分钟。
+接下来，我们不妨尝试大胆地插入大量文档，看看它是如何工作的。 在内部测试中，如果实验室虚拟机和 Azure Cosmos DB for NoSQL 帐户在地理上相对接近，则可能需要大约 1-2 分钟。
 
 1. 返回到 script.cs 代码文件的“编辑器”选项卡。
 
@@ -169,7 +164,7 @@ ms.locfileid: "145919960"
     }
     ```
 
-1. 在 foreach 循环中，创建一个 Task，以异步方式将产品插入到 Azure Cosmos DB SQL API，以确保显式指定分区键，并将该任务添加到名为 concurrentTasks 的任务列表：
+1. 在 foreach 循环中，创建一个 Task，以异步方式将产品插入到 Azure Cosmos DB for NoSQL，以确保显式指定分区键，并将该任务添加到名为 concurrentTasks 的任务列表：
 
     ```
     concurrentTasks.Add(
@@ -256,13 +251,13 @@ ms.locfileid: "145919960"
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察“products”容器节点。
 
 1. 展开“products”节点，然后选择“Items”节点。 查看容器中的项列表。
 
-1. 选择“SQL API”导航树中的“products”容器节点，然后选择“新建 SQL 查询”。
+1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“新建 SQL 查询”。
 
 1. 删除编辑器区域的内容。
 

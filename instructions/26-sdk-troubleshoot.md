@@ -1,15 +1,10 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 对应用程序进行故障排除
-  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB SQL API solution
-ms.openlocfilehash: 9e1d3220eac65806d0512c6a22b3ff1b4fe6d778
-ms.sourcegitcommit: e85dbb2b871e28631beea55bfbb47191bd979628
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 06/13/2022
-ms.locfileid: "146316629"
+  title: 使用 Azure Cosmos DB for NoSQL SDK 对应用程序进行故障排除
+  module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
-# <a name="troubleshoot-an-application-using-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 对应用程序进行故障排除
+
+# <a name="troubleshoot-an-application-using-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 对应用程序进行故障排除
 
 Azure Cosmos DB 提供了一组广泛的响应代码，可帮助我们轻松解决不同操作类型产生的问题。 捕获是为了确保在为 Azure Cosmos DB 创建应用时，我们创建了正确的错误处理程序。
 
@@ -29,17 +24,17 @@ Azure Cosmos DB 提供了一组广泛的响应代码，可帮助我们轻松解�
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API） 。 Azure Cosmos DB SQL API 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB SQL API 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
 1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |

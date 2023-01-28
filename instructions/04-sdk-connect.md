@@ -1,19 +1,14 @@
 ---
 lab:
-  title: 通过 SDK 连接 Azure Cosmos DB SQL API
-  module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: df1c9fd90b00e59edbe9e078f8d99ccc043ec209
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919969"
+  title: 通过 SDK 连接 Azure Cosmos DB for NoSQL
+  module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
 ---
-# <a name="connect-to-azure-cosmos-db-sql-api-with-the-sdk"></a>通过 SDK 连接 Azure Cosmos DB SQL API
+
+# <a name="connect-to-azure-cosmos-db-for-nosql-with-the-sdk"></a>通过 SDK 连接 Azure Cosmos DB for NoSQL
 
 Azure SDK for .NET 是一套库，提供一致的开发人员界面来与多种 Azure 服务进行交互。 Azure SDK for .NET 是根据 .NET Standard 2.0 规范构建的，确保它可用于 .NET 框架（4.6.1 或更高版本）、.NET Core（2.1 或更高版本）和 .NET（5 或更高版本）应用程序。
 
-在此实验室中，你将使用 Azure SDK for .NET 连接到 Azure SDK Cosmos DB SQL API 帐户。
+在此实验室中，你将使用 Azure SDK for .NET 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -23,33 +18,33 @@ Azure SDK for .NET 是一套库，提供一致的开发人员界面来与多种 
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
     | 限制可在此帐户上预配的总吞吐量 | *未选中* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -99,7 +94,7 @@ NuGet 网站包含可导入 .NET 应用程序的包的可搜索索引。 若要�
 
 ## <a name="use-the-microsoftazurecosmos-library"></a>使用 Microsoft.Azure.Cosmos 库
 
-导入 Azure SDK for .NET 中的 Azure Cosmos DB 库后，可以立即使用 [Microsoft.Azure.Cosmos][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos] 命名空间中的类连接到 Azure Cosmos DB SQL API 帐户。 [CosmosClient][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient] 类是一个核心类，用于与 Azure Cosmos DB SQL API 帐户建立初始连接。
+导入 Azure SDK for .NET 中的 Azure Cosmos DB 库后，可以立即使用 [Microsoft.Azure.Cosmos][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos] 命名空间中的类连接到 Azure Cosmos DB for NoSQL 帐户。 [CosmosClient][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient] 类是一个核心类，用于与 Azure Cosmos DB for NoSQL 帐户建立初始连接。
 
 1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 04-sdk-connect 文件夹  。
 
@@ -181,7 +176,7 @@ NuGet 网站包含可导入 .NET 应用程序的包的可搜索索引。 若要�
 
 ## <a name="test-the-script"></a>测试脚本
 
-现在用于连接到 Azure Cosmos DB SQL API 帐户的 .NET 代码已完成，可以测试脚本。 此脚本将输出帐户的名称，以及第一个可写区域的名称。 创建帐户后，你指定了一个位置，应会看到输出为此脚本结果的同一位置值。
+现在用于连接到 Azure Cosmos DB for NoSQL 帐户的 .NET 代码已完成，可以测试脚本。 此脚本将输出帐户的名称，以及第一个可写区域的名称。 创建帐户后，你指定了一个位置，应会看到输出为此脚本结果的同一位置值。
 
 1. 在 Visual Studio Code 中，打开 04-sdk-connect 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例  。
 

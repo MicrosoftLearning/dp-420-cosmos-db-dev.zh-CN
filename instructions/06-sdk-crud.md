@@ -1,19 +1,14 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 创建和更新文档
-  module: Module 4 - Implement Azure Cosmos DB SQL API point operations
-ms.openlocfilehash: 4e50de8a4368336f952a8f966ff26340f86fa170
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919963"
+  title: 使用 Azure Cosmos DB for NoSQL SDK 创建和更新文档
+  module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
-# <a name="create-and-update-documents-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 创建和更新文档
 
-[Microsoft.Azure.Cosmos.Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 类包括一组成员方法，用于在 Azure Cosmos DB SQL API 容器中创建、检索、更新和删除项。 这些方法共同在 SQL API 容器中对各种项执行一些最常见的“CRUD”操作。
+# <a name="create-and-update-documents-with-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 创建和更新文档
 
-在本实验室中，你将在 Azure Cosmos DB SQL API 容器中使用 SDK 对项执行日常 CRUD 操作。
+[Microsoft.Azure.Cosmos.Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 类包括一组成员方法，用于在 Azure Cosmos DB for NoSQL 容器中创建、检索、更新和删除项。 这些方法共同在 NoSQL API 容器中对各种项执行一些最常见的“CRUD”操作。
+
+在本实验室中，你将在 Azure Cosmos DB for NoSQL 容器中使用 SDK 对项执行日常 CRUD 操作。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -25,30 +20,30 @@ ms.locfileid: "145919963"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -62,7 +57,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="connect-to-the-azure-cosmos-db-sql-api-account-from-the-sdk"></a>从 SDK 连接到 Azure Cosmos DB SQL API 帐户
+## <a name="connect-to-the-azure-cosmos-db-for-nosql-account-from-the-sdk"></a>从 SDK 连接到 Azure Cosmos DB for NoSQL 帐户
 
 使用新创建帐户中的凭据，你将连接到 SDK 类，并创建新的数据库和容器实例。 然后，你将使用数据资源管理器验证这些实例是否存在于 Azure 门户中。
 
@@ -152,15 +147,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
 ## <a name="perform-create-and-read-point-operations-on-items-with-the-sdk"></a>使用 SDK 对项执行创建和读取点操作
 
-现在，你将在 Microsoft.Azure.Cosmos.Container 类中使用一组异步方法，对 SQL API 容器中的项执行常见操作。 这些操作都是使用 C# 中的任务异步编程模型完成的。
+现在，你将在 Microsoft.Azure.Cosmos.Container 类中使用一组异步方法，对 NoSQL API 容器中的项执行常见操作。 这些操作都是使用 C# 中的任务异步编程模型完成的。
 
 1. 返回到 Visual Studio Code。 在 06-sdk-crud 文件夹内打开 product.cs 代码文件。
 
@@ -347,9 +342,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中展开新“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中展开新“products”容器节点。
 
 1. 选择“Items”节点。 选择容器中的唯一项，然后观察项的 name 和 price 属性的值。
 
@@ -434,9 +429,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中展开新“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中展开新“products”容器节点。
 
 1. 选择“Items”节点。 选择容器中的唯一项，然后观察项的 name 和 price 属性的值。
 
@@ -486,9 +481,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中展开新“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中展开新“products”容器节点。
 
 1. 选择“Items”节点。 应会看到项列表现在为空。
 
