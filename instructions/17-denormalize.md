@@ -1,14 +1,9 @@
 ---
 lab:
   title: 反规范化数据和聚合以及使用更改源实现引用完整性的成本
-  module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB SQL API
-ms.openlocfilehash: 15cd43fa0d9b901c235384a3f2e89f36216f812a
-ms.sourcegitcommit: afe4494c941a80ce5f692349bb002c9e984a6b24
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 06/02/2022
-ms.locfileid: "146018302"
+  module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
 ---
+
 # <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>反规范化数据和聚合以及使用更改源实现引用完整性的成本
 
 使用关系模型可以让我们将不同的实体放置在它们自己的容器中。  但是，在 NoSQL 数据库中，容器之间没有联接，因此我们需要开始反规范化数据，以便消除联接的使用 。 此外，NoSQL 通过为数据建模来减少请求数，以便应用程序可以在尽可能少的请求中提取数据。 反规范化数据时出现的一个问题可能是实体之间的引用完整性，为此，可以使用更改源使数据保持同步。反规范化聚合（如按计数分组）还可以帮助我们减少请求。  
@@ -25,7 +20,7 @@ ms.locfileid: "146018302"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
@@ -37,7 +32,7 @@ ms.locfileid: "146018302"
 
     > &#128161; 要打开 Git Bash 终端，请在终端菜单的右侧，单击 + 符号旁边的下拉菜单，然后选择 Git Bash 。
 
-1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 脚本要求提供 Azure 帐户的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
 
     ```
     az login
@@ -77,7 +72,7 @@ ms.locfileid: "146018302"
 
     ![屏幕截图显示 productCategory 容器的查询结果。](media/16-product-category-results.png)
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 2.93 RU（请求单位）。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 2.8 RU（请求单位）。
 
     ![屏幕截图显示你在数据资源管理器中运行的查询的查询统计信息。](media/16-product-category-stats.png)
 
@@ -95,7 +90,7 @@ ms.locfileid: "146018302"
 
 1. 选择“结果”选项卡，查看结果。 你会看到返回了三个产品：HL Headset、LL Headset 和 ML Headset。 每个产品都有 SKU、名称、价格和一组产品标记。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 2.9 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 2.89 RU。
 
     ![Azure Cosmos DB 数据资源管理器的屏幕截图，显示对 product 容器的查询结果。](media/16-product-results.png)
 
@@ -135,7 +130,7 @@ ms.locfileid: "146018302"
 
     此查询返回 LL Headset 产品的五个标记。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 3.47 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 3.45 RU。
 
     ![屏幕截图显示针对“LL Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ll-stats.png)
 
@@ -153,7 +148,7 @@ ms.locfileid: "146018302"
 
     此查询返回 ML Headset 产品的三个标记。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 3.2 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 3.19 RU。
 
     ![屏幕截图显示针对“ML Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ml-stats.png)
 
@@ -163,12 +158,12 @@ ms.locfileid: "146018302"
 
 |**查询**|**RU/秒 成本**|
 |---------|---------|
-|类别名称|2.93|
-|产品|2.9|
+|类别名称|2.8|
+|产品|2.89|
 |HL 产品标记|3.06|
-|LL 产品标记|3.47|
-|ML 产品标记|3.2|
-|总 RU 成本|**15.56**|
+|LL 产品标记|3.45|
+|ML 产品标记|3.19|
+|总 RU 成本|**15.39**|
 
 ### <a name="run-the-same-queries-for-your-nosql-design"></a>对 NoSQL 设计运行相同的查询
 
@@ -189,7 +184,7 @@ ms.locfileid: "146018302"
 
 1. 查看在此查询中返回的数据。 它包含呈现此类别产品所需的全部信息，包括这三种产品中每种产品的类别名称和标记名称。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 2.9 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 2.89 RU。
 
 ### <a name="compare-the-performance-of-the-two-models"></a>比较两个模型的性能
 

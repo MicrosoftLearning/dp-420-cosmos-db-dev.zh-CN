@@ -1,21 +1,16 @@
 ---
 lab:
   title: 使用 Azure 数据工厂迁移现有数据
-  module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 15a34904589e5ce2e266ec3078f9b794ae744d73
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919954"
+  module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
 ---
+
 # <a name="migrate-existing-data-using-azure-data-factory"></a>使用 Azure 数据工厂迁移现有数据
 
 在 Azure 数据工厂中，支持将 Azure Cosmos DB 作为数据引入的源以及数据输出的目标（接收器）。
 
 在本实验室中，我们将使用有用的命令行实用工具填充 Azure Cosmos DB，然后使用 Azure 数据工厂将数据的子集从一个容器移到另一个容器。
 
-## <a name="create-and-seed-your-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户并设定种子
+## <a name="create-and-seed-your-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户并设定种子
 
 你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器，每秒 4,000 个请求单位（RU/秒）。 创建后，将吞吐量调整至 400 RU/秒。
 
@@ -23,21 +18,21 @@ ms.locfileid: "145919954"
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
     | 限制可在此帐户上预配的总吞吐量 | *未选中* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -117,7 +112,7 @@ ms.locfileid: "145919954"
 
 ## <a name="create-azure-data-factory-resource"></a>创建 Azure 数据工厂资源
 
-Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数据工厂资源，并配置所有必需的组件和连接，以执行从一个 SQL API 容器到另一个容器的一次性数据移动，以提取数据、转换数据，并将其加载到另一个 SQL API 容器。
+Azure Cosmos DB for NoSQL 资源已就绪，接下来你将创建一个 Azure 数据工厂资源，并配置所有必需的组件和连接，以执行从一个 NoSQL API 容器到另一个容器的一次性数据移动，以提取数据、转换数据，并将其加载到另一个 NoSQL API 容器。
 
 1. 选择“+ 创建资源”，搜索“数据工厂”，然后使用以下设置创建新的“Azure 数据工厂”资源，并将所有其余设置保留为默认值：
 
@@ -125,16 +120,16 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **名称** | 输入一个全局唯一的名称 |
+    | **名称** | 输入全局唯一名称 |
     | **区域** | 选择任何可用区域 |
     | **版本** | *V2* |
     | **Git 配置** | 稍后配置 Git |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
-1. 转到新创建的“Azure 数据工厂”资源，然后选择“打开 Azure 数据工厂工作室”。
+1. 转到新创建的“Azure 数据工厂”资源，然后选择“启动工作室”。
 
     > &#128161; 或者，可以导航到 (``adf.azure.com/home``)，选择新创建的数据工厂资源，然后选择主页图标。
 
@@ -144,11 +139,11 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
 
 1. 在“任务节奏或任务计划”部分，选择“立即运行一次”，然后选择“下一步”以转到向导的“源”步骤。
 
-1. 在向导的“源”步骤中，选择“源类型”列表中的“Azure Cosmos DB (SQL API)”。
+1. 在向导的“源”步骤中，选择“源类型”列表中的“Azure Cosmos DB (NoSQL API)”。
 
 1. 在“连接”部分，选择“+ 新建连接”。
 
-1. 在“新建连接(Azure DB Cosmos (SQL API))”弹出窗口中，配置具有以下值的新连接，然后选择“创建”：
+1. 在“新建连接(Azure DB Cosmos (NoSQL API))”弹出窗口中，配置具有以下值的新连接，然后选择“创建”：
 
     | **设置** | **值** |
     | ---: | :--- |
@@ -177,7 +172,7 @@ Azure Cosmos DB SQL API 资源已就绪，接下来你将创建一个 Azure 数�
 
 1. 选择“预览数据”以测试查询的有效性。 选择“下一步”，转到向导的“目标”步骤。
 
-1. 在向导的“目标”步骤中，选择“目标类型”列表中的“Azure Cosmos DB (SQL API)”。
+1. 在向导的“目标”步骤中，选择“目标类型”列表中的“Azure Cosmos DB (NoSQL API)”。
 
 1. 在“连接”列表中，选择“CosmosSqlConn”。
 

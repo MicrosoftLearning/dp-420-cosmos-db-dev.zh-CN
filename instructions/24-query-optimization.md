@@ -1,7 +1,7 @@
 ---
 lab:
-  title: 优化用于查询的 Azure Cosmos DB for NoSQL 容器索引策略
-  module: Module 10 - Optimize query performance in Azure Cosmos DB for NoSQL
+  title: 优化 Azure Cosmos DB for NoSQL 容器的索引策略以执行特定查询
+  module: Module 10 - Optimize query and operation performance in Azure Cosmos DB for NoSQL
 ---
 
 # <a name="optimize-an-azure-cosmos-db-for-nosql-containers-indexing-policy-for-a-query"></a>优化用于查询的 Azure Cosmos DB for NoSQL 容器索引策略
@@ -20,7 +20,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -114,7 +114,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 删除编辑器区域的内容。
 
-1. 创建一个新的 SQL 查询，该查询将返回 name 等同于 HL Headset 的所有文档：
+1. 创建一个新的 SQL 查询，该查询将从所有文档返回所有三个值：
 
     ```
     SELECT 
@@ -131,7 +131,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 删除编辑器区域的内容。
 
-1. 创建一个新的 SQL 查询，该查询将返回 name 等同于 HL Headset 的所有文档：
+1. 创建一个新的 SQL 查询，该查询将从所有文档按 categoryName 返回所有三个值：
 
     ```
     SELECT 
@@ -265,7 +265,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“执行查询”。
 
-1. 观察查询的结果和统计信息。 请求单位费用将再次增加，因为查询复杂了以及缺少支持的复合索引。
+1. 查询应会失败，并显示错误：“order by”查询没有相应的复合索引可用于提供相应服务。
 
 1. 在“数据资源管理器”中，依次展开“cosmicworks”数据库节点和“products”容器节点，然后再次选择“设置”。
 

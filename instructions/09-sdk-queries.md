@@ -1,21 +1,16 @@
 ---
 lab:
-  title: 使用 Azure Cosmos DB SQL API SDK 执行查询
-  module: Module 5 - Execute queries in Azure Cosmos DB SQL API
-ms.openlocfilehash: cc0f5c470747dca5ea494b29eeb1b2397223ffd8
-ms.sourcegitcommit: b86b01443b8043b4cfefd2cf6bf6b5104e2ff514
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/05/2022
-ms.locfileid: "144773634"
+  title: 使用 Azure Cosmos DB for NoSQL SDK 执行查询
+  module: Module 5 - Execute queries in Azure Cosmos DB for NoSQL
 ---
-# <a name="execute-a-query-with-the-azure-cosmos-db-sql-api-sdk"></a>使用 Azure Cosmos DB SQL API SDK 执行查询
 
-利用最新版本的用于 Azure Cosmos DB SQL API 的 .NET SDK 可以更容易地查询容器，并使用 C# 中的最新最佳做法和语言功能异步遍历结果集。
+# <a name="execute-a-query-with-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 执行查询
+
+利用最新版本的用于 Azure Cosmos DB for NoSQL 的 .NET SDK 可以更容易地查询容器，并使用 C# 中的最新最佳做法和语言功能异步遍历结果集。
 
 > &#128161; 此实验室使用 NuGet 上的 4.0.0-preview3 版本的 [Azure.Cosmos][nuget.org/packages/azure.cosmos/4.0.0-preview3] 库。 此库具有特殊功能，让你可以更轻松地使用[异步流][docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams]查询 Azure Cosmos DB。
 
-在此实验室中，你将使用异步流来遍历从 Azure Cosmos DB SQL API 返回的大型结果集。 你将使用 .NET SDK 查询和遍历结果。
+在此实验室中，你将使用异步流来遍历从 Azure Cosmos DB for NoSQL 返回的大型结果集。 你将使用 .NET SDK 查询和遍历结果。
 
 ## <a name="prepare-your-development-environment"></a>准备开发环境
 
@@ -27,30 +22,30 @@ ms.locfileid: "144773634"
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-sql-api-account"></a>创建 Azure Cosmos DB SQL API 帐户
+## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
 
-Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 SQL API）。 完成 Azure Cosmos DB SQL API 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB SQL API 帐户。
+Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
+1. 使用与你的订阅关联的 Microsoft 凭证登录到门户。
 
-1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB SQL API”帐户资源，并将所有其余设置保留为默认值：
+1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
-    | **帐户名** | 输入一个全局唯一的名称 |
+    | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
     | **应用免费分级折扣** | *不应用* |
 
-    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用预先创建的现有资源组。
+    > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
 1. 等待部署任务完成，然后继续执行此任务。
 
@@ -64,11 +59,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="seed-the-azure-cosmos-db-sql-api-account-with-data"></a>使用数据为 Azure Cosmos DB SQL API 帐户设定种子
+## <a name="seed-the-azure-cosmos-db-for-nosql-account-with-data"></a>使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
-[cosmicworks][nuget.org/packages/cosmicworks] 命令行工具将示例数据部署到任何 Azure Cosmos DB SQL API 帐户。 该工具是开源工具，可通过 NuGet 获得。 需要将此工具安装到 Azure Cloud Shell，然后使用它来设定数据库种子。
+[cosmicworks][nuget.org/packages/cosmicworks] 命令行工具将示例数据部署到任何 Azure Cosmos DB for NoSQL 帐户。 该工具是开源工具，可通过 NuGet 获得。 将此工具安装到 Azure Cloud Shell，然后使用它来设定数据库种子。
 
-1. 在 Visual Studio Code 中，打开“终端”菜单，然后选择“新建终端”以打开新的终端实例。
+1. 在 Visual Studio Code 中，打开“终端”菜单，然后选择“新建终端”以打开新的终端实例  。
 
 1. 在计算机上安装可全局使用的 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具。
 

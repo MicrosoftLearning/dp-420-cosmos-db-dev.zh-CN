@@ -1,17 +1,12 @@
 ---
 lab:
-  title: 通过 Azure 门户为 Azure Cosmos DB SQL API 配置吞吐量
-  module: Module 2 - Plan and implement Azure Cosmos DB SQL API
-ms.openlocfilehash: 08dca99514789805471e0068fb19d5c9e331f80d
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919957"
+  title: 通过 Azure 门户为 Azure Cosmos DB for NoSQL 配置吞吐量
+  module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
 ---
-# <a name="configure-throughput-for-azure-cosmos-db-sql-api-with-the-azure-portal"></a>通过 Azure 门户为 Azure Cosmos DB SQL API 配置吞吐量
 
-配置 Azure Cosmos DB SQL API 吞吐量是最重要的事情之一。 为了创建 Azure Cosmos DB SQL API 容器，必须首先创建一个帐户，然后创建一个数据库，按顺序进行。
+# <a name="configure-throughput-for-azure-cosmos-db-for-nosql-with-the-azure-portal"></a>通过 Azure 门户为 Azure Cosmos DB for NoSQL 配置吞吐量
+
+配置 Azure Cosmos DB for NoSQL 吞吐量是最重要的事情之一。 为了创建 Azure Cosmos DB for NoSQL 容器，必须首先创建一个帐户，然后创建一个数据库，按顺序进行。
 
 在本实验室中，你将在数据资源管理器中使用各种方法预配吞吐量。 你将通过手动方式或使用自动缩放在数据库和容器级别预配吞吐量。
 
@@ -27,7 +22,7 @@ ms.locfileid: "145919957"
 
     > &#128161; 或者，展开“&#8801;”菜单，选择“所有服务”，在“数据库”类别中选择“Azure Cosmos DB”，然后选择“创建”。
 
-1. 在“选择 API 选项”窗格中，选择“核心(SQL) - 建议”部分中的“创建”选项。
+1. 在“选择 API 选项”窗格中，选择“Azure Cosmos DB for NoSQL”部分中的“创建”选项。
 
 1. 在“创建 Azure Cosmos DB 帐户”窗格内，查看“基本信息”选项卡。
 
@@ -43,7 +38,7 @@ ms.locfileid: "145919957"
 
 1. 依次选择“审阅并创建”以导航到“审阅并创建”选项卡，然后选择“创建”。
 
-    > &#128221; Azure Cosmos DB SQL API 帐户可能需要 10-15 分钟才能可供使用。
+    > &#128221; Azure Cosmos DB for NoSQL 帐户可能需要 10-15 分钟才能可供使用。
 
 1. 观察“部署”窗格。 部署完成后，窗格将更新，显示“部署成功”消息。
 
@@ -83,7 +78,7 @@ ms.locfileid: "145919957"
 
     > &#128161; 或者，展开“&#8801;”菜单，选择“所有服务”，在“数据库”类别中选择“Azure Cosmos DB”，然后选择“创建”。
 
-1. 在“选择 API 选项”窗格中，选择“核心(SQL) - 建议”部分中的“创建”选项。
+1. 在“选择 API 选项”窗格中，选择“Azure Cosmos DB for NoSQL”部分中的“创建”选项。
 
 1. 在“创建 Azure Cosmos DB 帐户”窗格内，查看“基本信息”选项卡。
 
@@ -101,7 +96,7 @@ ms.locfileid: "145919957"
 
 1. 依次选择“审阅并创建”以导航到“审阅并创建”选项卡，然后选择“创建”。
 
-    > &#128221; Azure Cosmos DB SQL API 帐户可能需要 10-15 分钟才能可供使用。
+    > &#128221; Azure Cosmos DB for NoSQL 帐户可能需要 10-15 分钟才能可供使用。
 
 1. 观察“部署”窗格。 部署完成后，窗格将更新，显示“部署成功”消息。
 

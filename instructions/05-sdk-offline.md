@@ -1,17 +1,12 @@
 ---
 lab:
-  title: 配置 Azure Cosmos DB SQL API SDK 进行脱机开发
-  module: Module 3 - Connect to Azure Cosmos DB SQL API with the SDK
-ms.openlocfilehash: f977dc20266bbd843ab9c94bae8cf08672b99dd9
-ms.sourcegitcommit: 70795561eb9e26234c0e0ce614c2e8be120135ac
-ms.translationtype: HT
-ms.contentlocale: zh-CN
-ms.lasthandoff: 05/28/2022
-ms.locfileid: "145919966"
+  title: 配置 Azure Cosmos DB for NoSQL SDK 进行脱机开发
+  module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
 ---
-# <a name="configure-the-azure-cosmos-db-sql-api-sdk-for-offline-development"></a>配置 Azure Cosmos DB SQL API SDK 进行脱机开发
 
-Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB 服务，用于开发和测试。 该仿真器支持 SQL API，在使用 Azure SDK for .NET 开发代码时，可以使用它来代替云服务。
+# <a name="configure-the-azure-cosmos-db-for-nosql-sdk-for-offline-development"></a>配置 Azure Cosmos DB for NoSQL SDK 进行脱机开发
+
+Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB 服务，用于开发和测试。 该仿真器支持 NoSQL，在使用 Azure SDK for .NET 开发代码时，可以使用它来代替云服务。
 
 在本实验室中，你将从 Azure SDK for .NET 连接到 Azure Cosmos DB 仿真器。
 
@@ -25,7 +20,7 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
 1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
-    > &#128161; 可以使用 CTRL+SHIFT+P 键盘快捷方式打开命令面板。
+    > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
@@ -37,7 +32,7 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
     > &#128221; 系统可能会提示你授予管理员访问权限以启动仿真器。 在实验室环境中，Admin 帐户密码与 Student 帐户密码相同。
 
-    > &#128161; Azure Cosmos DB 仿真器已固定到 Windows 任务栏和“开始”菜单。如果仿真器未从固定图标启动，请尝试通过双击 C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe 文件来打开它 ** 。 请注意，仿真器需要 20-30 秒才能启动。
+    > &#128161; Azure Cosmos DB 仿真器已固定到 Windows 任务栏和“开始”菜单。 如果仿真器未从固定图标启动，请尝试通过双击 C:\Program Files\Azure Cosmos DB Emulator\CosmosDB.Emulator.exe 文件来打开它。 请注意，仿真器需要 20-30 秒才能启动。
 
 1. 等待仿真器自动打开默认浏览器并导航到 localhost:8081/_explorer/index.html 登陆页面。
 
@@ -49,7 +44,7 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
 1. 导航到“资源管理器”窗格。
 
-1. 在“数据资源管理器”中，观察“SQL API”导航树中是否没有节点。
+1. 在“数据资源管理器”中，观察“NoSQL API”导航树中是否没有节点。
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
@@ -119,13 +114,13 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 ## <a name="view-the-changes-in-the-emulator"></a>在仿真器中查看更改
 
-在 Azure Cosmos DB 仿真器中创建了一个新数据库后，将使用联机数据资源管理器来观察仿真器中的 SQL API 数据库。
+在 Azure Cosmos DB 仿真器中创建了一个新数据库后，将使用联机数据资源管理器来观察仿真器中的 NoSQL API 数据库。
 
 1. 导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“打开数据资源管理器...”，使用默认浏览器导航到 localhost:8081/_explorer/ 登陆页面。
 
 1. 在 Azure Cosmos DB 仿真器登陆页面中，导航到“资源管理器”窗格。
 
-1. 在“数据资源管理器”中，观察“SQL API”导航树中的新“cosmicworks”数据库节点。
+1. 在“数据资源管理器”中，观察“NoSQL API”导航树中的新“cosmicworks”数据库节点。
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
@@ -184,7 +179,7 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 1. 在 Azure Cosmos DB 仿真器登陆页面中，导航到“资源管理器”窗格。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“SQL API”导航树中观察新“products”容器节点。
+1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
