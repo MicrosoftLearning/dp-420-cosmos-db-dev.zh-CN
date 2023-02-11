@@ -4,13 +4,13 @@ lab:
   module: Module 2 - Plan and implement Azure Cosmos DB for NoSQL
 ---
 
-# <a name="migrate-existing-data-using-azure-data-factory"></a>使用 Azure 数据工厂迁移现有数据
+# 使用 Azure 数据工厂迁移现有数据
 
 在 Azure 数据工厂中，支持将 Azure Cosmos DB 作为数据引入的源以及数据输出的目标（接收器）。
 
 在本实验室中，我们将使用有用的命令行实用工具填充 Azure Cosmos DB，然后使用 Azure 数据工厂将数据的子集从一个容器移到另一个容器。
 
-## <a name="create-and-seed-your-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户并设定种子
+## 创建 Azure Cosmos DB for NoSQL 帐户并设定种子
 
 你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器，每秒 4,000 个请求单位（RU/秒）。 创建后，将吞吐量调整至 400 RU/秒。
 
@@ -110,7 +110,7 @@ lab:
 
 1. 转到 Azure 门户的主页。
 
-## <a name="create-azure-data-factory-resource"></a>创建 Azure 数据工厂资源
+## 创建 Azure 数据工厂资源
 
 Azure Cosmos DB for NoSQL 资源已就绪，接下来你将创建一个 Azure 数据工厂资源，并配置所有必需的组件和连接，以执行从一个 NoSQL API 容器到另一个容器的一次性数据移动，以提取数据、转换数据，并将其加载到另一个 NoSQL API 容器。
 
@@ -208,7 +208,7 @@ Azure Cosmos DB for NoSQL 资源已就绪，接下来你将创建一个 Azure �
         p.category, 
         p.price 
     FROM
-        products p
+        flatproducts p
     WHERE
         p.name = 'HL Headset'
     ```
