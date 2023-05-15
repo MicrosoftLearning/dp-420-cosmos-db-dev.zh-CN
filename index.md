@@ -18,7 +18,7 @@ ms.locfileid: "147866802"
 {% assign labs = site.pages | where_exp:"page", "page.url contains '/instructions'" %}
 | 模块 | 实验室 |
 | --- | --- |
-{% 表示实验室 % 中的活动}| {{ activity.lab.module }} | [{{ activity.lab.title }}]({{ site.github.url }}{{ activity.url }}) |
+{% for activity in labs  %}| {{ activity.lab.module }} | [{{ activity.lab.title }}]({{ site.github.url }}{{ activity.url }}) |
 {% endfor %}
 
 [azure]: https://azure.microsoft.com
