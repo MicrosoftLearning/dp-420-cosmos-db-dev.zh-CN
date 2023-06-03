@@ -1,5 +1,5 @@
 ---
-lab:
+Lab:
   title: 从恢复点恢复数据库或容器
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
