@@ -4,13 +4,13 @@ lab:
   module: Module 12 - Manage an Azure Cosmos DB for NoSQL solution using DevOps practices
 ---
 
-# <a name="create-an-azure-cosmos-db-for-nosqlcontainer-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
+# 使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 容器
 
 Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 Azure 的基础结构。 Azure 资源管理器模板是一种常见的基础结构即代码解决方案，用于将服务部署到 Azure。 Bicep 通过定义一种更易于读取的域特定语言（该语言可用来创建 JSON 模板），进一步发展了此概念。
 
 在此实验室中，你将使用 Azure 资源管理器模板创建新的 Azure Cosmos DB 帐户、数据库和容器。 首先从原始 JSON 创建模板，然后使用 Bicep 域特定语言创建模板。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -18,13 +18,13 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
     > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-azure-cosmos-db-for-nosql-resources-using-azure-resource-manager-templates"></a>使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 资源
+## 使用 Azure 资源管理器模板创建 Azure Cosmos DB for NoSQL 资源
 
 借助 Azure 资源管理器中的 Microsoft.DocumentDB 资源提供程序，可以使用 JSON 文件部署帐户、数据库和容器。 虽然文件可能很复杂，但它们遵循可预测的格式，并且可以在 Visual Studio Code 扩展的帮助下编写。
 
@@ -70,7 +70,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
     | ---: | :--- |
     | **资源类型** | *Microsoft.DocumentDB/databaseAccounts* |
     | **API 版本** | 2021-05-15 |
-    | **帐户名称** | 从帐户名称生成的 csmsarm 和 unique 字符串   |
+    | **帐户名称** | 从帐户名称生成的 csmsarm 和 unique 字符串  |
     | **位置** | 资源组的当前位置 |
     | **帐户产品/服务类型** | *标准* |
     | **位置** | 仅美国西部 |
@@ -80,6 +80,15 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 1. 打开 31-create-container-arm-template 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例 。
 
     > &#128221; 此命令将打开起始目录已设置为 31-create-container-arm-template 文件夹的终端。
+
+1. 在登录到 Azure 之前安装 tls/ssl 证书：
+
+    ```
+    $CurrentDirectory=$pwd
+    CD "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\"
+    .\python.exe -m pip install pip-system-certs
+    CD $CurrentDirectory
+    ```
 
 1. 使用以下命令开始 Azure CLI 的交互式登录过程：
 
@@ -227,7 +236,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 关闭集成终端。
 
-## <a name="observe-deployed-azure-cosmos-db-resources"></a>观察已部署的 Azure Cosmos DB 资源
+## 观察已部署的 Azure Cosmos DB 资源
 
 部署 Azure Cosmos DB for NoSQL 资源后，可以在 Azure 门户中导航到该资源。 你将使用数据资源管理器，验证帐户、数据库和容器是否已全部部署并正确配置。
 
@@ -249,7 +258,7 @@ Azure 资源管理器模板是 JSON 文件，以声明方式定义要部署到 A
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="create-azure-cosmos-db-for-nosql-resources-using-bicep-templates"></a>使用 Bicep 模板创建 Azure Cosmos DB for NoSQL 资源
+## 使用 Bicep 模板创建 Azure Cosmos DB for NoSQL 资源
 
 Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板相比，使用该语言可以更简单、更轻松地部署 Azure 资源。 你将使用 Bicep 和不同的名称部署相同的资源，以说明\[差别\]。
 
@@ -281,7 +290,7 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
     | **设置** | **值** |
     | ---: | :--- |
     | **Alias** | *帐户* |
-    | **名称** | 从帐户名称生成的 csmsarm 和 unique 字符串  |
+    | **名称** | 从帐户名称生成的 csmsarm 和 unique 字符串 |
     | **资源类型** | *Microsoft.DocumentDB/databaseAccounts/sqlDatabases* |
     | **API 版本** | 2021-05-15 |
     | **位置** | 资源组的当前位置 |
@@ -392,7 +401,7 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 
 1. 关闭 Visual Studio Code。
 
-## <a name="observe-bicep-template-deployment-results"></a>观察 Bicep 模板部署结果
+## 观察 Bicep 模板部署结果
 
 可以使用与 Azure 资源管理器部署相同的许多技术验证 Bicep 部署。 你不仅会验证你的帐户、数据库和容器是否已成功部署，还将查看所有六个部署中的部署历史记录。
 

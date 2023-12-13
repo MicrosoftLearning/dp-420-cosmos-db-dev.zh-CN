@@ -4,13 +4,13 @@ lab:
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
 
-# <a name="troubleshoot-an-application-using-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 对应用程序进行故障排除
+# 使用 Azure Cosmos DB for NoSQL SDK 对应用程序进行故障排除
 
 Azure Cosmos DB 提供了一组广泛的响应代码，可帮助我们轻松解决不同操作类型产生的问题。 捕获是为了确保在为 Azure Cosmos DB 创建应用时，我们创建了正确的错误处理程序。
 
 在此实验中，将创建一个菜单驱动程序，用于支持插入或删除两个文档中的一个。 此实验的主要目的是介绍如何使用一些最常见的响应代码以及如何在应用的错误处理代码中使用它们。  虽然我们将为多个响应代码的错误处理进行编码，但只会在两种不同类型的条件下触发。  此外，错误处理中不执行任何复杂的操作，可能在屏幕上显示一条消息或等待 10 秒然后重试操作一次，具体取决于响应代码。 
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -18,13 +18,13 @@ Azure Cosmos DB 提供了一组广泛的响应代码，可帮助我们轻松解�
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
-1. 打开命令面板并运行 Git: Clone 以将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
+1. 打开命令面板并运行 Git: Clone，将 ``https://github.com/microsoftlearning/dp-420-cosmos-db-dev`` GitHub 存储库克隆到你选择的本地文件夹中。
 
     > &#128161; 你可以使用 Ctrl+Shift+P 键盘快捷方式打开命令面板。
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
@@ -41,7 +41,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
-    | **应用免费分级折扣** | *`Do Not Apply`* |
+    | **应用免费分级折扣** | *不应用* |
 
     > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
@@ -51,22 +51,22 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
 1. 最小化浏览器窗口，但不要关闭它。 在接下来的步骤中，我们将在启动后台工作负载几分钟后返回 Azure 门户。
 
 
-## <a name="import-the-microsoftazurecosmos-library-into-a-net-script"></a>将 Microsoft.Azure.Cosmos 库导入 .NET 脚本
+## 将 Microsoft.Azure.Cosmos 库导入 .NET 脚本
 
 .NET CLI 包含 [add package][docs.microsoft.com/dotnet/core/tools/dotnet-add-package] 命令，用于从预配置的包源导入包。 .NET 安装使用 NuGet 作为默认包源。
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 26-sdk-troubleshoot  。
+1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 26-sdk-troubleshoot************。
 
-1. 打开 26-sdk-troubleshoot 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例 。
+1. 打开 26-sdk-troubleshoot 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例********。
 
-    > &#128221; 此命令将打开起始目录已设置为 26-sdk-troubleshoot 文件夹的终端。
+    > &#128221; 此命令将打开起始目录已设置为 26-sdk-troubleshoot 文件夹的终端****。
 
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
 
@@ -74,11 +74,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     ```
 
-## <a name="run-a-script-to-create-menu-driven-options-to-insert-and-delete-documents"></a>运行脚本以创建菜单驱动的选项，用于插入和删除文档。
+## 运行脚本以创建菜单驱动的选项，用于插入和删除文档。
 
 在应用程序能够运行之前，需要将其连接到 Azure Cosmos DB 帐户。 
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 26-sdk-troubleshoot  。
+1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 26-sdk-troubleshoot************。
 
 1. 打开 Program.cs 代码文件。
 
@@ -114,9 +114,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     >Select an option:
     >```
 
-## <a name="time-to-insert-and-delete-documents"></a>插入和删除文档的时间。
+## 插入和删除文档的时间。
 
-1. 选择“1”并按 ENTER 以插入第一个文档 。 该程序将插入第一个文档并返回以下消息。
+1. 选择“1”并按 ENTER 以插入第一个文档********。 该程序将插入第一个文档并返回以下消息。
 
     ```
     Insert Successful.
@@ -124,13 +124,13 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     Press [ENTER] to continue
     ```
 
-1. 再次选择“1”并按 ENTER 以插入第一个文档 。 这次程序将崩溃，并引发异常。 通过查看错误堆栈，可以找到程序失败的原因。 通过从错误堆栈中提取的消息可以看出，遇到了一个未处理的异常“冲突 (409)”
+1. 再次选择“1”并按 ENTER 以插入第一个文档********。 这次程序将崩溃，并引发异常。 通过查看错误堆栈，可以找到程序失败的原因。 通过从错误堆栈中提取的消息可以看出，遇到了一个未处理的异常“冲突 (409)”
 
     ```
     Unhandled exception. Microsoft.Azure.Cosmos.CosmosException : Response status code does not indicate success: Conflict (409);
     ```
 
-1. 由于要插入文档，因此需要查看创建文档时返回的常用的[创建文档状态代码][/rest/api/cosmos-db/create-a-document#status-codes]的列表。 此代码的说明是：为新文档提供的 ID 已被现有文档使用。 这是显而易见的，因为刚刚才运行了菜单选项，创建了同一个文档。
+1. 由于要插入文档，因此需要查看创建文档时返回的常用的[创建文档状态代码][/rest/api/cosmos-db/create-a-document#status-codes]的列表。 此代码的说明是：为新文档提供的 ID 已被现有文档使用**。 这是显而易见的，因为刚刚才运行了菜单选项，创建了同一个文档。
 
 1. 进一步深入堆栈中，可以看到这个异常是从第 100 行调用的，而这又是从第 64 行调用的。
 
@@ -139,7 +139,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
    at Program.CompleteTaskOnCosmosDB(String consoleinputcharacter, Container container) in C:\Git\dp-420-cosmos-db-dev\26-sdk-troubleshoot\Program.cs:line 64
     ```
 
-1. 检查第 100 行，可以看到此错误是由 CreateItemAsync 操作引起的，与预期一致。 
+1. 检查第 100 行，可以看到此错误是由 CreateItemAsync 操作引起的，与预期一致**。 
 
     ```C#
         ItemResponse<customerInfo> response = await Customer.CreateItemAsync<customerInfo>(customer, new PartitionKey(customerID));
@@ -157,7 +157,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 请注意，虽然我们将为 403 异常编写一个错误处理任务，但在本实验中，我们不会生成 403 异常。
 
-1. 现在为名为 CompleteTaskOnCosmosDB 的函数添加错误处理。 在第 45 行的函数 Main 中找到 while 循环，并使用错误处理代码结束对 CompleteTaskOnCosmosDB 的调用   。 我们将第 47 行的 CompleteTaskOnCosmosDB 语句替换为以下代码 。  在这段新代码中首先要注意的是，在 catch 上，将捕获 CosmosException 类型的类的异常 。  此类包含属性 StatusCode，该属性可从 Azure Cosmos DB 服务返回请求完成状态代码。 StatusCode 属性的类型为 System.Net.HttpStatusCode，我们可以使用此值并将其与 .NET [HTTP 状态代码][dotnet/api/system.net.httpstatuscode]中的字段名称进行比较 。  
+1. 现在为名为 CompleteTaskOnCosmosDB 的函数添加错误处理****。 在第 45 行的函数 Main 中找到 while 循环，并使用错误处理代码结束对 CompleteTaskOnCosmosDB 的调用****************。 我们将第 47 行的 CompleteTaskOnCosmosDB 语句替换为以下代码********。  在这段新代码中首先要注意的是，在 catch 上，将捕获 CosmosException 类型的类的异常********。  此类包含属性 StatusCode，该属性可从 Azure Cosmos DB 服务返回请求完成状态代码****。 StatusCode 属性的类型为 System.Net.HttpStatusCode，我们可以使用此值并将其与 .NET [HTTP 状态代码][dotnet/api/system.net.httpstatuscode]中的字段名称进行比较********。  
 
     ```C#
         try
@@ -194,7 +194,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet run
     ```
  
-1. 再次选择“1”并按 ENTER 以插入第一个文档 。 这次不会发生故障，而是会获得用户友好的消息。
+1. 再次选择“1”并按 ENTER 以插入第一个文档********。 这次不会发生故障，而是会获得用户友好的消息。
 
     ```
     Insert Failed. 
@@ -202,7 +202,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     Can not insert a duplicate partition key, customer with the same ID already exists.
     ```
 
-1. 此代码添加了对 403 和 409 异常的错误处理，现在，让我们为一些常见通信类型的异常添加代码 。 常见的通信类型异常有以下三种：429、503 和 408，分别对应“请求过多”、“服务不可用”和“请求超时”  。 在第 66 行附近现在应该有一个 default 语句，因此请在前面的 break; 语句之后和 default 语句之前添加下面的代码  。  此代码将验证我们是否发现任何这些通信异常，如果是，请等待 10 秒，然后再尝试插入文档一次。  现在在代码中添加更多内容：
+1. 此代码添加了对 403 和 409 异常的错误处理，现在，让我们为一些常见通信类型的异常添加代码****。 这些是三种常见的通信异常类型：429**、503** 和 408**，分别对应“请求过多”、“服务不可用”和“请求超时”。 在第 66 行附近现在应该有一个 default 语句，因此请在前面的 break; 语句之后和 default 语句之前添加下面的代码**************。  此代码将验证我们是否发现任何这些通信异常，如果是，请等待 10 秒，然后再尝试插入文档一次。  现在在代码中添加更多内容：
 
     ```C#
                         case ("TooManyRequests"):
@@ -226,7 +226,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 请注意，虽然要编写一个任务代码，在遇到 429、503 或 408 异常时执行相应的任务，但本实验中不会生成相应类型的异常错误。
 
-1. Main 函数现在应如下所示：
+1. Main 函数现在应如下所示****：
 
     ```C#
         public static async Task Main(string[] args)
@@ -305,9 +305,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         }
     ```
 
-1. 请注意，仍然通过上面的更改来解决此 CreateDocument2 函数的问题。
+1. 请注意，仍然通过上面的更改来解决此 CreateDocument2 函数的问题****。
 
-1. 最后，函数 DeleteDocument1 和 DeleteDocument2 还需要将以下代码替换为类似于 CreateDocument1 函数的适当错误处理代码  。 除了使用 DeleteItemAsync 而不是 CreateItemAsync 以外，这些函数的唯一区别在于，[“删除”状态代码][/rest/api/cosmos-db/delete-a-document]与“插入”状态代码不同 。 对于删除，我们只用注意 404 状态代码，它表示未找到文档。 现在来了解一下其他情况的 CompleteTaskOnCosmosDB 函数调用错误处理。  在 Main 函数中，需要在默认情况下添加以下代码 ：
+1. 最后，函数 DeleteDocument1 和 DeleteDocument2 还需要将以下代码替换为类似于 CreateDocument1 函数的适当错误处理代码************。 除了使用 DeleteItemAsync 而不是 CreateItemAsync 以外，这些函数的唯一区别在于，[“删除”状态代码][/rest/api/cosmos-db/delete-a-document]与“插入”状态代码不同********。 对于删除，我们只用注意 404 状态代码，它表示未找到文档****。 现在来了解一下其他情况的 CompleteTaskOnCosmosDB 函数调用错误处理****。  在 Main 函数中，需要在默认情况下添加以下代码********：
 
     ```C#
                     case ("NotFound"):
@@ -405,7 +405,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         }
     ```
 
-## <a name="conclusion"></a>结束语
+## 结论
 
 即使是最初级的开发人员也知道需要向所有代码添加正确的错误处理。 这段代码中的错误处理很简单，但通过它你应该了解了有关 Azure Cosmos DB 异常组件的基础知识，通过这些组件可在代码中创建可靠的错误处理解决方案。
 

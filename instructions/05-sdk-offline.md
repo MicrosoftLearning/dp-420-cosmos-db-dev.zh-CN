@@ -4,13 +4,13 @@ lab:
   module: Module 3 - Connect to Azure Cosmos DB for NoSQL with the SDK
 ---
 
-# <a name="configure-the-azure-cosmos-db-for-nosql-sdk-for-offline-development"></a>配置 Azure Cosmos DB for NoSQL SDK 进行脱机开发
+# 配置 Azure Cosmos DB for NoSQL SDK 进行脱机开发
 
 Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB 服务，用于开发和测试。 该仿真器支持 NoSQL，在使用 Azure SDK for .NET 开发代码时，可以使用它来代替云服务。
 
 在本实验室中，你将从 Azure SDK for .NET 连接到 Azure Cosmos DB 仿真器。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="start-the-azure-cosmos-db-emulator"></a>启动 Azure Cosmos DB 仿真器
+## 启动 Azure Cosmos DB 仿真器
 
 你的环境应已预安装了仿真器。 如果没有，请参阅[安装说明][docs.microsoft.com/azure/cosmos-db/local-emulator]来安装 Azure Cosmos DB 仿真器。 启动仿真器后，可以检索连接字符串，并使用 Azure SDK for .NET 或所选的任何其他 SDK 将其连接到仿真器。
 
@@ -40,15 +40,15 @@ Azure Cosmos DB 仿真器是一个本地工具，可以模拟 Azure Cosmos DB �
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“主连接字符串”字段的值。 你将在本练习的后面部分用到此连接字符串值。
+    >  请注意“主连接字符串”**** 字段。 你将在本练习的后面部分用到此连接字符串值。
 
 1. 导航到“资源管理器”窗格。
 
 1. 在“数据资源管理器”中，观察“NoSQL API”导航树中是否没有节点。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 将此选项卡保持打开状态并切换到 Visual Studio Code****。
 
-## <a name="connect-to-the-emulator-from-the-sdk"></a>从 SDK 连接到仿真器
+## 从 SDK 连接到仿真器
 
 Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚本中。 此外，已编写一些样本代码以节省你的时间。 你将需要更新样本连接字符串值并编写几行代码才能完成脚本。
 
@@ -112,19 +112,19 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 1. 关闭集成终端。
 
-## <a name="view-the-changes-in-the-emulator"></a>在仿真器中查看更改
+## 在仿真器中查看更改
 
 在 Azure Cosmos DB 仿真器中创建了一个新数据库后，将使用联机数据资源管理器来观察仿真器中的 NoSQL API 数据库。
 
-1. 导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“打开数据资源管理器...”，使用默认浏览器导航到 localhost:8081/_explorer/ 登陆页面。
+1. 切回到浏览器
 
 1. 在 Azure Cosmos DB 仿真器登陆页面中，导航到“资源管理器”窗格。
 
-1. 在“数据资源管理器”中，观察“NoSQL API”导航树中的新“cosmicworks”数据库节点。
+1. 在“数据资源管理器”**** 中，刷新“NOSQL API”**** 以观察导航树中的新“cosmicworks”**** 数据库节点。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 切回到 Visual Studio Code****。
 
-## <a name="create-and-view-a-new-container"></a>创建和查看新容器
+## 创建和查看新容器
 
 创建新容器的模式与创建新数据库类似。 无论是在云中还是在仿真器中创建资源，你在这里学到的代码都是相关的，你只需更改连接字符串。 进一步展开脚本文件，创建新容器以及数据库。
 
@@ -175,21 +175,21 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 1. 关闭 Visual Studio Code。
 
-1. 导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“打开数据资源管理器...”，使用默认浏览器导航到 localhost:8081/_explorer/ 登陆页面。
+1. 切换到浏览器。
 
 1. 在 Azure Cosmos DB 仿真器登陆页面中，导航到“资源管理器”窗格。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
+1. 在“数据资源管理器”**** 中，刷新“SQL API”**** 以观察“cosmicworks”**** 数据库节点中的新“products”**** 容器节点。
 
 1. 关闭 Web 浏览器窗口或选项卡。
 
-## <a name="stop-the-azure-cosmos-db-emulator"></a>停止 Azure Cosmos DB 仿真器
+## 停止 Azure Cosmos DB 仿真器
 
 使用完仿真器后，必须将其停止，因为它会在你的环境中使用系统资源。 使用系统托盘图标停止仿真器以及所有正在运行的实例。
 
-1. 导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“退出”以关闭仿真器。
+ 导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“退出”以关闭仿真器。
 
-    > &#128221; 退出仿真器的所有实例可能需要一分钟的时间。
+    > &#128221; It may take a minute for all instances of the emulator to exit.
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks
 [docs.microsoft.com/azure/cosmos-db/local-emulator]: https://docs.microsoft.com/azure/cosmos-db/local-emulator

@@ -4,11 +4,11 @@ lab:
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="measure-performance-for-customer-entities"></a>衡量客户实体的性能
+# 衡量客户实体的性能
 
 在本练习中，你将衡量将实体建模为单独的容器时与为将实体嵌入单个文档的 NoSQL 数据库建模时的客户实体的差异。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -33,6 +33,7 @@ lab:
 1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
 
     ```
+    "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
     cd 16-measure-performance
     bash init.sh
@@ -44,11 +45,11 @@ lab:
 
 1. 关闭集成终端。
 
-## <a name="measure-performance-of-entities-in-separate-containers"></a>衡量不同容器中的实体的性能
+## 衡量不同容器中的实体的性能
 
 在 Database-v1 中，数据存储在单个容器中。 在该数据库中，运行查询来获取客户、客户地址和客户密码。 查看每个查询的请求费用。
 
-### <a name="query-for-customer-entity"></a>查询客户实体
+### 查询客户实体
 
 在 Database-v1 中，运行查询以获取客户实体并查看请求费用。
 
@@ -72,7 +73,7 @@ lab:
 
     ![屏幕截图显示了数据库中客户查询的查询统计信息。](media/17-customer-query-v1.png)
 
-### <a name="query-for-customer-address"></a>查询客户地址
+### 查询客户地址
 
 运行查询获取客户地址实体并查看请求费用。
 
@@ -88,7 +89,7 @@ lab:
 
     ![屏幕截图显示了数据库中客户地址查询的查询统计信息。](media/17-customer-address-query-v1.png)
 
-### <a name="query-for-customer-password"></a>查询客户密码
+### 查询客户密码
 
 运行查询以获取客户密码实体并查看请求费用。
 
@@ -104,7 +105,7 @@ lab:
 
     ![屏幕截图显示了数据库中客户密码查询的查询统计信息。](media/17-customer-password-query-v1.png)
 
-### <a name="add-up-the-request-charges"></a>合计请求费用
+### 合计请求费用
 
 现在我们已运行所有查询，接下来合计其所有请求单位成本。
 
@@ -115,7 +116,7 @@ lab:
 |客户密码|2.83|
 |**总 RU/秒**|**8.49**|
 
-## <a name="measure-performance-of-embedded-entities"></a>衡量嵌入实体的性能
+## 衡量嵌入实体的性能
 
 现在我们将查询相同的信息，但这次将实体嵌入到单个文档中。
 
@@ -133,7 +134,7 @@ lab:
 
 1. 选择“查询统计信息”。记下请求费用为 2.83，而之前运行的三个查询的费用为 8.49 RU/秒。
 
-## <a name="compare-the-performance-of-the-two-models"></a>比较两个模型的性能
+## 比较两个模型的性能
 
 比较运行的每个查询的 RU/秒时，你会发现其客户实体嵌入单个文档的最后一个查询的成本远低于单独运行三个查询的总成本。 返回这些数据的延迟较低，因为数据是通过单个操作返回的。
 

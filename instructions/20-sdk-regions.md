@@ -4,13 +4,13 @@ lab:
   module: Module 9 - Design and implement a replication strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="connect-to-different-regions-with-the-azure-cosmos-db-for-nosql-sdk"></a>通过 Azure Cosmos DB for NoSQL SDK 连接到不同区域
+# 通过 Azure Cosmos DB for NoSQL SDK 连接到不同区域
 
 为 Azure Cosmos DB for NoSQL 帐户启用异地冗余时，可以使用 SDK 按你配置的任何顺序从区域中读取数据。 当你在所有可用的读取区域分发读取请求时，此方法非常有用。
 
 在本实验室中，你将配置 CosmosClient 类，按手动配置的回退顺序连接到读取区域。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ lab:
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
@@ -34,7 +34,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -67,13 +67,13 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 新建 &vert; cosmicworks |
+    | **数据库 ID** | 新建 &vert; ``cosmicworks``**** |
     | **在容器之间共享吞吐量** | 请不要选择 |
-    | **容器 ID** | products |
-    | **分区键** | /categoryId |
+    | **容器 ID** | *``products``* |
+    | **分区键** | *``/categoryId``* |
     | **容器吞吐量** | 手动 &vert; 400 |
 
-1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。  
+1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。
 
 1. 在“数据资源管理器”窗格中，依次展开“cosmicworks”数据库节点和“products”容器节点，然后选择“项”。
 
@@ -98,17 +98,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 返回到 Visual Studio Code。
 
-## <a name="connect-to-the-azure-cosmos-db-for-nosql-account-from-the-sdk"></a>从 SDK 连接到 Azure Cosmos DB for NoSQL 帐户
+## 从 SDK 连接到 Azure Cosmos DB for NoSQL 帐户
 
 使用新创建帐户中的凭据，你将连接到 SDK 类，并访问不同区域的数据库和容器实例。
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到“20-sdk-regions”文件夹。
+1. 在“资源管理器”**** 窗格中，浏览到“20-sdk-regions”**** 文件夹。
 
 1. 打开“20-sdk-regions”文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例。
 
@@ -146,7 +146,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 保存 script.cs 代码文件 。
 
-## <a name="configure-the-net-sdk-with-a-preferred-region-list"></a>使用首选区域列表配置 .NET SDK
+## 使用首选区域列表配置 .NET SDK
 
 CosmosClientOptions 类包含一个属性，用于配置要使用 SDK 连接到的区域列表。 列表按故障转移优先级排序，尝试按你配置的顺序连接到每个区域。
 
