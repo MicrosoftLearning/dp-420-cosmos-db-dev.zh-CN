@@ -4,13 +4,13 @@ lab:
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="configure-an-azure-cosmos-db-for-nosql-containers-index-policy-using-the-sdk"></a>使用 SDK 配置 Azure Cosmos DB for NoSQL 容器的索引策略
+# 使用 SDK 配置 Azure Cosmos DB for NoSQL 容器的索引策略
 
 可以从任何 Azure Cosmos DB SDK 管理索引策略。 .NET SDK 专门包含了一组类，可用于构建新的索引策略，并将其推送到 Azure Cosmos DB for NoSQL 中的容器。
 
 在此实验室中，你将使用 .NET SDK 为容器创建自定义索引策略
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ lab:
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
@@ -34,7 +34,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -51,17 +51,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 返回到 Visual Studio Code。
 
-## <a name="create-a-new-indexing-policy-using-the-net-sdk"></a>使用 .NET SDK 创建新的索引策略
+## 使用 .NET SDK 创建新的索引策略
 
 .NET SDK 包含一套与 [Microsoft.Azure.Cosmos.IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.indexingpolicy] 父类相关的类，用于在代码中构建新的索引策略。
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到 12-custom-index-policy 文件夹  。
+1. 在“资源管理器”**** 窗格中，浏览到“12-custom-index-policy”**** 文件夹。
 
 1. 打开 script.cs 代码文件。
 
@@ -181,19 +181,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭集成终端。
 
-1. 关闭 Visual Studio Code。
+1. 返回 Web 浏览器。
 
-## <a name="observe-an-indexing-policy-created-by-the-net-sdk-using-the-data-explorer"></a>使用数据资源管理器观察由 .NET SDK 创建的索引策略
+## 使用数据资源管理器观察由 .NET SDK 创建的索引策略
 
 与任何其他索引策略一样，可以使用数据资源管理器查看使用 .NET SDK 推送的策略。 现在，你将使用门户查看在此实验室中使用代码创建的策略。
 
-1. 在 Web 浏览器中，转到 Azure 门户 (``portal.azure.com``)。
-
-1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
-
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
+1. 在“数据资源管理器”**** 中，展开“cosmicworks”**** 数据库节点，然后在“NoSQL API”**** 导航树中观察新“products”**** 容器节点。
 
 1. 在 NoSQL API 导航树的 products 容器节点内，选择“缩放和设置”  。
 

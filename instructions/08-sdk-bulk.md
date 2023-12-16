@@ -4,13 +4,13 @@ lab:
   module: Module 4 - Access and manage data with the Azure Cosmos DB for NoSQL SDKs
 ---
 
-# <a name="move-multiple-documents-in-bulk-with-the-azure-cosmos-db-for-nosql-sdk"></a>使用 Azure Cosmos DB for NoSQL SDK 批量移动多个文档
+# 使用 Azure Cosmos DB for NoSQL SDK 批量移动多个文档
 
 要了解如何执行批量操作，最简单的方法是尝试将多个文档推送到云中的 Azure Cosmos DB for NoSQL 帐户。 使用 SDK 的批量功能，可通过 [System.Threading.Tasks][docs.microsoft.com/dotnet/api/system.threading.tasks] 命名空间提供的一些小帮助完成此操作。
 
 在本实验室中，你将使用 NuGet 的 [Bogus][nuget.org/packages/bogus/33.1.1] 库生成虚构的数据，并将其放入 Azure Cosmos DB 帐户。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ lab:
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account-and-configure-the-sdk-project"></a>创建 Azure Cosmos DB for NoSQL 帐户并配置 SDK 项目
+## 创建 Azure Cosmos DB for NoSQL 帐户并配置 SDK 项目
 
 1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
 
@@ -49,27 +49,27 @@ lab:
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 同样在新创建的 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
+1. 同样在新创建的 Azure Cosmos DB**** 帐户资源中，导航到“数据资源管理器”**** 窗格。
 
-1. 在“数据资源管理器”中，选择“新建容器”，然后创建一个具有以下设置的新容器，并将所有其余设置保留为其默认值：
+1. 在“数据资源管理器”**** 中，选择****“新建容器”，然后创建一个具有以下设置的新容器，并将所有其余设置保留为其默认值：
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **数据库 ID** | 新建 &vert; `cosmicworks`  |
+    | **数据库 ID** | 新建 &vert; `cosmicworks`**** |
     | **在容器之间共享吞吐量** | 请不要选择 |
     | **容器 ID** | *`products`* |
     | **分区键** | *`/categoryId`* |
-    | **容器吞吐量** | 自动缩放 &vert; `4000`  |
+    | **容器吞吐量** | 自动缩放 &vert; `4000`**** |
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 返回到 Visual Studio Code。
 
-1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到“08-sdk-bulk”文件夹。
+1. 在“资源管理器”**** 窗格中，浏览到“08-sdk-bulk”**** 文件夹。
 
-1. 在 08-sdk-bulk 文件夹内打开 script.cs 代码文件。
+1. 在 08-sdk-bulk**** 文件夹内打开 script.cs**** 代码文件。
 
     > &#128221; [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 库已从 NuGet 中预先导入。
 
@@ -91,9 +91,9 @@ lab:
 
 1. 保存 script.cs 代码文件 。
 
-1. 打开“08-sdk-bulk”文件夹的上下文菜单，然后选择“在集成终端中打开”以打开新的终端实例。
+1. 打开“08-sdk-bulk”**** 文件夹的上下文菜单，然后选择“在集成终端中打开”**** 以打开新的终端实例。
 
-    > &#128221; 此命令将打开起始目录已设置为“08-sdk-bulk”文件夹的终端。
+    > &#128221; 此命令将打开起始目录已设置为“08-sdk-bulk”**** 文件夹的终端。
 
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
 
@@ -109,13 +109,13 @@ lab:
 
 1. 关闭集成终端。
 
-## <a name="bulk-inserting-a-twenty-five-thousand-documents"></a>批量插入 25,000 个文档
+## 批量插入 25,000 个文档
 
 接下来，我们不妨尝试大胆地插入大量文档，看看它是如何工作的。 在内部测试中，如果实验室虚拟机和 Azure Cosmos DB for NoSQL 帐户在地理上相对接近，则可能需要大约 1-2 分钟。
 
 1. 返回到 script.cs 代码文件的“编辑器”选项卡。
 
-1. 创建名为 options 的 [CosmosClientOptions][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclientoptions] 类的新实例，并将 AllowBulkExecution 属性设置为值 true：
+1. 创建名为 options**** 的 [CosmosClientOptions][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclientoptions] 类的新实例，并将 AllowBulkExecution**** 属性设置为值 true****：
 
     ```
     CosmosClientOptions options = new () 
@@ -130,13 +130,13 @@ lab:
     CosmosClient client = new (endpoint, key, options); 
     ```
 
-1. 使用 client 变量的 [GetContainer][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.cosmosclient.getcontainer] 方法，使用数据库名称 (cosmicworks) 和容器名称 (products) 检索现有容器：
+1. 使用 client 变量的 GetContainer 方法，使用数据库名称 (cosmicworks) 和容器名称 (products) 检索现有容器：
 
     ```
     Container container = client.GetContainer("cosmicworks", "products");
     ```
 
-1. 使用此特殊示例代码，使用从 NuGet 导入的 Bogus 库中的 Faker 类生成 25,000 个虚构产品。
+1. 使用此特殊示例代码，使用从 NuGet 导入的 Bogus 库中的 Faker**** 类生成 25,000**** 个虚构产品。
 
     ```
     List<Product> productsToInsert = new Faker<Product>()
@@ -150,7 +150,7 @@ lab:
 
     > &#128161; [Bogus][nuget.org/packages/bogus/33.1.1] 库是一个开源库，用于设计虚构的数据来测试用户界面应用程序，非常适合用户学习如何开发批量导入/导出应用程序。
 
-1. 新建名为 concurrentTasks、类型为 Task 的泛型 List<>：
+1. 新建名为 concurrentTasks****、类型为 Task**** 的泛型 List<>****：
 
     ```
     List<Task> concurrentTasks = new List<Task>();
@@ -164,7 +164,7 @@ lab:
     }
     ```
 
-1. 在 foreach 循环中，创建一个 Task，以异步方式将产品插入到 Azure Cosmos DB for NoSQL，以确保显式指定分区键，并将该任务添加到名为 concurrentTasks 的任务列表：
+1. 在 foreach 循环中，创建一个 Task****，以异步方式将产品插入到 Azure Cosmos DB for NoSQL，以确保显式指定分区键，并将该任务添加到名为 concurrentTasks**** 的任务列表：
 
     ```
     concurrentTasks.Add(
@@ -172,13 +172,13 @@ lab:
     );   
     ```
 
-1. 在 foreach 循环后，以异步方式等待 concurrentTasks 变量上 Task.WhenAll 的结果：
+1. 在 foreach 循环后，以异步方式等待 concurrentTasks**** 变量上 Task.WhenAll**** 的结果：
 
     ```
     await Task.WhenAll(concurrentTasks);
     ```
 
-1. 使用内置 Console.WriteLine 静态方法，将“批量处理任务完成”的静态消息输出到控制台：
+1. 使用内置 Console.WriteLine**** 静态方法，将“批量处理任务完成”**** 的静态消息输出到控制台：
 
     ```
     Console.WriteLine("Bulk tasks complete");
@@ -229,9 +229,9 @@ lab:
 
 1. 保存 script.cs 代码文件 。
 
-1. 在 Visual Studio Code 中，打开 08-sdk-bulk 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例。
+1. 在 Visual Studio Code**** 中，打开 08-sdk-bulk**** 文件夹的上下文菜单，然后选择“在集成终端中打开”**** 以打开一个新的终端实例。
 
-1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
+1. 使用 **[dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run]** 命令生成并运行项目：
 
     ```
     dotnet run
@@ -241,21 +241,15 @@ lab:
 
 1. 关闭集成终端。
 
-1. 关闭 Visual Studio Code。
-
-## <a name="observe-the-results"></a>观察结果
+## 观察结果
 
 现在，你已将 25,000 个项发送到 Azure Cosmos DB，接下来查看数据资源管理器。
 
-1. 在 Web 浏览器中，导航到 Azure 门户 (``portal.azure.com``)。
+1.返回到 Web 浏览器并导航到“数据资源管理器”**** 窗格。
 
-1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
+1. 在“数据资源管理器”**** 中，展开“cosmicworks”**** 数据库节点，然后在“NoSQL API”**** 导航树中观察“products”**** 容器节点。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
-
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察“products”容器节点。
-
-1. 展开“products”节点，然后选择“Items”节点。 查看容器中的项列表。
+1. 展开“products”**** 节点，然后选择“Items”**** 节点。 查看容器中的项列表。
 
 1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“新建 SQL 查询”。
 

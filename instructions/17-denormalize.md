@@ -4,13 +4,13 @@ lab:
   module: Module 8 - Implement a data modeling and partitioning strategy for Azure Cosmos DB for NoSQL
 ---
 
-# <a name="cost-of-denormalizing-data-and-aggregates-and-using-the-change-feed-for-referential-integrity"></a>反规范化数据和聚合以及使用更改源实现引用完整性的成本
+# 反规范化数据和聚合以及使用更改源实现引用完整性的成本
 
 使用关系模型可以让我们将不同的实体放置在它们自己的容器中。  但是，在 NoSQL 数据库中，容器之间没有联接，因此我们需要开始反规范化数据，以便消除联接的使用 。 此外，NoSQL 通过为数据建模来减少请求数，以便应用程序可以在尽可能少的请求中提取数据。 反规范化数据时出现的一个问题可能是实体之间的引用完整性，为此，可以使用更改源使数据保持同步。反规范化聚合（如按计数分组）还可以帮助我们减少请求。  
 
 在此实验室中，你将了解反规范化数据和聚合如何帮助我们降低成本的好处，以及如何使用更改源来维护反规范化数据的引用完整性。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -35,6 +35,7 @@ lab:
 1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
 
     ```
+    "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
     cd 17-denormalize
     bash init.sh
@@ -46,9 +47,9 @@ lab:
 
 1. 关闭集成终端。
 
-## <a name="exercise-1-measure-performance-cost-when-denormalizing-data"></a>练习 1：在反规范化数据时衡量性能成本
+## 练习 1：在反规范化数据时衡量性能成本
 
-### <a name="query-for-the-product-category-name"></a>查询产品类别名称
+### 查询产品类别名称
 
 在 database-v2 容器（其中数据存储在各个容器中）中，运行查询以获取产品类别名称，然后查看该查询的请求费用。
 
@@ -76,7 +77,7 @@ lab:
 
     ![屏幕截图显示你在数据资源管理器中运行的查询的查询统计信息。](media/16-product-category-stats.png)
 
-### <a name="query-for-the-products-in-the-category"></a>查询某一类别的产品
+### 查询某一类别的产品
 
 接下来，查询 product 容器以获取“Components, Headsets”类别的所有产品。
 
@@ -94,11 +95,11 @@ lab:
 
     ![Azure Cosmos DB 数据资源管理器的屏幕截图，显示对 product 容器的查询结果。](media/16-product-results.png)
 
-### <a name="query-for-each-products-tags"></a>查询每个产品的标记
+### 查询每个产品的标记
 
 接下来，针对以下三种产品查询 productTag 容器三次（每种产品一次）：HL Headset、LL Headset 和 ML Headset。
 
-#### <a name="hl-headset-tags"></a>HL Headset 标记
+#### HL Headset 标记
 
 首先，运行查询以返回 HL Headset 的标记。
 
@@ -116,7 +117,7 @@ lab:
 
     ![屏幕截图显示针对 HL Headset 查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-hl-stats.png)
 
-#### <a name="ll-headset-tags"></a>LL Headset 标记
+#### LL Headset 标记
 
 接下来，运行查询以返回 LL Headset 的标记。
 
@@ -134,7 +135,7 @@ lab:
 
     ![屏幕截图显示针对“LL Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ll-stats.png)
 
-#### <a name="ml-headset-tags"></a>ML Headset 标记
+#### ML Headset 标记
 
 最后，运行查询以返回 ML Headset 的标记。
 
@@ -152,7 +153,7 @@ lab:
 
     ![屏幕截图显示针对“ML Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ml-stats.png)
 
-### <a name="add-up-the-ru-charges"></a>合计 RU 费用
+### 合计 RU 费用
 
 现在，合计你运行的每个查询中的所有的 RU 成本。
 
@@ -165,7 +166,7 @@ lab:
 |ML 产品标记|3.19|
 |总 RU 成本|**15.39**|
 
-### <a name="run-the-same-queries-for-your-nosql-design"></a>对 NoSQL 设计运行相同的查询
+### 对 NoSQL 设计运行相同的查询
 
 查询相同的信息，但这次是在非规范化数据库中。
 
@@ -186,7 +187,7 @@ lab:
 
 1. 选择“查询统计信息”选项卡，并记下请求费用为 2.89 RU。
 
-### <a name="compare-the-performance-of-the-two-models"></a>比较两个模型的性能
+### 比较两个模型的性能
 
 在关系模型中，数据存储在各个容器中，你运行了五个查询来获取类别的名称、该类别的所有产品以及每个产品的所有产品标记。 五个查询的请求费用合计为 15.56 RU/秒。
 
@@ -198,7 +199,7 @@ lab:
 
 ---
 
-## <a name="exercise-2-use-the-change-feed-to-manage-referential-integrity"></a>练习 2：使用更改源管理引用完整性
+## 练习 2：使用更改源管理引用完整性
 
 在本单元中，你将了解更改源如何帮助维护 Azure Cosmos DB 中两个容器之间的引用完整性。 在此方案中，使用更改源来侦听 productCategory 容器。 更新产品类别的名称时，更改源会捕获更新后的名称，并使用新名称更新该类别中的所有产品。
 
@@ -211,13 +212,13 @@ lab:
 - 使用新的类别名称查询新的 product 容器，并计算产品数量以确保所有产品都已更新。
 - 改回原来的名称并监视更改源是否已将更改传播回来。
 
-### <a name="start-azure-cloud-shell-and-open-visual-studio-code"></a>启动 Azure Cloud Shell 并打开 Visual Studio Code
+### 启动 Azure Cloud Shell 并打开 Visual Studio Code
 
 若要转到要针对更改源更新的代码，请执行以下操作：
 
 1. 如果尚未打开，请打开 Visual Studio Code，然后打开 17-denormalize 文件夹中的 Program.cs 文件 。
 
-### <a name="complete-the-code-for-change-feed"></a>完成更改源的代码
+### 完成更改源的代码
 
 添加代码以处理传入委托中的更改，循环访问该类别的每个产品并对它们进行更新。
 
@@ -303,7 +304,7 @@ lab:
 
     ![屏幕截图显示应用程序的主菜单，有多个选项可用于处理数据。](media/16-main-menu.png)
 
-### <a name="run-the-change-feed-sample"></a>运行更改源示例
+### 运行更改源示例
 
 现在你已完成更改源的代码，接下来看看它的运行情况。
 
@@ -331,7 +332,7 @@ lab:
 
 ---
 
-## <a name="exercise-3-denormalizing-aggregates"></a>练习 3：反规范化聚合
+## 练习 3：反规范化聚合
 
 在本单元中，你将了解如何使聚合非规范化，以便为电子商务站点编写针对排名前 10 的客户的查询。 你将使用 Azure Cosmos DB .NET SDK 中的事务性批处理功能，该功能同时插入新的销售订单并更新客户的 salesOrderCount 属性，这两者都在同一逻辑分区中。
 
@@ -345,13 +346,13 @@ lab:
 - 运行针对排名前 10 的客户的查询，查看当前的结果如何。
 - 演示在客户取消订单时如何使用事务性批处理。
 
-## <a name="open-visual-studio-code"></a>打开“Visual Studio Code”
+## 打开“Visual Studio Code”
 
 若要获取将在本单元中使用的代码，请执行以下操作：
 
 1. 如果尚未打开，请打开 Visual Studio Code，然后打开 17-denormalize 文件夹中的 Program.cs 文件 。
 
-## <a name="complete-the-code-to-update-total-sales-orders"></a>完成代码以更新总销售订单
+## 完成代码以更新总销售订单
 
 1. 转到用于创建新销售订单的函数。
 
@@ -376,7 +377,7 @@ lab:
 
     ![屏幕截图显示“创建新订单并更新客户总数”函数，其中的代码行将销售订单计数递增 1。](media/16-create-order-sales-order-count.png)
 
-## <a name="complete-the-code-to-implement-transactional-batch"></a>完成代码以实现事务性批处理
+## 完成代码以实现事务性批处理
 
 1. 向下滚动几行，查看你将为你的客户创建的新销售订单的数据。
 
@@ -426,7 +427,7 @@ lab:
 
     ![屏幕截图显示应用程序的主菜单，有多个选项可用于处理数据。](media/16-main-menu.png)
 
-## <a name="query-for-the-customer-and-their-sales-orders"></a>查询客户及其销售订单
+## 查询客户及其销售订单
 
 由于你已将数据库设计为使用 customerId 作为分区键来将客户及其所有销售订单存储在同一容器中，因此你可以在单个操作中查询客户容器，并返回客户的记录及其所有的销售订单。
 
@@ -442,7 +443,7 @@ lab:
 
     ![Cloud Shell 的屏幕截图，显示“查询客户和订单”查询的输出，其中有一条客户记录和两个销售订单。](media/16-query-customer-and-orders-initial.png)
 
-## <a name="create-a-new-sales-order-and-update-total-sales-orders-in-a-transaction"></a>在事务中创建新的销售订单并更新总销售订单
+## 在事务中创建新的销售订单并更新总销售订单
 
 为同一客户创建新的销售订单，并更新其客户记录中保存的总销售订单。
 
@@ -461,7 +462,7 @@ lab:
 
     ![Cloud Shell 的屏幕截图，其中更新的客户记录显示销售订单计数的值为 3，下面显示三个销售订单。](media/16-query-customer-and-orders-next.png)
 
-## <a name="delete-an-order-by-using-transactional-batch"></a>使用事务性批处理删除订单
+## 使用事务性批处理删除订单
 
 与任何电子商务应用程序一样，客户也会取消订单。 你也可以在此处执行相同的操作。
 
@@ -476,7 +477,7 @@ lab:
 
 1. 按任意键返回到主菜单。
 
-## <a name="view-the-code-that-deletes-a-sales-order"></a>查看用于删除销售订单的代码
+## 查看用于删除销售订单的代码
 
 删除销售订单的方式与创建销售订单的方式完全相同。 这两个操作都包装在事务中，并在同一逻辑分区中执行。 接下来看一下执行该操作的代码。
 
@@ -491,7 +492,7 @@ lab:
 
     接下来是调用 CreateTransactionalBatch()。 再次传入逻辑分区键值，但这次使用订单 ID 调用 DeleteItem()，并使用更新后的客户记录调用 ReplaceItem() 。
 
-## <a name="view-the-code-for-your-top-10-customers-query"></a>查看针对排名前 10 的客户的查询的代码
+## 查看针对排名前 10 的客户的查询的代码
 
 让我们看看针对排名前 10 的客户的查询。
 

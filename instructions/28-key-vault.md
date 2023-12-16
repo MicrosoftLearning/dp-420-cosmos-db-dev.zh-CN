@@ -4,13 +4,13 @@ lab:
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
 
-# <a name="store-azure-cosmos-db-for-nosql-account-keys-in-azure-key-vault"></a>将 Azure Cosmos DB for NoSQL 帐户密钥存储在 Azure Key Vault 中
+# 将 Azure Cosmos DB for NoSQL 帐户密钥存储在 Azure Key Vault 中
 
 将 Azure Cosmos DB 帐户连接代码添加到应用程序就像提供帐户的 URI 和密钥一样简单。 有时，此安全信息可能会硬编码到应用程序代码中。 但是，如果将应用程序部署到 Azure 应用服务，则可以将加密连接信息保存到 Azure 密钥保管库。
 
 在此实验室中，我们将加密 Azure Cosmos DB 帐户连接字符串，并将其存储到 Azure 密钥保管库。 然后，我们将创建一个 Azure 应用服务 Web 应用，该应用将从 Azure 密钥保管库中检索这些凭据。 应用程序将使用这些凭据并连接到 Azure Cosmos DB 帐户。 然后，应用程序将在 Azure Cosmos DB 帐户容器中创建一些文档，并将其状态返回到网页。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ lab:
 
 1. 克隆存储库后，关闭 Visual Studio Code。 稍后，直接指向 28-key-vault，以打开该文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
@@ -34,7 +34,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -49,19 +49,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 转到新创建的 Azure Cosmos DB 帐户资源，并导航到“键”窗格。
 
-1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
+1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 特别是“主连接字符串”**** 字段。 你将在此练习的稍后部分使用此连接字符串值。
 
-    1. 记录“主链接字符串”字段的值。 你将在此练习的稍后部分使用此连接字符串值。
-
-## <a name="create-an-azure-key-vault-and-store-the-azure-cosmos-db-account-credentials-as-a-secret"></a>创建 Azure 密钥保管库并将 Azure Cosmos DB 帐户凭据存储为机密
+## 创建 Azure 密钥保管库并将 Azure Cosmos DB 帐户凭据存储为机密
 
 在创建 Web 应用之前，我们会通过将 Azure Cosmos DB 帐户连接字符串复制到 Azure 密钥保管库加密机密来保护它们 。 现在就让我们执行此操作。
 
-1. 在 Azure 门户，导航到“密钥保管库”页面。
+1. 在新的浏览器选项卡中，导航到 Azure 门户，打开“密钥保管库”**** 页。
 
 1. 选择“+ 创建”按钮添加保管库，并使用以下设置填写保管库，将所有其余设置保留为其默认值，然后选择以创建保管库：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -78,7 +76,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | ---: | :--- |
     | **上传选项** | *手动* |
     | **名称** | 用于标记机密的名称 |
-    | **值** | 此字段是最重要的字段，必须填写。此值是你之前从 Azure Cosmos DB 帐户的密钥部分复制的主连接字符串。此值将转换为机密。 |
+    | **值** | *此字段是最重要的字段，必须填写。在此复制来自你的 Azure Cosmos DB 帐户的密钥部分的主连接字符串的值。此值将转换为机密。* |
     | **已启用** | *是* |
  
 1. 在“机密”下，现在应该会看到新机密已列出。 我们需要获取将添加到 Web 应用代码中的机密标识符。 选择你创建的机密。
@@ -87,7 +85,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 记录“机密标识符”字段的值。 我们将在应用程序代码中使用此值从密钥保管库获取机密。  请注意，此值是 URL。 要让此机密起作用，我们还需要执行一个步骤，我们将在稍后执行此步骤。
 
-## <a name="create-an-azure-app-service-webapp"></a>创建 Azure 应用服务 Web 应用
+## 创建 Azure 应用服务 Web 应用
 
 我们将创建一个 Web 应用，用于连接到 Azure Cosmos DB 帐户，并创建一些容器和文档。 我们不会在此应用中对 Azure Cosmos DB 凭据进行硬编码，而是对密钥保管库中的机密标识符进行硬编码。 我们将看到，如果没有向 Azure 层上的 Web 应用分配适当的权限，此标识符将无用。 现在，我们开始编码。
 
@@ -108,19 +106,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     ```
 
 
-1. 该命令创建了 Web 应用的外壳，因此它添加了几个文件和目录。 我们已经有几个文件，其中包含我们需要的所有代码。 将文件 .\Controllers\HomeController.cs 和 .\Views\Home\Index.cshtml 替换为 .\KeyvaultFiles 目录中各自的文件  。
+    > 该命令创建了 Web 应用的外壳，因此它添加了几个文件和目录。 我们已经有几个文件，其中包含我们需要的所有代码。 
+
+1. 将文件 .\Controllers\HomeController.cs**** 和 .\Views\Home\Index.cshtml**** 替换为 .\KeyvaultFiles**** 目录中各自的文件  。
 
 1. 替换文件后，请删除 .\KeyvaultFiles 目录。
 
-## <a name="import-the-multiple-missing-libraries-into-the-net-script"></a>将多个缺少的库导入 .NET 脚本
+## 将多个缺少的库导入 .NET 脚本
 
 .NET CLI 包含 [add package][docs.microsoft.com/dotnet/core/tools/dotnet-add-package] 命令，用于从预配置的包源导入包。 .NET 安装使用 NuGet 作为默认包源。
-
-1. 如果尚未这样做，请在 Visual Studio Code 的“资源管理器”窗格中，浏览到 28-key-vault 文件夹  。
-
-1. 如果尚未这样做，请打开 28-key-vault 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例 。
-
-    > &#128221; 此命令将打开起始目录已设置为 28-key-vault 文件夹的终端。
 
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
 
@@ -143,10 +137,10 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Services.AppAuthentication][nuget.org/packages/Microsoft.Azure.Services.AppAuthentication] 包：
 
     ```
-    dotnet add package Microsoft.Azure.Services.AppAuthentication
+    dotnet add package Microsoft.Azure.Services.AppAuthentication --version 1.6.2
     ```
 
-## <a name="adding-the-secret-identifier-to-your-webapp"></a>将机密标识符添加到 Web 应用
+## 将机密标识符添加到 Web 应用
 
 1. 在 Visual Studio 中，打开 `.\Controllers\HomeControler.cs` 文件
 
@@ -188,7 +182,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         var KeyVaultSecret = await KVClient.GetSecretAsync("<Key Vault Secret Identifier>")
 ```
 
-## <a name="optional-install-the-azure-app-services-extension"></a>（可选）安装 Azure 应用服务扩展
+## （可选）安装 Azure 应用服务扩展
 
 在 Visual Studio 中，如果调出命令面板 (Ctrl+Shift+P)，并且在搜索 Azure 应用资源命令时它没有返回任何内容，则需要安装扩展。
 
@@ -200,7 +194,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭“扩展”选项卡并返回到代码。
 
-## <a name="deploy-your-application-to-azure-app-services"></a>将应用程序部署到 Azure 应用服务
+## 将应用程序部署到 Azure 应用服务
 
 其余代码很简单，获取连接字符串，连接到 Azure Cosmos DB，并添加一些文档。 应用程序还应就任何问题向我们提供一些反馈。 在部署应用程序后，我们不应再执行任何其他更改。 让我们开始吧。 
 
@@ -244,7 +238,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 系统提示时，选择“浏览网站”。  或者，打开浏览器并转到 `https://<yourwebappname>.azurewebsites.net`。 在这两种情况下，我们都有一个问题。 你将在我们的网页上看到用户定义的消息。 消息应该是“密钥保管库无法访问”，并带有扩展的错误消息。 现在来解决此问题。
 
-## <a name="allow-our-app-to-use-a-managed-identity"></a>允许应用使用托管标识
+## 允许应用使用托管标识
 
 我们需要解决的第一个问题是允许应用使用托管标识。 使用托管标识将允许应用使用 Azure 服务，例如 Azure 密钥保管库。
 
@@ -260,7 +254,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 仍有一个问题。 虽然第一条消息是程序正在发送的用户定义消息，但第二条消息是系统生成的消息。 第二条消息的意思是，我们已被授予对密钥保管库的连接访问权限，但尚未授予我们查看保管库中机密的权限。  现在，我们来进行最后一个设置，以解决此问题。
 
-## <a name="granting-our-web-application-an-access-policy-to-the-key-vault-secrets"></a>向 Web 应用程序授予对密钥保管库机密的访问策略
+## 向 Web 应用程序授予对密钥保管库机密的访问策略
 
 此实验室的最初目标是防止我们的 Azure Cosmos DB 帐户在应用程序中被硬编码。 但是，我们确实对任何人都可以看到的机密标识符 URL 进行了硬编码。 那么，我们如何保护凭据呢？ 好消息是机密标识符本身没有用处。 机密标识符只能将你带到 Azure 密钥保管库门口，但允许谁进入保管库则由保管库自己决定。 这意味着，我们需要为应用程序创建密钥保管库访问策略，以便它可以看到该保管库中的机密。 我们来看看该解决方案。
 
@@ -272,7 +266,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 确保选择了“保管库访问策略”，然后选择“转到访问策略”。
 
-1. 选择“+ 新建”。 
+1. 选择“+ 新建”。
 
 1. 在“权限”选项卡上，选中“密钥权限”和“机密权限”对应的“获取”复选框，然后选择“下一步”。
 
@@ -280,7 +274,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“应用程序(可选)”选项卡上，选择“下一步”。
     
-1. 在“查看 + 创建”选项卡上，选择“创建”。 
+1. 在“查看 + 创建”选项卡上，选择“创建”。
 
 1. 现在，再次尝试我们的 Web 应用。  在浏览器中转到 `https://<yourwebappname>.azurewebsites.net`。
 

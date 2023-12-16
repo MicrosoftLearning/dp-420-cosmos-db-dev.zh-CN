@@ -4,13 +4,13 @@ lab:
   module: Module 13 - Create server-side programming constructs in Azure Cosmos DB for NoSQL
 ---
 
-# <a name="implement-and-then-use-user-defined-functions-with-the-sdk"></a>通过 SDK 实现和使用用户定义的函数
+# 通过 SDK 实现和使用用户定义的函数
 
 适用于 Azure Cosmos DB for NoSQL 的 .NET SDK 可用于直接从容器管理和调用服务器端编程结构。 准备新容器时，建议使用 .NET SDK 将 UDF 直接发布到容器，而不是使用数据资源管理器手动执行任务。
 
 在本实验室中，你将使用 .NET SDK 创建新的 UDF，然后使用数据资源管理器验证 UDF 是否正常工作。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ lab:
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
@@ -34,7 +34,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -51,13 +51,13 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+1. 在不关闭浏览器窗口的情况下，打开 Visual Studio Code****。
 
-## <a name="seed-the-azure-cosmos-db-for-nosql-account-with-data"></a>使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
+## 使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具将示例数据部署到任何 Azure Cosmos DB for NoSQL 帐户。 该工具是开源工具，可通过 NuGet 获得。 将此工具安装到 Azure Cloud Shell，然后使用它来设定数据库种子。
 
@@ -66,7 +66,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 在计算机上安装可全局使用的 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具。
 
     ```
-    dotnet tool install --global cosmicworks
+    dotnet tool install cosmicworks --global --version 1.*
     ```
 
     > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具 "cosmicworks" 已安装）。
@@ -89,7 +89,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭集成终端。
 
-## <a name="create-a-user-defined-function-udf-using-the-net-sdk"></a>使用 .NET SDK 创建用户定义函数 (UDF)
+## 使用 .NET SDK 创建用户定义函数 (UDF)
 
 .NET SDK 中的 [Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 类包括一个 [Scripts][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.scripts] 属性，该属性用于直接从 SDK 对存储过程、UDF 和触发器执行 CRUD 操作。 你将使用此属性创建新的 UDF，然后将该 UDF 推送到 Azure Cosmos DB for NoSQL 容器。 我们使用 SDK 创建的 UDF 将计算含税产品价格，这样，我们就可以使用产品的含税价格对产品运行 SQL 查询。
 
@@ -175,7 +175,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     Console.WriteLine($"Created UDF [{udf.Resource?.Id}]");
     ```
 
-1. 保存 script.cs 文件。 
+1. 保存 script.cs 文件。
 
 1. 在 Visual Studio Code 中，打开 33-create-use-udf-sdk 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例。
 
@@ -195,21 +195,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Visual Studio Code。
 
-## <a name="test-the-udf-using-the-data-explorer"></a>使用数据资源管理器测试 UDF
+## 使用数据资源管理器测试 UDF
 
 在 Azure Cosmos DB 容器中创建了新的 UDF 后，使用数据资源管理器验证 UDF 是否正常工作。
 
-1. 在新的 Web 浏览器窗口或选项卡中，导航到 Azure 门户 (``portal.azure.com``)。
-
-1. 使用与你的订阅关联的 Microsoft 凭据登录到门户。
-
-1. 选择“资源组”，选择先前在此实验室中创建或查看的资源组，然后选择在此实验室中创建的“Azure Cosmos DB 帐户”资源。
+1. 返回 Web 浏览器。
 
 1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
 
-1. 在“数据资源管理器”中，展开“cosmicworks”数据库节点，然后在“NoSQL API”导航树中观察新“products”容器节点。
+1. 在“数据资源管理器”**** 中，展开“cosmicworks”**** 数据库节点，然后在“NoSQL API”**** 导航树中观察新“products”**** 容器节点。
 
-1. 选择“NoSQL API”导航树中的“products”容器节点，然后选择“新建 SQL 查询”。
+1. 选择“NoSQL API”**** 导航树中的“products”**** 容器节点，然后选择“新建 SQL 查询”****。
 
 1. 在“查询”选项卡中，选择“执行查询”以查看选择不包含任何筛选器的所有项的标准查询。
 

@@ -4,13 +4,13 @@ lab:
   module: Module 7 - Integrate Azure Cosmos DB for NoSQL with Azure services
 ---
 
-# <a name="search-data-using-azure-cognitive-search-and-azure-cosmos-db-for-nosql"></a>使用 Azure 认知搜索和 Azure Cosmos DB for NoSQL 来搜索数据
+# 使用 Azure 认知搜索和 Azure Cosmos DB for NoSQL 来搜索数据
 
 Azure 认知搜索将搜索引擎作为一项服务与和人工智能功能的深度集成相结合，来丰富搜索索引中的信息。
 
 在此实验中，你将构建一个 Azure 认知搜索索引，该索引会自动为 Azure Cosmos DB for NoSQL 容器中的数据编制索引，并使用 Azure 认知服务翻译器功能来丰富数据。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API）。 完成 Azure Cosmos DB for NoSQL 帐户预配后，可以检索终结点和密钥，并使用它们通过 Azure SDK for .NET 或所选择的任何其他 SDK 连接到 Azure Cosmos DB for NoSQL 帐户。
 
@@ -20,7 +20,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -36,11 +36,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-    1. 记录“主链接字符串”字段的值。 你将在此练习的稍后部分使用此连接字符串值。
+    1. 请注意“主连接字符串”**** 字段。 你将在此练习的稍后部分使用此连接字符串值。
 
 1. 从资源菜单中选择“数据资源管理器”。
 
@@ -50,24 +50,22 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 新建 &vert; cosmicworks |
-    | **容器 ID** | products |
-    | **分区键** | /categoryId |
+    | **数据库 ID** | 新建 &vert; ``cosmicworks``**** |
+    | **容器 ID** | *``products``* |
+    | **分区键** | *``/categoryId``* |
 
-1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。  
+1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。
 
-1. 关闭 Web 浏览器窗口或选项卡。
+## 使用示例数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
-## <a name="seed-your-azure-cosmos-db-for-nosql-account-with-sample-data"></a>使用示例数据为 Azure Cosmos DB for NoSQL 帐户设定种子
+你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器。
 
-你将使用命令行实用工具来创建 cosmicworks 数据库和 products 容器。  然后，该工具将创建一组项，你将使用终端窗口中运行的更改源处理器来观察它们。
-
-1. 在 Visual Studio Code 中，打开“终端”菜单，然后选择“拆分终端”，以与现有实例并排打开新的终端。  
+1. 在 Visual Studio Code**** 中，打开“终端”**** 菜单，选择“新建终端”****。
 
 1. 在计算机上安装可全局使用的 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具。
 
     ```
-    dotnet tool install --global cosmicworks
+    dotnet tool install cosmicworks --global --version 1.*
     ```
 
     > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具 "cosmicworks" 已安装）。
@@ -92,7 +90,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 关闭 Visual Studio Code。
 
-## <a name="create-azure-cognitive-search-resource"></a>创建 Azure 认知搜索资源
+## 创建 Azure 认知搜索资源
 
 继续完成此练习之前，需要先创建新的 Azure 认知搜索实例。
 
@@ -102,7 +100,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“认知搜索”，然后使用以下设置创建新的“Azure 认知搜索”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
@@ -116,7 +114,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 转到新创建的“Azure 认知搜索”帐户资源。
 
-## <a name="build-indexer-and-index-for-azure-cosmos-db-for-nosql-data"></a>Azure Cosmos DB for NoSQL 数据的生成索引器和索引
+## Azure Cosmos DB for NoSQL 数据的生成索引器和索引
 
 将创建一个索引器，该索引器按小时索引特定 Azure Cosmos DB for NoSQL 容器中数据的子集。
 
@@ -128,7 +126,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **数据源名称** | products-cosmossql-source |
+    | **数据源名称** | *``products-cosmossql-source``* |
     | **连接字符串** | 之前创建的 Azure Cosmos DB for NoSQL 帐户的连接字符串** |
     | **Database** | cosmicworks |
     | **集合** | products |
@@ -162,7 +160,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **索引名称** | products-index |
+    | **索引名称** | *``products-index``* |
     | **键** | *id* |
 
 1. 在字段表中，使用下表为每个字段配置“可检索”、“可筛选”、“可排序”、“可分面”和“可搜索”选项    ：
@@ -180,7 +178,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | ---: | :--- |
-    | **名称** | products-cosmosdb-indexer |
+    | **Name** | *``products-cosmosdb-indexer``* |
     | **计划** | *每小时* |
 
 1. 选择“提交”以创建数据源、索引和索引器。
@@ -195,7 +193,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 导航到“索引”选项卡，然后选择“products-index”索引 。
 
-## <a name="validate-index-with-example-search-queries"></a>使用示例搜索查询来验证索引
+## 使用示例搜索查询来验证索引
 
 现在，Azure Cosmos DB for NoSQL 数据的具体化视图已在搜索索引中，可以执行一些基本查询来利用 Azure 认知搜索中的功能。
 

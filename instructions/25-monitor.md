@@ -4,13 +4,13 @@ lab:
   module: Module 11 - Monitor and troubleshoot an Azure Cosmos DB for NoSQL solution
 ---
 
-# <a name="use-azure-monitor-to-analyze-an-azure-cosmos-db-for-nosql-account"></a>使用 Azure Monitor 分析 Azure Cosmos DB for NoSQL 帐户
+# 使用 Azure Monitor 分析 Azure Cosmos DB for NoSQL 帐户
 
 Azure Monitor 是 Azure 中的全栈监视服务，它提供了一套完整的功能来监视 Azure 资源。  Azure Cosmos DB 使用 Azure Monitor 来创建监视数据。  Azure Monitor 捕获 Cosmos DB 的指标和遥测数据。
 
 在此实验室中，你将针对 Azure Cosmos DB 容器运行一个模拟工作负载，并分析该工作负载如何影响 Azure Cosmos DB 帐户。
 
-## <a name="prepare-your-development-environment"></a>准备开发环境
+## 准备开发环境
 
 如果你还没有将 DP-420 的实验室代码存储库克隆到使用此实验室的环境，请按照以下步骤操作。 否则，请在 Visual Studio Code 中打开以前克隆的文件夹。
 
@@ -24,7 +24,7 @@ Azure Monitor 是 Azure 中的全栈监视服务，它提供了一套完整的�
 
 1. 克隆存储库后，打开在 Visual Studio Code 中选择的本地文件夹。
 
-## <a name="create-an-azure-cosmos-db-for-nosql-account"></a>创建 Azure Cosmos DB for NoSQL 帐户
+## 创建 Azure Cosmos DB for NoSQL 帐户
 
 Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 API。 在首次预配 Azure Cosmos DB 帐户时，可以选择希望该帐户支持的 API（例如 Mongo API 或 NoSQL API） 。 Azure Cosmos DB for NoSQL 帐户完成预配后，你可以检索终结点和密钥。 使用终结点和密钥以编程方式连接到 Azure Cosmos DB for NoSQL 帐户。 在 Azure SDK for .NET 或任何其他 SDK 的连接字符串上使用终结点和密钥。
 
@@ -34,14 +34,14 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | **值** |
+    | **设置** | 值 |
     | ---: | :--- |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
     | **容量模式** | *预配的吞吐量* |
-    | **应用免费分级折扣** | *`Do Not Apply`* |
+    | **应用免费分级折扣** | *不应用* |
     | 限制可在此帐户上预配的总吞吐量 | *取消选中* |
 
     > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
@@ -52,14 +52,14 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 记录“URI”字段的值。 稍后在本练习中将用到此终结点值。
+    1.请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
 
-    1. 记录“主键”字段的值。 稍后在本练习中将用到此键值。
+    1.请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
 1. 最小化浏览器窗口，但不要关闭它。 在接下来的步骤中，我们将在启动后台工作负载几分钟后返回 Azure 门户。
 
 
-## <a name="import-the-microsoftazurecosmos-and-newtonsoftjson-libraries-into-a-net-script"></a>将 Microsoft.Azure.Cosmos 和 Newtonsoft.Json 库导入 .NET 脚本
+## 将 Microsoft.Azure.Cosmos 和 Newtonsoft.Json 库导入 .NET 脚本
 
 .NET CLI 包含 [add package][docs.microsoft.com/dotnet/core/tools/dotnet-add-package] 命令，用于从预配置的包源导入包。 .NET 安装使用 NuGet 作为默认包源。
 
@@ -81,7 +81,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     dotnet add package Newtonsoft.Json --version 13.0.1
     ```
 
-## <a name="run-a-script-to-create-the-containers-and-the-workload"></a>运行脚本以创建容器和工作负载
+## 运行脚本以创建容器和工作负载
 
 现在，我们已准备好运行工作负载来监视 Azure Cosmos DB 帐户的使用情况。  脚本将在后台运行。 此脚本将创建三个容器，并将一些数据加载到这些容器中。 然后，该脚本会随机运行一些 SQL 查询来模拟访问 Azure Cosmos DB 帐户的多个用户应用程序。 
 
@@ -118,11 +118,11 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 你将注意到几个黄色警告，因为编译器检测到脚本以同步方式运行多个操作，并且不等待操作答复。 你可以忽略这些警告，因为这是同时运行多个 SQL 脚本的预期行为。
 
-## <a name="use-azure-monitor-to-analyze-the-azure-cosmos-db-account-usage"></a>使用 Azure Monitor 分析 Azure Cosmos DB 帐户使用情况
+## 使用 Azure Monitor 分析 Azure Cosmos DB 帐户使用情况
 
 在本练习的这一部分中，我们将返回到浏览器，并查看一些 Azure Monitor 见解和指标报告。
 
-### <a name="azure-monitor-metricss-reports"></a>Azure Monitor 指标报告
+### Azure Monitor 指标报告
 
 1. 返回到前面已最小化的打开的浏览器窗口。 如果已将其关闭，请打开一个新窗口，并在 portal.azure.com 下转到 Azure Cosmos DB 帐户页。
 
@@ -154,7 +154,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 > &#128221; 共享图表的另一种方法是单击“共享”下拉菜单，然后将其下载为 Excel 文件，或者选择“复制链接”选项。
 
-### <a name="azure-monitor-insights-reports"></a>Azure Monitor 见解报告
+### Azure Monitor 见解报告
 
 我们可能需要花些时间来微调 Azure Monitor 指标诊断报告。  Cosmos DB Insights 提供了对 Azure Cosmos DB 资源的整体性能、故障和操作运行状况的概览。 这些见解图表将是预先生成的图表，与指标图表类似。 让我们来看看其中一些见解。
 
@@ -174,7 +174,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“系统”选项卡。如果你的应用程序经常创建、删除或查询帐户元数据，则可能会出现 429 异常。  这些图表可帮助我们确定频繁的元数据访问是否是导致 429 异常的原因。 此外，还可以确定元数据请求的状态。  
 
-### <a name="azure-monitor-insights-reports"></a>Azure Monitor 见解报告
+### Azure Monitor 见解报告
 
 1. 如果程序仍在运行，请返回到 Visual Studio Code 命令终端。
 
