@@ -271,9 +271,11 @@ Bicep 是一种高效的域特定语言，与使用 Azure 资源管理器模板�
 1. 在该文件中，添加一个新的对象来创建新的 Azure Cosmos DB 帐户：
 
     ```
+    param location string = resourceGroup().location
+    
     resource Account 'Microsoft.DocumentDB/databaseAccounts@2021-05-15' = {
       name: 'csmsbicep${uniqueString(resourceGroup().id)}'
-      location: resourceGroup().location
+      location: location
       properties: {
         databaseAccountOfferType: 'Standard'
         locations: [
