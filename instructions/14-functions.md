@@ -78,6 +78,39 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 转到 Azure 门户的主页。
 
+## 创建 Application Insight
+
+在创建 Azure Funtion Application 之前，需要启用 Azure Application Insight，以便可以监视应用程序功能****。 Application Insight 首先需要 Log Analytics 工作区**。
+
+1. 在搜索框中搜索“Log Analytics 工作区”****。
+
+1. 选择“+创建”以创建新的 Log Analytics 工作区******。
+
+1. 在“Log Analytics 工作区”对话框中，为每个设置输入以下值，然后选择“查看+创建”，然后选择“创建”************：
+
+    | **设置** | 值 |
+    | ---: | :--- |
+    | **订阅** | 你的现有 Azure 订阅 |
+    | **资源组** | 选择现有资源组，或创建新资源组 |
+    | **Name** | *``lab14laworkspace``* |
+    | **位置** | 选择任何可用区域 |
+
+1. 创建 Log Analytics 工作区后，在搜索框中搜索“Application Insights”******。
+
+1. 选择“+创建”以创建新的 Application Insight******。
+
+1. 在“Application Insights”对话框中，为每个设置输入以下值，然后选择“查看+创建”，然后选择“创建”************：
+
+    | **设置** | **值** |
+    | ---: | :--- |
+    | **订阅（两个条目）** | 你的现有 Azure 订阅 |
+    | **资源组** | 选择现有资源组，或创建新资源组 |
+    | **Name** | *``lab14appinsight``* |
+    | **位置** | 选择任何可用区域 |
+    | **Log Analytics 工作区** | lab14laworkspace** |
+
+现在应该能够监视应用程序函数。
+
 ## 创建 Azure Function 应用和 Azure Cosmos DB 触发的函数
 
 在开始编写代码之前，需要使用创建向导创建 Azure Functions 资源及其相关资源（Application Insights、存储）。
@@ -91,7 +124,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **名称** | 输入全局唯一名称 |
     | **发布** | *代码* |
     | **运行时堆栈** | *.NET* |
-    | **版本** | *6* |
+    | **版本** | *6 (LTS) 进程内* |
     | **区域** | 选择任何可用区域 |
     | **存储帐户** | *新建存储帐户* |
 

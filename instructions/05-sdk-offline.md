@@ -189,7 +189,7 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
  导航到 Windows 系统托盘中的仿真器图标，打开上下文菜单，然后选择“退出”以关闭仿真器。
 
-    > &#128221; It may take a minute for all instances of the emulator to exit.
+> &#128221; 退出仿真器的所有实例可能需要一分钟的时间。
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks
 [docs.microsoft.com/azure/cosmos-db/local-emulator]: https://docs.microsoft.com/azure/cosmos-db/local-emulator

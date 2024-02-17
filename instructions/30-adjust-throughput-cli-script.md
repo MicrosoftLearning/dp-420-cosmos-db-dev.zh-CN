@@ -207,7 +207,7 @@ Azure CLI 可用于在手动和自动缩放的吞吐量预配之间迁移容器�
     az cosmosdb sql container throughput show --name "products" --query "resource.minimumThroughput" --output "tsv" --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup
     ```
 
-1. 使用以下命令将 products 容器的最大自动缩放吞吐量从默认值 4000 更新为新值 5000************：
+1. 使用以下命令将 **products** 容器的最大自动缩放吞吐量从当前默认值 **1000** 更新为新值 **5000**：
 
     ```
     az cosmosdb sql container throughput update --name "products" --max-throughput 5000 --database-name "cosmicworks" --account-name $accountName --resource-group $resourceGroup

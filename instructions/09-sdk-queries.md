@@ -57,7 +57,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 ## 使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
@@ -117,9 +117,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     string key = "<cosmos-key>";
     ```
 
-    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ=="; 。
+    > &#128221; 例如，如果键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：string key = "fDR2ci9QgkdkvERTQ==";。
 
-1. 使用 SELECT * FROM products p 的值创建一个名为 sql 的 string 类型的新变量：
+1. ************** 让我们将一些附加代码追加到 script.cs 文件的末尾，创建一个名为 sql 且类型为 string 的新变量，使其值为 SELECT * FROM products p：
 
     ```
     string sql = "SELECT * FROM products p";
@@ -157,17 +157,17 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
   
     ```
     using System;
-    using Azure.Cosmos;
+    using Microsoft.Azure.Cosmos;
 
     string endpoint = "<cosmos-endpoint>";
 
     string key = "<cosmos-key>";
 
-    CosmosClient client = new CosmosClient(endpoint, key);
+    CosmosClient client = new (endpoint, key);
 
-    CosmosDatabase database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
+    Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
-    CosmosContainer container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
 
     string sql = "SELECT * FROM products p";
     QueryDefinition query = new (sql);
@@ -189,6 +189,12 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 保存 script.cs 文件 。
 
 1. 在 Visual Studio Code 中，打开 09-execute-query-sdk 文件夹的上下文菜单，然后选择“在集成终端中打开”以打开一个新的终端实例  。
+
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+
+    ```
+    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
 
 1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
 
