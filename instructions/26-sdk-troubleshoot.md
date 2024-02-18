@@ -98,6 +98,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 例如，如果你的键为：fDR2ci9QgkdkvERTQ==，则 C# 语句应为：private static readonly string key = "fDR2ci9QgkdkvERTQ==";。
 
+1. 保存文件。
+
 1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
 
     ```
@@ -305,7 +307,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         }
     ```
 
-1. 请注意，仍然通过上面的更改来解决此 CreateDocument2 函数的问题****。
+1. 请注意，CreateDocument2 函数的问题仍然通过上面的更改来修复。****
 
 1. 最后，函数 DeleteDocument1 和 DeleteDocument2 还需要将以下代码替换为类似于 CreateDocument1 函数的适当错误处理代码************。 除了使用 DeleteItemAsync 而不是 CreateItemAsync 以外，这些函数的唯一区别在于，[“删除”状态代码][/rest/api/cosmos-db/delete-a-document]与“插入”状态代码不同********。 对于删除，我们只用注意 404 状态代码，它表示未找到文档****。 现在来了解一下其他情况的 CompleteTaskOnCosmosDB 函数调用错误处理****。  在 Main 函数中，需要在默认情况下添加以下代码********：
 
@@ -315,6 +317,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
                         Console.WriteLine("Can not delete customer, customer not found.");
                         break;         
     ```
+
+1. 保存文件。
 
 1. 完成所有函数的修复后，多次测试所有菜单选项，以确保应用程序在遇到异常时返回消息并不会崩溃。  如果应用崩溃，则解决错误，然后只重新运行以下命令：
 
