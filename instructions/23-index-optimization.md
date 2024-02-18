@@ -68,7 +68,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 ## 使用默认索引策略运行测试 .NET 应用程序
 
@@ -188,7 +188,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 返回到 Visual Studio Code。 返回到打开的终端。
 
-1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令至少再生成并运行项目两次。 观察控制台输出中的新 RU 费用，该费用应显著小于原始费用：
+1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令至少再生成并运行项目两次。 观察控制台输出中的新 RU 费用，该费用应显著小于原始费用。 由于未为所有项属性编制索引，更新索引时的写入成本会明显降低。 但是，如果读取需要查询未编制索引的属性，此操作可能会产生大量费用。  
 
     ```
     dotnet run
@@ -212,7 +212,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 返回到 Visual Studio Code。 返回到打开的终端。
 
-1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令至少再生成并运行项目两次。 观察控制台输出中的新 RU 费用，该费用应略微小于原始费用：
+1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令至少再生成并运行项目两次。 观察控制台输出中的新 RU 费用，该费用应显著小于原始费用。  为什么会这样？ 由于此脚本在你编写该项时测量 RU，因此选择无索引，就不会产生管理该索引的开销。 另一方面，虽然写入生成的 RU 较少，但读取成本会很高。
 
     ```
     dotnet run
