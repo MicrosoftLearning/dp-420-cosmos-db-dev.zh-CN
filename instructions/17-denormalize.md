@@ -74,7 +74,7 @@ lab:
 
     ![屏幕截图显示 productCategory 容器的查询结果。](media/16-product-category-results.png)
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 2.8 RU（请求单位）。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 2.92 RU（请求单位）****。
 
     ![屏幕截图显示你在数据资源管理器中运行的查询的查询统计信息。](media/16-product-category-stats.png)
 
@@ -160,12 +160,12 @@ lab:
 
 |**查询**|**RU/秒 成本**|
 |---------|---------|
-|类别名称|2.8|
+|类别名称|2.92|
 |产品|2.89|
 |HL 产品标记|3.06|
 |LL 产品标记|3.45|
 |ML 产品标记|3.19|
-|总 RU 成本|**15.39**|
+|总 RU 成本|**15.51**|
 
 ### 对 NoSQL 设计运行相同的查询
 
@@ -400,7 +400,6 @@ lab:
         .CreateItem<SalesOrder>(salesOrder)
         .ReplaceItem<CustomerV4>(customer.id, customer)
         .ExecuteAsync();
-    
     if (txBatchResponse.IsSuccessStatusCode)
         Console.WriteLine("Order created successfully");
     ```
