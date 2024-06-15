@@ -53,7 +53,7 @@ lab:
 
     1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 1. 在“资源管理器”**** 窗格中，浏览到“07-sdk-batch”**** 文件夹。
 

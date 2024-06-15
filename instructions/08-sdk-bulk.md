@@ -65,7 +65,7 @@ lab:
     | **分区键** | *`/categoryId`* |
     | **容器吞吐量** | 自动缩放 &vert; `4000`**** |
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 1. 在“资源管理器”**** 窗格中，浏览到“08-sdk-bulk”**** 文件夹。
 
@@ -231,7 +231,7 @@ lab:
 
 1. 在 Visual Studio Code**** 中，打开 08-sdk-bulk**** 文件夹的上下文菜单，然后选择“在集成终端中打开”**** 以打开一个新的终端实例。
 
-1. 使用 **[dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run]** 命令生成并运行项目：
+1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
 
     ```
     dotnet run
