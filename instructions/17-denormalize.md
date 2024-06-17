@@ -32,14 +32,21 @@ lab:
 
     > &#128161; 要打开 Git Bash 终端，请在终端菜单的右侧，单击 + 符号旁边的下拉菜单，然后选择 Git Bash 。
 
-1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在此处使用提供的实验室凭据。
 
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
     cd 17-denormalize
-    bash init.sh
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    ```
+
+    > &#128161; 如果首先运行了 **度量客户实体性能** 实验室，但未移除该实验室创建的 Azure 资源，请关闭集成终端，忽略以下步骤并移动到下一部分。 请注意，如果已有由 **度量客户实体性能** 实验室创建的资源，并且尝试运行下面的脚本，则脚本将会失败。
+
+1. 在 Git Bash 终端中，运行以下命令。 这些命令运行创建新 Azure Cosmos DB 帐户的脚本，然后构建并启动用于填充数据库的应用，完成练习。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+
+    ```
+    bash init.sh
     dotnet build
     dotnet run --load-data
     echo "Data Load completed."
@@ -523,5 +530,9 @@ lab:
     你可能不知道，针对排名前 10 的客户的查询是跨分区查询，它跨容器的所有分区扇出。
 
     此实验室的配套实验室指出，应尽量避免跨分区查询。 但实际上，在容器仍然较小或查询不经常运行的情况下，此类查询是可行的。 如果此查询经常运行或容器特别大，则值得探究将此数据具体化到另一个容器并用它来为此查询提供服务的成本。
+
+## 清理
+
+删除在此实验室中创建的资源组。  如果无权移除资源组，请移除此实验室创建的所有 Azure 对象。
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks

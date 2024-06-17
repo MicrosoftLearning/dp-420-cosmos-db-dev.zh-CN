@@ -30,20 +30,26 @@ lab:
 
     > &#128161; 要打开 Git Bash 终端，请在终端菜单的右侧，单击 + 符号旁边的下拉菜单，然后选择 Git Bash 。
 
-1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在其中使用提供的实验室凭据，运行创建新 Azure Cosmos DB 帐户的脚本，然后生成并启动用于填充数据库并完成练习的应用。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+1. 在 Git Bash 终端中，运行以下命令。 这些命令会打开浏览器窗口以连接到 Azure 门户，你将在此处使用提供的实验室凭据。
 
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
     cd 16-measure-performance
-    bash init.sh
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+
+    ```
+    > &#128161; 如果首先运行了 **非规范化数据成本** 实验室，但未移除该实验室创建的 Azure 资源，请关闭集成终端，忽略以下步骤并转到下一部分。 请注意，如果已有由 **非规范化数据成本** 实验室创建的资源，并且尝试运行以下脚本，则脚本将会失败。
+
+1. 在 Git Bash 终端中，运行以下命令。 这些命令运行创建新 Azure Cosmos DB 帐户的脚本，然后构建并启动用于填充数据库的应用，完成练习。 输入为 Azure 帐户提供的凭据后，可能需要 15-20 分钟才能完成生成，不妨在此时喝杯咖啡或茶。
+
+    ```
+    bash init.sh
     dotnet build
     dotnet run --load-data
     echo "Data load process completed."
 
     ```
-
 1. 关闭集成终端。
 
 ## 衡量不同容器中的实体的性能
@@ -140,5 +146,9 @@ lab:
 比较运行的每个查询的 RU/秒时，你会发现其客户实体嵌入单个文档的最后一个查询的成本远低于单独运行三个查询的总成本。 返回这些数据的延迟较低，因为数据是通过单个操作返回的。
 
 搜索单个项目且了解数据的分区键和 ID 后，可通过调用 `ReadItemAsync()` 在 Azure Cosmos DB SDK 中使用 point-read 检索此数据。 点读速度比我们的查询还要快。 对于同一客户数据，成本仅为 1 RU/秒，几乎是原来的 1/3。
+
+## 清理
+
+删除在此实验室中创建的资源组。  如果无权移除资源组，请移除此实验室创建的所有 Azure 对象。
 
 [code.visualstudio.com/docs/getstarted]: https://code.visualstudio.com/docs/getstarted/tips-and-tricks
