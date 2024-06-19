@@ -48,7 +48,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 启动 Visual Studio Code。
 
-1. 在 Visual Studio Code 中，打开“终端”菜单，然后选择“新建终端”以打开新的终端实例  。
+1. 在 Visual Studio Code 中，打开“终端”菜单，然后选择“新建终端”以打开新的终端实例。
 
     > &#128221; 如果你还不熟悉 Visual Studio Code 界面，请参阅 [Visual Studio Code 入门指南][code.visualstudio.com/docs/getstarted]
 
@@ -84,7 +84,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 返回 Web 浏览器。
 
-1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格 。
+1. 在 Azure Cosmos DB 帐户资源中，导航到“数据资源管理器”窗格。
 
 1. 在“数据资源管理器”**** 中，展开“cosmicworks”**** 数据库节点，然后在“NoSQL API”**** 导航树中观察新“products”**** 容器节点。
 

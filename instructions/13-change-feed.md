@@ -90,7 +90,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“productslease”容器节点。************
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 ## 在 .NET SDK 中实现更改源处理器
 

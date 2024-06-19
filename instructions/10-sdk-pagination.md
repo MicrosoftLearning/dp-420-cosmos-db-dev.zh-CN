@@ -55,7 +55,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
-1. 返回到 Visual Studio Code。
+1. 返回到 **Visual Studio Code**。
 
 ## 使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
 
