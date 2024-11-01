@@ -1,6 +1,6 @@
 ---
 lab:
-  title: 通过门户查看 Azure Cosmos DB for NoSQL 容器的默认索引策略
+  title: 使用 SDK 配置 Azure Cosmos DB for NoSQL 容器的索引策略
   module: Module 6 - Define and implement an indexing strategy for Azure Cosmos DB for NoSQL
 ---
 
