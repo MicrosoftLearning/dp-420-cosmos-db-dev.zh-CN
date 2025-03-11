@@ -37,7 +37,6 @@ lab:
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
-    cd 17-denormalize
     dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
     ```
 
@@ -103,6 +102,8 @@ lab:
 
     ![Azure Cosmos DB 数据资源管理器的屏幕截图，显示对 product 容器的查询结果。](media/16-product-results.png)
 
+   > **备注**：你观察到的请求费用可能与本练习中报告的请求费用略有不同，差异在 +/- 0.1 范围内。
+
 ### 查询每个产品的标记
 
 接下来，针对以下三种产品查询 productTag 容器三次（每种产品一次）：HL Headset、LL Headset 和 ML Headset。
@@ -139,7 +140,7 @@ lab:
 
     此查询返回 LL Headset 产品的五个标记。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 3.45 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 3.47 RU****。
 
     ![屏幕截图显示针对“LL Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ll-stats.png)
 
@@ -157,7 +158,7 @@ lab:
 
     此查询返回 ML Headset 产品的三个标记。
 
-1. 选择“查询统计信息”选项卡，并记下请求费用为 3.19 RU。
+1. 选择“查询统计信息”选项卡，并记下请求费用为 3.2 RU****。
 
     ![屏幕截图显示针对“ML Headset”查询统计信息对 productTag 容器的查询结果。](media/16-product-tag-ml-stats.png)
 
@@ -170,9 +171,9 @@ lab:
 |类别名称|2.92|
 |产品|2.89|
 |HL 产品标记|3.06|
-|LL 产品标记|3.45|
-|ML 产品标记|3.19|
-|总 RU 成本|**15.51**|
+|LL 产品标记|3.47|
+|ML 产品标记|3.20|
+|总 RU 成本|**15.54**|
 
 ### 对 NoSQL 设计运行相同的查询
 
