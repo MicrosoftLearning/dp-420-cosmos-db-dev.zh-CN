@@ -214,7 +214,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择现有资源组，或创建一个新组（如果需要）。
 
-1. 选择 .NET 6 (LTS)。
+1. 选择 **.NET 8 (LTS)**。
 
 1. 选择“Windows”。
 
