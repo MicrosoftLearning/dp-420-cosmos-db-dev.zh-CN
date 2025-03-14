@@ -33,7 +33,7 @@ Azure CLI 是一组命令，可用于管理 Azure 中的各种资源。 Azure Co
 1. 在登录到 Azure 之前安装 tls/ssl 证书：
 
     ```
-    CD "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\"
+    cd "C:\Program Files\Microsoft SDKs\Azure\CLI2\"
     .\python.exe -m pip install pip-system-certs
     ```
 
@@ -74,7 +74,7 @@ Cosmosdb 命令组包含使用 CLI 创建和管理 Azure Cosmos DB 帐户的基�
 
 1. 返回到已在 Visual Studio Code 中打开的终端实例****。
 
-1. 使用以下命令查看与 Azure Cosmos DB 相关的大多数 Azure CLI 命令****：
+1. 使用以下命令查看与 **Azure Cosmos DB** 相关的最常见的 Azure CLI 命令：
 
     ```
     az cosmosdb --help
@@ -131,7 +131,7 @@ cosmosdb sql 命令组包含用于管理 Azure Cosmos DB 的 NoSQL API 特定资
 
 1. 返回到已在 Visual Studio Code 中打开的终端实例****。
 
-1. 使用以下命令查看与 Azure Cosmos DB for NoSQL 相关的大多数 Azure CLI 命令组****：
+1. 使用以下命令查看与 **Azure Cosmos DB for NoSQL** 相关的最常见的 Azure CLI 命令组：
 
     ```
     az cosmosdb sql --help
