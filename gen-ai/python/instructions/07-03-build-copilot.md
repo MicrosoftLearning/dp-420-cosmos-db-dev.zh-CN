@@ -1,11 +1,7 @@
 ---
-title: 07.3 - 使用 Python 和 Azure Cosmos DB for NoSQL 生成 Copilot
 lab:
   title: 07.3 - 使用 Python 和 Azure Cosmos DB for NoSQL 生成 Copilot
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 12
-parent: Python SDK labs
 ---
 
 # 使用 Python 和 Azure Cosmos DB for NoSQL 生成 Copilot

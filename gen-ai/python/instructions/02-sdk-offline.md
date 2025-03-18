@@ -1,11 +1,7 @@
 ---
-title: 02 - 配置 Azure Cosmos DB Python SDK 进行脱机开发
 lab:
-  title: 02 - 配置 Azure Cosmos DB Python SDK 进行脱机开发
+  title: 02 - 配置 Azure Cosmos DB SQL API SDK 进行脱机开发
   module: Configure the Azure Cosmos DB for NoSQL SDK
-layout: default
-nav_order: 5
-parent: Python SDK labs
 ---
 
 # 配置 Azure Cosmos DB Python SDK 进行脱机开发

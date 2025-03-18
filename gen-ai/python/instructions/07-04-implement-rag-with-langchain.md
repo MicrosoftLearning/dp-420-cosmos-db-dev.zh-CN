@@ -1,11 +1,7 @@
 ---
-title: 07.4 - 使用 LangChain 和 Azure Cosmos DB for NoSQL 矢量搜索实现 RAG
 lab:
   title: 07.4 - 使用 LangChain 和 Azure Cosmos DB for NoSQL 矢量搜索实现 RAG
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 13
-parent: Python SDK labs
 ---
 
 # 使用 LangChain 和 Azure Cosmos DB for NoSQL 矢量搜索实现 RAG

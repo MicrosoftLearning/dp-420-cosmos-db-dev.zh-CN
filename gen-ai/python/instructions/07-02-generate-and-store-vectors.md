@@ -1,11 +1,7 @@
 ---
-title: 07.2 - 使用 Azure OpenAI 生成矢量嵌入，存储在 Azure Cosmos DB for NoSQL 中
 lab:
   title: 07.2 - 使用 Azure OpenAI 生成矢量嵌入，存储在 Azure Cosmos DB for NoSQL 中
   module: Build copilots with Python and Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 11
-parent: Python SDK labs
 ---
 
 # 使用 Azure OpenAI 生成矢量嵌入，存储在 Azure Cosmos DB for NoSQL 中

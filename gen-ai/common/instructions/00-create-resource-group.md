@@ -1,11 +1,7 @@
 ---
-title: 创建实验室资源组
 lab:
   title: 创建实验室资源组
   module: Setup
-layout: default
-nav_order: 1
-parent: Common setup instructions
 ---
 
 # 为实验室创建 Azure 资源组

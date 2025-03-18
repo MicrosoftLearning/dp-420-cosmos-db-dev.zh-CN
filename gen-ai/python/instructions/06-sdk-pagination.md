@@ -1,11 +1,7 @@
 ---
-title: 06 - 在 Azure Cosmos DB for NoSQL SDK 中对叉积查询结果进行分页
 lab:
   title: 06 - 在 Azure Cosmos DB for NoSQL SDK 中对叉积查询结果进行分页
   module: Author complex queries with the Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 9
-parent: Python SDK labs
 ---
 
 # 在 Azure Cosmos DB for NoSQL SDK 中对叉积查询结果进行分页
@@ -16,11 +12,11 @@ Azure Cosmos DB 查询通常会有多页的结果。 当 Azure Cosmos DB 不能�
 
 ## 准备开发环境
 
-如果你还没有克隆**使用 Azure Cosmos DB 生成助手**的实验室代码存储库并设置你的本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明进行操作。
+如果尚未为**使用 Azure Cosmos DB 生成 Copilot** 克隆实验室代码存储库并设置本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明以执行此操作。
 
 ## 创建 Azure Cosmos DB for NoSQL 帐户
 
-如果已为此站点上的**使用 Azure Cosmos DB 生成助手**实验室创建了 Azure Cosmos DB for NoSQL 帐户，你可以将其用于此实验室，并跳转至[下一部分](#create-azure-cosmos-db-database-and-container-with-sample-data)。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，创建一个将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并通过向帐户分配 **Cosmos DB 内置数据参与者**角色，授予你的用户标识访问权限，以管理帐户中的数据。
+如果已为此站点上的 **使用 Azure Cosmos DB 生成 Copilot** 实验室创建 Azure Cosmos DB for NoSQL 帐户，则可以将其用于此实验室，并跳到“[下一部分](#create-azure-cosmos-db-database-and-container-with-sample-data)”。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，创建一个将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并通过向帐户分配 **Cosmos DB 内置数据参与者**角色，授予你的用户标识访问权限，以管理帐户中的数据。
 
 ## 创建 Azure Cosmos DB 数据库和包含示例数据的容器
 

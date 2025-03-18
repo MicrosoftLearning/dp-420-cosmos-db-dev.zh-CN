@@ -1,11 +1,7 @@
 ---
-title: 设置实验室环境
 lab:
   title: 设置实验室环境
   module: Setup
-layout: default
-nav_order: 2
-parent: JavaScript SDK labs
 ---
 
 # 设置本地实验室环境

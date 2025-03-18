@@ -1,11 +1,7 @@
 ---
-title: 安装 Azure Cosmos DB
 lab:
   title: 安装 Azure Cosmos DB
   module: Setup
-layout: default
-nav_order: 3
-parent: Common setup instructions
 ---
 
 # 安装 Azure Cosmos DB
