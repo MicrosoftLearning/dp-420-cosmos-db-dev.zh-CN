@@ -1,28 +1,24 @@
 ---
-title: 03 - 使用 Azure Cosmos DB for NoSQL SDK 创建和更新文档
 lab:
   title: 03 - 使用 Azure Cosmos DB for NoSQL SDK 创建和更新文档
   module: Implement Azure Cosmos DB for NoSQL point operations
-layout: default
-nav_order: 6
-parent: JavaScript SDK labs
 ---
 
 # 使用 Azure Cosmos DB for NoSQL SDK 创建和更新文档
 
-`@azure/cosmos` 库包含在 Azure Cosmos DB for NoSQL 容器中创建、检索、更新和删除 (CRUD) 项所用的方法。 这些方法共同执行 NoSQL API 容器中各种项的最常见“CRUD”操作。
+该`@azure/cosmos`库包括在 Azure Cosmos DB for NoSQL 容器中创建、检索、更新和删除 (CRUD) 项的操作方法。 这些方法共同执行 NoSQL API 容器中各种项的最常见“CRUD”操作。
 
 在本实验室中，你将在 Azure Cosmos DB for NoSQL 容器中使用 JavaScript SDK 对项执行日常 CRUD 操作。
 
 ## 准备开发环境
 
-如果你还没有克隆**使用 Azure Cosmos DB 生成助手**的实验室代码存储库并设置你的本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明进行操作。
+如果尚未为**使用 Azure Cosmos DB 生成 Copilot** 克隆实验室代码存储库并设置本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明以执行此操作。
 
 ## 创建 Azure Cosmos DB for NoSQL 帐户
 
-如果已为此站点上的**使用 Azure Cosmos DB 生成助手**实验室创建了 Azure Cosmos DB for NoSQL 帐户，则可以将其用于此实验室，并跳转到[下一部分](#import-the-azurecosmos-library)。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，创建一个将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并通过向帐户分配 **Cosmos DB 内置数据参与者**角色，授予你的用户标识访问权限，以管理帐户中的数据。
+如果已为此站点上的 **使用 Azure Cosmos DB 生成 Copilot** 实验室创建 Azure Cosmos DB for NoSQL 帐户，则可以将其用于此实验室，并跳到“[下一部分](#import-the-azurecosmos-library)”。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，以创建将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并向用户标识授予访问权限以管理帐户中的数据，方法是将其分配给 **Cosmos DB 内置数据参与者**角色。
 
-## 导入 @azure/cosmos 库
+## 导入@azure/cosmos库
 
 **@azure/cosmos** 库在 **npm** 上可用，可轻松安装到 JavaScript 项目中。
 
@@ -44,21 +40,21 @@ parent: JavaScript SDK labs
     npm install @azure/cosmos
     ```
 
-1. 使用以下命令安装 [@azure/identity][npmjs.com/package/@azure/identity] 库，以便使用 Azure 身份验证连接到 Azure Cosmos DB 工作区：
+1. 使用以下命令安装[@azure/identity][npmjs.com/package/@azure/identity]库，以便使用 Azure 身份验证连接到 Azure Cosmos DB 工作区：
 
     ```bash
     npm install @azure/identity
     ```
 
-## 使用 @azure/cosmos 库
+## 使用@azure/cosmos库
 
-导入 Azure SDK for JavaScript 中的 Azure Cosmos DB 库后，可以立即使用 其类连接到 Azure Cosmos DB for NoSQL 帐户。 **CosmosClient** 类是一个核心类，用于与 Azure Cosmos DB for NoSQL 帐户建立初始连接。
+从适用于 JavaScript 的 Azure SDK 中导入 Azure Cosmos DB 库后，可以立即使用其类连接到 Azure Cosmos DB for NoSQL 帐户。 **CosmosClient** 类是一个核心类，用于与 Azure Cosmos DB for NoSQL 帐户建立初始连接。
 
 1. 在 **Visual Studio Code** 的“**资源管理器**”窗格中，访问 **javascript/03-sdk-crud** 文件夹。
 
 1. 打开名为 **script.js** 的空 JavaScript 文件。
 
-1. 添加以下 `require` 语句，以导入 **@azure/cosmos** 和 **@azure/identity** 库：
+1. 添加以下`require`语句以导入**@azure/cosmos**和**@azure/identity**库：
 
     ```javascript
     const { CosmosClient } = require("@azure/cosmos");
@@ -66,14 +62,14 @@ parent: JavaScript SDK labs
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
     ```
 
-1. 更新名为 **endpoint** 和 **credential** 的变量，将 **endpoint** 值设置为之前创建的 Azure Cosmos DB 帐户的**终结点**。 **credential** 变量应设置为 **DefaultAzureCredential** 类的新实例：
+1. 添加名为 **endpoint** 和 **credential** 的变量，并将 **endpoint** 值设置为之前创建的 Azure Cosmos DB 帐户的 **endpoint**。 **credential** 变量应设置为 **DefaultAzureCredential** 类的新实例：
 
     ```javascript
     const endpoint = "<cosmos-endpoint>";
     const credential = new DefaultAzureCredential();
     ```
 
-    > &#128221; 例如，如果终结点为：**https://dp420.documents.azure.com:443/**，则语句为：**const endpoint = "https://dp420.documents.azure.com:443/";**。
+    > #128221；例如，如果终结点为：**https://dp420.documents.azure.com:443/**，则语句为：**const endpoint = "https://dp420.documents.azure.com:443/";**。
 
 1. 添加名为 **client** 的新变量，并使用 **endpoint** 和 **credential** 变量将其初始化为 **CosmosClient** 类的新实例：
 
@@ -128,7 +124,7 @@ parent: JavaScript SDK labs
 
 1. **保存** **script.cs** 文件。
 
-1. 运行脚本之前，必须使用`az login`命令登录 Azure。 在“终端”窗口中，运行：
+1. 运行脚本之前，必须使用 `az login` 命令登录 Azure。 在“终端”窗口中，运行：
 
     ```bash
     az login
@@ -263,7 +259,7 @@ parent: JavaScript SDK labs
     const { resource: saddle } = await container.item(itemId, partitionKey).read();
     ```
 
-    > &#128161；`read` 方法支持你对容器中的项执行点读取操作。 该方法需要`itemId`和`partitionKey`参数，用于标识要读取的项。 相比使用 Cosmos DB 的 SQL 查询语言查询单个项，`read` 方法是针对单个项的更高效、更具成本效益的检索方式。 点读取可以直接读取数据，不需要查询引擎来处理请求。
+    > &#128161；`read` 方法支持你对容器中的项执行点读取操作。 该方法需要 `itemId` 和 `partitionKey` 参数来标识要读取的项。 相比于使用 Cosmos DB 的 SQL 查询语言执行查询来查找单个项，`read` 方法可以更加高效且经济有效地检索单个项。 点读取可以直接读取数据，不需要查询引擎来处理请求。
 
 1. 使用格式化输出字符串打印 saddle 对象：
 
@@ -316,7 +312,7 @@ parent: JavaScript SDK labs
 
 ## 使用 SDK 执行更新和删除点操作
 
-在学习 SDK 期间，使用联机 Azure Cosmos DB 帐户或模拟器来更新项，在执行操作时在数据资源管理器与所选的 IDE 之间来回切换，以及查看更改是否已应用，是很常见的情况。 在本实验室中，当你使用 SDK 更新和删除项时，你就会这样做。
+在学习 SDK 期间，使用联机 Azure Cosmos DB 帐户或仿真器来更新项，在执行操作时在数据资源管理器与所选的 IDE 之间来回切换，以及查看更改是否已应用，是很常见的情况。 在本实验室中，当你使用 SDK 更新和删除项时，你就会这样做。
 
 1. 返回 Web 浏览器窗口或选项卡。
 

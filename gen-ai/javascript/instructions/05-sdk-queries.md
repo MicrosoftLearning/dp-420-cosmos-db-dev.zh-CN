@@ -1,11 +1,7 @@
 ---
-title: 05 - 使用 Azure Cosmos DB for NoSQL SDK 执行查询
 lab:
   title: 05 - 使用 Azure Cosmos DB for NoSQL SDK 执行查询
   module: Query the Azure Cosmos DB for NoSQL
-layout: default
-nav_order: 8
-parent: JavaScript SDK labs
 ---
 
 # 使用 Azure Cosmos DB for NoSQL SDK 执行查询
@@ -18,15 +14,15 @@ parent: JavaScript SDK labs
 
 ## 准备开发环境
 
-如果你还没有克隆**使用 Azure Cosmos DB 生成助手**的实验室代码存储库并设置你的本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明进行操作。
+如果尚未为**使用 Azure Cosmos DB 生成 Copilot** 克隆实验室代码存储库并设置本地环境，请查看[设置本地实验室环境](00-setup-lab-environment.md)说明以执行此操作。
 
 ## 创建 Azure Cosmos DB for NoSQL 帐户
 
-如果已为此站点上的**使用 Azure Cosmos DB 生成助手**实验室创建了 Azure Cosmos DB for NoSQL 帐户，你可以将其用于此实验室，并跳转至[下一部分](#create-azure-cosmos-db-database-and-container-with-sample-data)。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，创建一个将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并通过向帐户分配 **Cosmos DB 内置数据参与者**角色，授予你的用户标识访问权限，以管理帐户中的数据。
+如果已为此站点上的 **使用 Azure Cosmos DB 生成 Copilot** 实验室创建 Azure Cosmos DB for NoSQL 帐户，则可以将其用于此实验室，并跳到“[下一部分](#create-azure-cosmos-db-database-and-container-with-sample-data)”。 否则，请查看[设置 Azure Cosmos DB](../../common/instructions/00-setup-cosmos-db.md) 说明，创建一个将在整个实验室模块中使用的 Azure Cosmos DB for NoSQL 帐户，并通过向帐户分配 **Cosmos DB 内置数据参与者**角色，授予你的用户标识访问权限，以管理帐户中的数据。
 
 ## 创建 Azure Cosmos DB 数据库和包含示例数据的容器
 
-如果已创建一个名为 **cosmicworks-full** 的 Azure Cosmos DB 数据库，其中的容器名为 **products**，且该容器预加载了示例数据，则可以将其用于此实验室，并跳转至[下一部分](#import-the-azurecosmos-library)。 否则，请按照以下步骤创建新的示例数据库和容器。
+如果你已创建一个名为 **cosmicworks-full** 的 Azure Cosmos DB 数据库，并且其中的容器 **products** 已预加载示例数据，则可以在此实验室中使用该数据库，并跳至[下一部分](#import-the-azurecosmos-library)。 否则，请按照以下步骤创建新的示例数据库和容器。
 
 <details markdown=1>
 <summary markdown="span"><strong>单击可展开/折叠步骤以创建数据库和包含示例数据的容器</strong></summary>
@@ -88,7 +84,7 @@ parent: JavaScript SDK labs
 
 1. 打开名为 **script.js** 的空 JavaScript 文件。
 
-1. 添加以下 `require` 语句，以导入 **@azure/cosmos** 和 **@azure/identity** 库：
+1. 添加以下`require`语句以导入**@azure/cosmos**和**@azure/identity**库：
 
     ```javascript
     const { CosmosClient } = require("@azure/cosmos");
@@ -96,14 +92,14 @@ parent: JavaScript SDK labs
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0
     ```
 
-1. 更新名为 **endpoint** 和 **credential** 的变量，将 **endpoint** 值设置为之前创建的 Azure Cosmos DB 帐户的**终结点**。 **credential** 变量应设置为 **DefaultAzureCredential** 类的新实例：
+1. 添加名为 **endpoint** 和 **credential** 的变量，并将 **endpoint** 值设置为之前创建的 Azure Cosmos DB 帐户的 **endpoint**。 **credential** 变量应设置为 **DefaultAzureCredential** 类的新实例：
 
     ```javascript
     const endpoint = "<cosmos-endpoint>";
     const credential = new DefaultAzureCredential();
     ```
 
-    > &#128221; 例如，如果终结点为：**https://dp420.documents.azure.com:443/**，则语句为：**const endpoint = "https://dp420.documents.azure.com:443/";**。
+    > #128221；例如，如果终结点为：**https://dp420.documents.azure.com:443/**，则语句为：**const endpoint = "https://dp420.documents.azure.com:443/";**。
 
 1. 添加名为 **client** 的新变量，并使用 **endpoint** 和 **credential** 变量将其初始化为 **CosmosClient** 类的新实例：
 
@@ -194,7 +190,7 @@ parent: JavaScript SDK labs
 
 1. **保存** **script.cs** 文件。
 
-1. 运行脚本之前，必须使用`az login`命令登录 Azure。 在“终端”窗口中，运行：
+1. 运行脚本之前，必须使用 `az login` 命令登录 Azure。 在“终端”窗口中，运行：
 
     ```bash
     az login
