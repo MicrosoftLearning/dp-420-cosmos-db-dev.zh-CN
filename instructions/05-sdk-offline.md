@@ -101,7 +101,7 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
 1. 使用 [dotnet run][docs.microsoft.com/dotnet/core/tools/dotnet-run] 命令生成并运行项目：
@@ -132,10 +132,10 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
 
 1. 在 05-sdk-offline 文件夹内，再次打开 script.cs 代码文件。
 
-1. 异步调用 database 变量的 [CreateContainerIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync] 方法，传入新容器的名称 (products)、分区键路径 (/categoryId)，以及要在 cosmicworks 中创建的吞吐量 (400)，并将结果存储在 [Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 类型的变量中：
+1. 异步调用 **database** 变量的 [CreateContainerIfNotExistsAsync][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.database.createcontainerifnotexistsasync] 方法，传入新容器 (**products**) 的名称、分区键路径 (**/category/name**) 以及希望在 **cosmicworks** 数据库中创建的吞吐量 (**400**)，并将结果存储在类型为 [Container][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container] 的变量中：
 
     ```
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name", 400);
     ```
 
 1. 使用内置的 Console.WriteLine 静态方法来输出 Container 类的 [Id][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.container.id] 属性，并将标题设置为 New Container：
@@ -157,7 +157,7 @@ Microsoft.Azure.Cosmos 库已预安装在你将在本练习中使用的 .NET 脚
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
     Console.WriteLine($"New Database:\tId: {database.Id}");
     
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId", 400);
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name", 400);
     Console.WriteLine($"New Container:\tId: {container.Id}");
     ```
 

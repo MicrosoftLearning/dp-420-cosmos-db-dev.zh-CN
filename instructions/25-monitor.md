@@ -34,8 +34,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
+    | 工作负载类型**** | **学习** |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
@@ -69,21 +70,21 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     > &#128221; 此命令将打开起始目录已设置为“25-monitor”文件夹的终端。
 
-1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.49.0] 包：
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
-1. 使用以下命令从 NuGet 添加 [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.1] 包：
+1. 使用以下命令从 NuGet 添加 [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.3] 包：
 
     ```
-    dotnet add package Newtonsoft.Json --version 13.0.1
+    dotnet add package Newtonsoft.Json --version 13.0.3
     ```
 
 ## 运行脚本以创建容器和工作负载
 
-现在，我们已准备好运行工作负载来监视 Azure Cosmos DB 帐户的使用情况。  脚本将在后台运行。 此脚本将创建三个容器，并将一些数据加载到这些容器中。 然后，该脚本会随机运行一些 SQL 查询来模拟访问 Azure Cosmos DB 帐户的多个用户应用程序。 
+现在，我们已准备好运行工作负载来监视 Azure Cosmos DB 帐户的使用情况。  脚本将在后台运行。 此脚本将创建三个容器，并将一些数据加载到这些容器中。 然后，该脚本会随机运行一些 SQL 查询来模拟访问 Azure Cosmos DB 帐户的多个用户应用程序。
 
 1. 在 Visual Studio Code 的“资源管理器”窗格中，浏览到“25-monitor”文件夹。
 

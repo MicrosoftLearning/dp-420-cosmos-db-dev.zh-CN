@@ -34,8 +34,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
+    | 工作负载类型**** | **学习** |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
@@ -55,6 +56,8 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
 
+    1. 请注意“主连接字符串”**** 字段。 你将在此练习的稍后部分使用此连接字符串值。
+
 1. 在不关闭浏览器窗口的情况下，打开 Visual Studio Code****。
 
 ## 使用数据为 Azure Cosmos DB for NoSQL 帐户设定种子
@@ -66,24 +69,23 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 在计算机上安装可全局使用的 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具。
 
     ```
-    dotnet tool install cosmicworks --global --version 1.*
+    dotnet tool install --global CosmicWorks --version 2.3.1
     ```
 
     > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具 "cosmicworks" 已安装）。
 
 1. 使用以下命令行选项运行 cosmicworks 以设置 Azure Cosmos DB 种子帐户：
 
-    | **选项** | **值** |
+    | **选项** | 值 |
     | ---: | :--- |
-    | **--endpoint** | 之前在本实验室中复制的终结点值 |
-    | **--key** | 之前在本实验室中复制的键值 |
-    | **--datasets** | *product* |
+    | **-c** | *之前在本实验室中勾选的连接字符串值* |
+    | **--number-of-employees** | *cosmicworks 命令会用员工容器和产品容器分别填充数据库，默认包含 1000 个和 200 个项目，除非另有指定。* |
 
-    ```
-    cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
+    ```powershell
+    cosmicworks -c "connection-string" --number-of-employees 0 --disable-hierarchical-partition-keys
     ```
 
-    > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
+    > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks -c "AccountEndpoint=https://dp420.documents.azure.com:443/;AccountKey=fDR2ci9QgkdkvERTQ==" --number-of-employees 0 --disable-hierarchical-partition-keys``
 
 1. 等待 cosmicworks 命令完成对帐户的数据库、容器和项的填充。
 
@@ -164,7 +166,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     Database database = await client.CreateDatabaseIfNotExistsAsync("cosmicworks");
 
-    Container container = await database.CreateContainerIfNotExistsAsync("products", "/categoryId");
+    Container container = await database.CreateContainerIfNotExistsAsync("products", "/category/name");
 
     UserDefinedFunctionProperties props = new ();
     props.Id = "tax";
