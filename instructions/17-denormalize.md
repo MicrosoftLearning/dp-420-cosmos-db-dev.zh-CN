@@ -37,7 +37,7 @@ lab:
     ```
     "C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe" -m pip install pip-system-certs
     az login
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
     > &#128161; 如果首先运行了 **度量客户实体性能** 实验室，但未移除该实验室创建的 Azure 资源，请关闭集成终端，忽略以下步骤并移动到下一部分。 请注意，如果已有由 **度量客户实体性能** 实验室创建的资源，并且尝试运行下面的脚本，则脚本将会失败。

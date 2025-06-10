@@ -34,8 +34,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
+    | 工作负载类型**** | **学习** |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
@@ -112,7 +113,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 创建一个名为 options 的 [ContainerProperties][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties] 类型的新变量，并传入 ``products`` 和 ``/categoryId`` 的值作为构造函数参数：
 
     ```
-    ContainerProperties options = new ("products", "/categoryId");
+    ContainerProperties options = new ("products", "/category/name");
     ```
 
 1. 将 policy 变量分配给 options 变量的 [IndexingPolicy][docs.microsoft.com/dotnet/api/microsoft.azure.cosmos.containerproperties.indexingpolicy] 属性 ：
@@ -156,7 +157,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
         new IncludedPath{ Path = "/name/?" }
     );
 
-    ContainerProperties options = new ("products", "/categoryId");
+    ContainerProperties options = new ("products", "/category/name");
     options.IndexingPolicy = policy;
 
     Container container = await database.CreateContainerIfNotExistsAsync(options);
@@ -191,7 +192,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 在“数据资源管理器”**** 中，展开“cosmicworks”**** 数据库节点，然后在“NoSQL API”**** 导航树中观察新“products”**** 容器节点。
 
-1. 在 NoSQL API 导航树的 products 容器节点内，选择“缩放和设置”  。
+1. 在 **NoSQL API** 导航树中，展开**产品**容器节点，选择“**设置**”。
 
 1. 在“索引策略”部分中观察索引策略：
 

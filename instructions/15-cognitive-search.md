@@ -20,13 +20,15 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
+    | 工作负载类型**** | **学习** |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
     | **位置** | 选择任何可用区域 |
-    | **容量模式** | *无服务器* |
+    | **容量模式** | *预配的吞吐量* |
+    | **应用免费分级折扣** | *不应用* |
 
     > &#128221; 你的实验室环境可能存在阻止你创建新资源组的限制。 如果是这种情况，请使用现有的预先创建的资源组。
 
@@ -36,13 +38,22 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 此窗格包含从 SDK 连接到帐户所需的连接详细信息和凭据。 具体而言：
 
-    1. 请注意“URI”**** 字段。 稍后在本练习中将用到此终结点值。
-
-    1. 请注意“主键”**** 字段。 稍后在本练习中将用到此键值。
-
     1. 请注意“主连接字符串”**** 字段。 你将在此练习的稍后部分使用此连接字符串值。
 
 1. 从资源菜单中选择“数据资源管理器”。
+
+1. 在“数据资源管理器”窗格中，展开“新建容器”，然后选择“新建数据库”。
+
+1. 在“新建数据库”弹出窗口中，为每个设置输入以下值，然后选择“确定”：
+
+    | **设置** | **值** |
+    | --: | :-- |
+    | **数据库 ID** | *``cosmicworks``* |
+    | 预配吞吐量 | enabled |
+    | **数据库吞吐量** | **手动** |
+    | **数据库每秒所需 RU 数** | ``1000`` |
+
+1. 返回到“数据资源管理器”窗格，观察层次结构中的“cosmicworks”数据库节点。
 
 1. 在“数据资源管理器”窗格中，选择“新建容器” 。
 
@@ -50,9 +61,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
     | **设置** | **值** |
     | --: | :-- |
-    | **数据库 ID** | 新建 &vert; ``cosmicworks``**** |
+    | **数据库 ID** | 使用现有 &vert; cosmicworks |
     | **容器 ID** | *``products``* |
-    | **分区键** | *``/categoryId``* |
+    | **分区键** | *``/category/name``* |
 
 1. 返回到“数据资源管理器”窗格中，展开“cosmicworks”数据库节点，然后观察层次结构中的“products”容器节点。
 
@@ -65,24 +76,23 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 1. 在计算机上安装可全局使用的 [cosmicworks][nuget.org/packages/cosmicworks] 命令行工具。
 
     ```
-    dotnet tool install cosmicworks --global --version 1.*
+    dotnet tool install --global CosmicWorks --version 2.3.1
     ```
 
     > &#128161; 此命令可能需要几分钟时间才能完成。 如果你过去已经安装了此工具的最新版本，此命令将输出警告消息（*工具 "cosmicworks" 已安装）。
 
 1. 使用以下命令行选项运行 cosmicworks 以设置 Azure Cosmos DB 种子帐户：
 
-    | **选项** | **值** |
+    | **选项** | 值 |
     | ---: | :--- |
-    | **--endpoint** | 之前在本实验室中复制的终结点值 |
-    | **--key** | 之前在本实验室中复制的键值 |
-    | **--datasets** | *product* |
+    | **-c** | *之前在本实验室中勾选的连接字符串值* |
+    | **--number-of-employees** | *cosmicworks 命令会用员工容器和产品容器分别填充数据库，默认包含 1000 个和 200 个项目，除非另有指定。* |
 
-    ```
-    cosmicworks --endpoint <cosmos-endpoint> --key <cosmos-key> --datasets product
+    ```powershell
+    cosmicworks -c "connection-string" --number-of-employees 0 --disable-hierarchical-partition-keys
     ```
 
-    > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks --endpoint https://dp420.documents.azure.com:443/ --key fDR2ci9QgkdkvERTQ== --datasets product``
+    > &#128221; 例如，如果终结点为：https&shy;://dp420.documents.azure.com:443/，密钥为：fDR2ci9QgkdkvERTQ==，则命令为：``cosmicworks -c "AccountEndpoint=https://dp420.documents.azure.com:443/;AccountKey=fDR2ci9QgkdkvERTQ==" --number-of-employees 0 --disable-hierarchical-partition-keys``
 
 1. 等待 cosmicworks 命令完成对帐户的数据库、容器和项的填充。
 
@@ -135,7 +145,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     ```sql
     SELECT 
         p.id, 
-        p.categoryId, 
+        p.category, 
         p.name, 
         p.price,
         p._ts
@@ -167,7 +177,7 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
     | **字段** | **可检索** | **可筛选** | **可排序** | **可分面** | **可搜索** |
     | ---: | :---: | :---: | :---: | :---: | :---: |
     | **id** | &#10004; | &#10004; | &#10004; | | |
-    | categoryId | &#10004; | &#10004; | &#10004; | &#10004; | |
+    | **category** | &#10004; | &#10004; | &#10004; | &#10004; | |
     | name | &#10004; | &#10004; | &#10004; | | &#10004;（英语 - Microsoft） |
     | **price** | &#10004; | &#10004; | &#10004; | &#10004; | |
 

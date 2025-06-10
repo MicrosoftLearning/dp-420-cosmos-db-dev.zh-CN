@@ -22,9 +22,9 @@ lab:
 
 1. 从 [microsoft.com/edge] 安装最新版本的 Microsoft Edge。
 
-### .NET 6 SDK
+### .NET 8 SDK
 
-1. 从 [dotnet.microsoft.com/download/dotnet/6.0] 下载并安装 SDK（非运行时）。
+1. 从 [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) 下载并安装 SDK（非运行时）。
 
 ### PowerShell 7
 

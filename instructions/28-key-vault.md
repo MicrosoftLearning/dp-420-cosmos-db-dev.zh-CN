@@ -34,8 +34,9 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 1. 选择“+ 创建资源”，搜索“Cosmos DB”，然后使用以下设置创建新的“Azure Cosmos DB for NoSQL”帐户资源，并将所有其余设置保留为默认值：
 
-    | **设置** | 值 |
+    | **设置** | **值** |
     | ---: | :--- |
+    | 工作负载类型**** | **学习** |
     | **订阅** | 你的现有 Azure 订阅 |
     | **资源组** | 选择现有资源组，或创建新资源组 |
     | **帐户名** | 输入全局唯一名称 |
@@ -120,16 +121,16 @@ Azure Cosmos DB 是一项基于云的 NoSQL 数据库服务，它支持多个 AP
 
 .NET CLI 包含 [add package][docs.microsoft.com/dotnet/core/tools/dotnet-add-package] 命令，用于从预配置的包源导入包。 .NET 安装使用 NuGet 作为默认包源。
 
-1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.22.1] 包：
+1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.Cosmos][nuget.org/packages/microsoft.azure.cosmos/3.49.0] 包：
 
     ```
-    dotnet add package Microsoft.Azure.Cosmos --version 3.22.1
+    dotnet add package Microsoft.Azure.Cosmos --version 3.49.0
     ```
 
-1. 使用以下命令从 NuGet 添加 [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.1] 包：
+1. 使用以下命令从 NuGet 添加 [Newtonsoft.Json][nuget.org/packages/Newtonsoft.Json/13.0.3] 包：
 
     ```
-    dotnet add package Newtonsoft.Json --version 13.0.1
+    dotnet add package Newtonsoft.Json --version 13.0.3
     ```
 
 1. 使用以下命令从 NuGet 添加 [Microsoft.Azure.KeyVault][nuget.org/packages/Microsoft.Azure.KeyVault] 包：
