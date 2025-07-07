@@ -155,7 +155,7 @@ Azure Cosmos DB for NoSQL 资源已就绪，接下来你将创建一个 Azure �
     ```
     SELECT 
         p.name, 
-        p.categoryName as category, 
+        p.category.name as category, 
         p.price 
     FROM 
         products p
